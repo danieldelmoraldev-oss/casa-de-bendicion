@@ -377,6 +377,8 @@ export const donate = {
   text: "Cada contribución ayuda a sostener la obra ministerial, formar discípulos, servir familias y ampliar nuestro impacto dentro y fuera de la iglesia.",
   verse: { text: "Dios ama al dador alegre.", ref: "2 Corintios 9:7" },
   cta: "Dar ahora",
+  // Pasarela de donaciones (Stripe Payment Link) facilitada por el cliente
+  url: "https://donate.stripe.com/9B600j33TdVlb0K7ok77O00",
 };
 
 /* ------------------------------------------------------------------ */

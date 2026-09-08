@@ -95,7 +95,6 @@ Cuando lleguen los recursos finales sólo hay que pasar `src`:
 |-------|-----------|
 | `ui/Modal.jsx` | POST del formulario al CRM / servicio de email |
 | `sections/FirstTime.jsx` | Mismo endpoint para el formulario embebido |
-| `sections/Donate.jsx` | Enlazar el botón "Dar ahora" a la pasarela (Givelify / Tithe.ly / Stripe) |
 | `layout/Footer.jsx` | URLs reales de redes sociales, `mailto:` y `tel:` |
 | `sections/Pastors.jsx` | Enlazar a `/pastores` cuando exista esa página |
 

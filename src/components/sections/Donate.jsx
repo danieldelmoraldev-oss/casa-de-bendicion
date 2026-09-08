@@ -56,9 +56,12 @@ export default function Donate() {
 
           {/* CTA principal */}
           <Reveal delay={0.28} className="mt-12">
-            {/* TODO: enlazar a la pasarela de donaciones (Givelify / Tithe.ly / Stripe) */}
+            {/* Abre en pestaña nueva: así el visitante no pierde la página
+                al ir a la pasarela de pago. */}
             <motion.a
-              href="#donar"
+              href={donate.url}
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ y: -3 }}
               whileTap={{ y: 0, scale: 0.985 }}
               transition={{ type: "spring", stiffness: 400, damping: 26 }}
