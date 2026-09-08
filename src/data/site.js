@@ -311,7 +311,7 @@ export const community = {
       name: "Blueprint Mentorship",
       slug: "blueprint-mentorship",
       photoSlug: "blueprint-mentorship",
-      photo: false, // pendiente de subir
+      photo: true,
 
       en: "Leadership & Family Development",
       text: "Plataforma de mentoría y desarrollo diseñada para fortalecer personas y familias, desarrollar liderazgo y acompañar a diferentes generaciones en procesos de crecimiento, propósito y participación comunitaria.",
@@ -322,7 +322,7 @@ export const community = {
       name: "Echo Media",
       slug: "echo-media",
       photoSlug: "echo-media",
-      photo: false, // pendiente de subir
+      photo: true,
 
       en: "Community Leadership & Digital Innovation",
       text: "Echo Media utiliza comunicación, creatividad y herramientas digitales como vehículos para desarrollar habilidades, liderazgo y oportunidades de participación. Su enfoque incluye desarrollo de habilidades digitales, comunicación, creación de contenido, innovación y preparación profesional.",
@@ -333,7 +333,7 @@ export const community = {
       name: "Community Outreach",
       slug: null, // sin marca propia: usa el identificador de Casa de Bendición
       photoSlug: "community-outreach",
-      photo: false, // pendiente de subir
+      photo: true,
       en: "Neighborhood Engagement",
       text: "Community Outreach moviliza el servicio más allá de las actividades internas de la iglesia mediante participación comunitaria, voluntariado, apoyo práctico, conexión con recursos y colaboración.",
       extensions: [

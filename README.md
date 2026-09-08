@@ -150,8 +150,6 @@ negativa según el fondo. Respeta la reducción mínima de la pág. 12
 
 **Fotografías**
 - **Revival Youth** — es el único de los 9 ministerios sin foto.
-- Fotos de la sección **Comunidad**: las tres plataformas ya tienen el
-  hueco preparado y salen con "Foto pendiente" hasta que lleguen.
 - Retrato de los **pastores** y las dos fotos de **Bienvenida**.
 - **Vídeo institucional**.
 
