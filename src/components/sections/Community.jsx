@@ -133,7 +133,7 @@ export default function Community() {
         </Reveal>
       </div>
 
-      <ArcDivider to="white" position="bottom" height={110} />
+      <ArcDivider to="ivory" position="bottom" height={110} />
     </section>
   );
 }

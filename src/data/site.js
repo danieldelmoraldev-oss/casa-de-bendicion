@@ -337,6 +337,51 @@ export const community = {
   closing: "Sé parte de lo que estamos construyendo.",
 };
 
+
+/* ------------------------------------------------------------------ */
+/* 09b · TESTIMONIOS                                                   */
+/* Textos entregados por el cliente, transcritos literalmente.         */
+/* ------------------------------------------------------------------ */
+export const testimonials = {
+  eyebrow: "Lo que dicen nuestras familias",
+  title: ["Historias de", "una misma casa."],
+  intro:
+    "No hay mejor manera de conocer Casa de Bendición que escuchar a quienes ya forman parte de ella.",
+  items: [
+    {
+      slug: "familia-morales",
+      name: "Familia Morales",
+      quote: [
+        "Casa de Bendición ha sido un ejemplo de amor para con toda nuestra familia. Se puede palpar la calidez y la empatía de cada líder y cada miembro.",
+      ],
+    },
+    {
+      slug: "emelyn-burgos",
+      name: "Emelyn Burgos",
+      quote: [
+        "En Casa de Bendición he encontrado mucho más que un lugar de congregación; he encontrado una familia. Allí he recibido apoyo en los momentos difíciles, amor sincero y el soporte que necesitaba para seguir adelante.",
+        "Me siento bendecida de formar parte de una familia que me anima, me acompaña y me recuerda que nunca estoy sola. Casa de Bendición ha sido para mí un lugar de amor, crecimiento, restauración y, sobre todo, de muchas bendiciones.",
+      ],
+    },
+    {
+      slug: "familia-liriano",
+      name: "Familia Liriano",
+      quote: [
+        "Estamos muy agradecidos por Casa de Bendición. Los pastores nos han ayudado a conocer más a Dios y a fortalecer nuestra relación con Él. A través de los diferentes programas y actividades, también hemos aprendido a trabajar en nuestro carácter, crecer como familia y mejorar nuestra convivencia dentro del hogar.",
+        "Casa de Bendición ha sido de gran bendición para nuestras vidas y nuestra familia. ¡Dios siga usando este ministerio para transformar hogares y acercar más personas a Él!",
+      ],
+    },
+    {
+      slug: "amy-crespo",
+      name: "Amy Crespo",
+      quote: [
+        "Casa de Bendición se ha convertido en nuestro segundo hogar, y sus pastores y miembros, en parte de nuestra familia. Para mi bebé y para mí ha sido un verdadero privilegio encontrar una comunidad donde no solo compartimos nuestras creencias y crecemos en nuestra fe, sino donde también contamos con líderes que nos acompañan con amor en las buenas y no tan buenas, nos guían a ser nuestra mejor versión y nos animan y orientan a descubrir y perseguir el propósito que Dios tiene para nuestras vidas.",
+        "Estamos profundamente agradecidas por esta familia de fe y por todo el amor, apoyo, soporte y dirección que hemos recibido. Es un privilegio y una gran bendición ser parte de Casa de Bendición.",
+      ],
+    },
+  ],
+};
+
 /* ------------------------------------------------------------------ */
 /* 10 · PRIMERA VEZ / VISÍTANOS                                        */
 /* ------------------------------------------------------------------ */

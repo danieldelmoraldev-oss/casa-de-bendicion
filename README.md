@@ -45,8 +45,10 @@ export CDB_HOST=usuario@mi-servidor   # acceso SSH por clave
 | 07 | Crece y fórmate | `sections/Training` | `#formacion` |
 | 08 | Ministerios | `sections/Ministries` | `#ministerios` |
 | 09 | Comunidad e impacto | `sections/Community` | `#comunidad` |
+| — | Testimonios de las familias | `sections/Testimonials` | `#testimonios` |
 | 10 | ¿Es tu primera vez? + formulario | `sections/FirstTime` | `#visitanos` |
 | 11 | Conéctate (4 modales) | `sections/Connect` | `#conectate` |
+| — | Momentos que marcan (12 tarjetas) | `sections/Moments` | `#conectate` |
 | 12 | Donar | `sections/Donate` | `#donar` |
 | — | Cierre "Tu historia puede comenzar aquí" | `sections/FinalCta` | — |
 | — | Footer | `layout/Footer` | — |

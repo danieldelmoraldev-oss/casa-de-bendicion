@@ -13,6 +13,7 @@ import Gatherings from "./components/sections/Gatherings";
 import Training from "./components/sections/Training";
 import Ministries from "./components/sections/Ministries";
 import Community from "./components/sections/Community";
+import Testimonials from "./components/sections/Testimonials";
 import FirstTime from "./components/sections/FirstTime";
 import Connect from "./components/sections/Connect";
 import Moments from "./components/sections/Moments";
@@ -54,6 +55,7 @@ export default function App() {
         <Training />    {/* 07 · Crece y fórmate                        */}
         <Ministries />  {/* 08 · Ministerios                            */}
         <Community />   {/* 09 · Comunidad e impacto                    */}
+        <Testimonials />{/*      Testimonios de las familias           */}
         <FirstTime />   {/* 10 · ¿Es tu primera vez? + formulario       */}
         <Connect />     {/* 11 · Conéctate (4 modales)                  */}
         <Moments />     {/*      Momentos que marcan (misma parada)     */}
