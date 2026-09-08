@@ -3,16 +3,11 @@ import { useModal } from "../../context/ModalContext";
 
 export function Arrow({ className = "" }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      className={`h-3.5 w-3.5 shrink-0 ${className}`}
-    >
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className={`h-3.5 w-3.5 shrink-0 ${className}`}>
       <path
         d="M5 12h13M12 5.5 18.5 12 12 18.5"
         stroke="currentColor"
-        strokeWidth="1.8"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -20,31 +15,30 @@ export function Arrow({ className = "" }) {
   );
 }
 
+/* El manual (pág. 32) reserva el dorado para "botones, enlaces,
+   indicadores activos y llamadas a la acción". De ahí que sólo la
+   acción principal sea dorada y el resto se resuelva en azul.
+
+   Nota de accesibilidad: el mockup del manual usa texto blanco
+   sobre dorado (contraste 2.8:1, insuficiente). Aquí el texto va
+   en azul institucional sobre el degradado dorado oficial, que da
+   entre 4.3:1 y 5.9:1 y sí cumple. Se conserva el color de marca,
+   cambia sólo el color del texto. */
 const base =
-  "group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full " +
-  "whitespace-nowrap px-7 py-3.5 text-[11.5px] font-semibold uppercase tracking-[0.16em] " +
-  "transition-colors duration-500 focus-visible:outline-2 focus-visible:outline-offset-4 " +
-  "focus-visible:outline-gold cursor-pointer select-none";
+  "group relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-md " +
+  "whitespace-nowrap px-7 py-3.5 text-[12px] font-bold uppercase tracking-[0.14em] " +
+  "transition-colors duration-400 cursor-pointer select-none " +
+  "focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-gold";
 
 const variants = {
-  /* Relleno dorado — acción principal */
-  primary: "bg-gold text-ink hover:bg-gold-soft shadow-[0_10px_40px_-12px_rgba(214,163,84,0.65)]",
-  /* Contorno sobre fondo oscuro */
-  ghost: "border border-cream/18 text-cream/85 hover:text-ink hover:border-transparent",
-  /* Contorno sobre fondo claro */
-  outline: "border border-ink/15 text-ink/80 hover:text-cream hover:border-transparent",
-  /* Relleno oscuro sobre fondo claro */
-  dark: "bg-ink text-cream hover:bg-carbon",
+  /* Acción principal — degradado institucional */
+  primary: "gradient-gold text-navy shadow-[0_10px_28px_-12px_rgba(208,142,8,0.75)]",
+  /* Acción secundaria sobre fondo claro */
+  navy: "bg-navy text-white hover:bg-navy-deep",
+  outline: "border-2 border-navy/25 text-navy hover:border-navy",
+  /* Acción secundaria sobre fondo azul */
+  light: "border-2 border-white/30 text-white hover:border-white",
 };
-
-/** Fondo que sube al hacer hover en las variantes de contorno. */
-function Fill({ tone }) {
-  return (
-    <span
-      className={`absolute inset-0 -z-0 origin-bottom scale-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100 ${tone}`}
-    />
-  );
-}
 
 export default function CTAButton({
   children,
@@ -55,8 +49,8 @@ export default function CTAButton({
   className = "",
   ...rest
 }) {
-  const isOutline = variant === "ghost" || variant === "outline";
   const Comp = href ? motion.a : motion.button;
+  const isOutline = variant === "outline" || variant === "light";
 
   return (
     <Comp
@@ -68,26 +62,47 @@ export default function CTAButton({
       className={`${base} ${variants[variant]} ${className}`}
       {...rest}
     >
-      {isOutline && <Fill tone={variant === "ghost" ? "bg-gold" : "bg-ink"} />}
-      {variant === "primary" && (
-        /* Barrido de brillo */
-        <span className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-[900ms] ease-out group-hover:translate-x-full" />
+      {isOutline && (
+        /* Relleno que sube al pasar el ratón */
+        <span
+          className={`absolute inset-0 -z-0 origin-bottom scale-y-0 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100 ${
+            variant === "outline" ? "bg-navy" : "bg-white"
+          }`}
+        />
       )}
-      <span className="relative z-10">{children}</span>
+      {variant === "primary" && (
+        <span className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/45 to-transparent transition-transform duration-[850ms] ease-out group-hover:translate-x-full" />
+      )}
+      <span
+        className={`relative z-10 ${
+          variant === "outline"
+            ? "transition-colors duration-400 group-hover:text-white"
+            : variant === "light"
+              ? "transition-colors duration-400 group-hover:text-navy"
+              : ""
+        }`}
+      >
+        {children}
+      </span>
       {icon && (
-        <span className="relative z-10 overflow-hidden">
-          <Arrow className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1" />
+        <span
+          className={`relative z-10 ${
+            variant === "outline"
+              ? "transition-colors duration-400 group-hover:text-white"
+              : variant === "light"
+                ? "transition-colors duration-400 group-hover:text-navy"
+                : ""
+          }`}
+        >
+          <Arrow className="transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1" />
         </span>
       )}
     </Comp>
   );
 }
 
-/**
- * Par de CTA que se repite al final de cada sección del documento:
- * [PLANIFICA TU VISITA] [CONÉCTATE CON NOSOTROS]
- */
-export function DualCTA({ theme = "dark", align = "left", className = "" }) {
+/** Par de CTA que cierra cada sección del documento de contenido. */
+export function DualCTA({ theme = "light", align = "left", className = "" }) {
   const { open } = useModal();
   return (
     <div
@@ -97,7 +112,7 @@ export function DualCTA({ theme = "dark", align = "left", className = "" }) {
     >
       <CTAButton onClick={() => open("planifica-tu-visita")}>Planifica tu visita</CTAButton>
       <CTAButton
-        variant={theme === "dark" ? "ghost" : "outline"}
+        variant={theme === "navy" ? "light" : "outline"}
         onClick={() => open("quiero-conectarme")}
       >
         Conéctate con nosotros

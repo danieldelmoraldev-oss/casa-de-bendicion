@@ -83,12 +83,12 @@ export function StaggerItem({ children, className = "", as = "div", ...rest }) {
 /**
  * Titular con revelado palabra a palabra usando máscara.
  * `lines` puede ser un string o un array de strings (una línea por entrada).
- * Se puede marcar una línea como itálica display pasando `italicLines={[1]}`.
+ * Se puede resaltar una línea con el degradado dorado pasando `accentLines={[1]}`.
  */
 export function SplitHeading({
   lines,
   className = "",
-  italicLines = [],
+  accentLines = [],
   delay = 0,
   step = 0.055,
   mount = false,
@@ -119,7 +119,7 @@ export function SplitHeading({
               >
                 <motion.span
                   className={`inline-block ${
-                    italicLines.includes(li) ? "italic text-gold-gradient" : ""
+                    accentLines.includes(li) ? "text-gold-gradient" : ""
                   }`}
                   variants={{
                     hidden: { y: "115%", opacity: 0 },

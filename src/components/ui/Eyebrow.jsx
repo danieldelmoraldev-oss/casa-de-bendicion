@@ -2,40 +2,29 @@ import { motion } from "framer-motion";
 import { EASE } from "./Motion";
 
 /**
- * Etiqueta superior de sección: punto + línea + texto en versalitas.
- * theme: "dark" (sobre fondo oscuro) | "light" (sobre crema)
+ * Etiqueta superior de sección: filete dorado + texto en versalitas.
+ * theme: "light" (sobre blanco/marfil) | "navy" (sobre azul institucional)
  */
-export default function Eyebrow({ children, theme = "dark", align = "left", className = "" }) {
-  const text = theme === "dark" ? "text-gold" : "text-gold-deep";
-  const line = theme === "dark" ? "bg-gold/45" : "bg-gold-deep/40";
+export default function Eyebrow({ children, theme = "light", align = "left", className = "" }) {
+  const text = theme === "navy" ? "text-gold-light" : "text-gold-deep";
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.7, ease: EASE }}
-      className={`flex items-center gap-3 ${
-        align === "center" ? "justify-center" : ""
-      } ${className}`}
+      className={`flex items-center gap-3.5 ${align === "center" ? "justify-center" : ""} ${className}`}
     >
-      <span className={`relative flex h-1.5 w-1.5 shrink-0 rounded-full ${text.replace("text-", "bg-")}`}>
-        <span
-          className={`absolute inset-0 animate-ping rounded-full ${text.replace("text-", "bg-")} opacity-60`}
-        />
-      </span>
       <motion.span
-        className={`h-px ${line}`}
+        aria-hidden="true"
+        className="rule-gold h-[3px] shrink-0 rounded-full"
         initial={{ width: 0 }}
-        whileInView={{ width: 28 }}
+        whileInView={{ width: 32 }}
         viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
+        transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
       />
-      <span
-        className={`text-[11px] font-semibold uppercase tracking-[0.28em] ${text} whitespace-nowrap`}
-      >
-        {children}
-      </span>
+      <span className={`label text-[11px] ${text} whitespace-nowrap`}>{children}</span>
     </motion.div>
   );
 }

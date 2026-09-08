@@ -4,8 +4,8 @@ import { community } from "../../data/site";
 import { Reveal, SplitHeading, Stagger, StaggerItem } from "../ui/Motion";
 import Eyebrow from "../ui/Eyebrow";
 import { DualCTA } from "../ui/Button";
-import { LogoPlaceholder } from "../ui/Placeholder";
-import { Blob, Cylinder, GridLines } from "../ui/BackgroundFX";
+import { MinistryLogo } from "../ui/Logo";
+import { ArcDivider, FlameWatermark, GoldRule } from "../ui/Decor";
 
 /* El título del documento son tres frases: una por línea. */
 const titleLines = community.title
@@ -16,48 +16,51 @@ const titleLines = community.title
 function Platform({ platform }) {
   return (
     <StaggerItem>
-      <article className="group relative border-t border-cream/[0.09] py-12 lg:py-16">
-        {/* Barrido de luz al pasar el ratón */}
-        <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
-        <span className="pointer-events-none absolute -inset-x-6 inset-y-0 -z-10 rounded-[32px] bg-cream/[0.02] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <article className="group relative border-t border-white/12 py-12 lg:py-16">
+        <span
+          aria-hidden="true"
+          className="gradient-gold pointer-events-none absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+        />
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
-          {/* Índice */}
           <div className="lg:col-span-1">
-            <span className="display text-gold-gradient text-[clamp(2.6rem,4vw,3.4rem)] leading-none">
+            <span className="display text-gold-gradient text-[clamp(2.4rem,3.6vw,3.2rem)] leading-none">
               {platform.index}
             </span>
           </div>
 
-          {/* Identidad */}
           <div className="lg:col-span-4">
-            <LogoPlaceholder label={`Logo ${platform.name}`} className="mb-6 h-16 w-16" />
-            <h3 className="display text-[clamp(1.7rem,3vw,2.4rem)] leading-tight text-cream transition-colors duration-500 group-hover:text-gold-soft">
+            {/* Los logos son a color y necesitan fondo claro (pág. 10) */}
+            {platform.slug ? (
+              <div className="mb-6 inline-flex rounded-lg bg-white px-5 py-3.5">
+                <MinistryLogo slug={platform.slug} name={platform.name} height={40} />
+              </div>
+            ) : (
+              <div className="mb-6 inline-flex rounded-lg border border-white/15 px-5 py-3.5">
+                {/* TODO: el cliente aún no ha entregado el logo de Community Outreach */}
+                <span className="label text-[10px] text-navy-mist">[Logo pendiente]</span>
+              </div>
+            )}
+            <h3 className="display text-[clamp(1.6rem,2.8vw,2.2rem)] leading-tight text-white transition-colors duration-400 group-hover:text-gold-light">
               {platform.name}
             </h3>
-            <p className="mt-2.5 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-gold/80">
-              {platform.en}
-            </p>
+            <p className="label mt-2.5 text-[10px] text-gold-light/85">{platform.en}</p>
           </div>
 
-          {/* Descripción + extensiones */}
           <div className="lg:col-span-6 lg:col-start-7">
-            <p className="text-[15px] leading-[1.85] text-mist">{platform.text}</p>
+            <p className="text-[15px] leading-[1.85] text-navy-mist">{platform.text}</p>
 
             {platform.extensions.length > 0 && (
               <div className="mt-8">
-                <p className="text-[9.5px] font-semibold uppercase tracking-[0.26em] text-cream/35">
-                  Extensiones
-                </p>
+                <p className="label text-[9.5px] text-white/40">Extensiones</p>
                 <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                   {platform.extensions.map((ext) => (
                     <div
                       key={ext.name}
-                      className="rounded-2xl border border-cream/[0.09] bg-carbon/50 p-5 transition-colors duration-500 hover:border-gold/30"
+                      className="rounded-lg bg-white p-5 transition-transform duration-400 hover:-translate-y-1"
                     >
-                      <LogoPlaceholder label={`Logo ${ext.name}`} className="h-11 w-11" />
-                      <p className="display mt-4 text-[17px] text-cream">{ext.name}</p>
-                      <p className="mt-1.5 text-[12.5px] leading-relaxed text-mist">{ext.text}</p>
+                      <MinistryLogo slug={ext.slug} name={ext.name} height={36} />
+                      <p className="mt-4 text-[12.5px] leading-relaxed text-stone">{ext.text}</p>
                     </div>
                   ))}
                 </div>
@@ -73,58 +76,34 @@ function Platform({ platform }) {
 /* ------------------------------------------------------------------ */
 export default function Community() {
   const listRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: listRef,
-    offset: ["start 80%", "end 70%"],
-  });
+  const { scrollYProgress } = useScroll({ target: listRef, offset: ["start 80%", "end 70%"] });
   const draw = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 });
 
   return (
-    <section id="comunidad" className="relative isolate overflow-hidden bg-night py-28 lg:py-40">
-      <div className="grain pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_20%_0%,#1a2130_0%,#0c1017_50%,#080a11_100%)]" />
-        <GridLines columns={5} />
-        <Blob className="right-[-15%] top-[15%]" color="var(--color-ember)" opacity={0.13} size={560} />
-        <Blob
-          className="bottom-[-10%] left-[-8%]"
-          color="var(--color-gold)"
-          opacity={0.14}
-          size={520}
-          duration={24}
-          delay={2}
-        />
-        <Cylinder
-          className="right-[5%] bottom-[12%] hidden opacity-70 2xl:block"
-          width={70}
-          height={190}
-          duration={14}
-        />
-      </div>
+    <section id="comunidad" className="relative isolate overflow-hidden bg-navy py-28 lg:py-36">
+      <FlameWatermark className="-right-24 top-24 text-white" size={520} opacity={0.035} />
 
-      <div className="shell">
-        {/* Encabezado */}
-        <Eyebrow>{community.eyebrow}</Eyebrow>
+      <div className="shell relative">
+        <Eyebrow theme="navy">{community.eyebrow}</Eyebrow>
 
         <SplitHeading
           lines={titleLines}
-          italicLines={[2]}
-          delay={0.1}
-          step={0.04}
-          className="display mt-7 max-w-5xl text-[clamp(2.1rem,4.8vw,4rem)] text-cream"
+          accentLines={[2]}
+          delay={0.08}
+          step={0.038}
+          className="display mt-7 max-w-5xl text-[clamp(1.9rem,4.2vw,3.5rem)] text-white"
         />
 
-        <Reveal delay={0.2} className="mt-8 flex items-center gap-4">
-          <span className="h-px w-10 shrink-0 bg-gold/50" />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold/85">
-            {community.subtitleEn}
-          </p>
+        <Reveal delay={0.18} className="mt-8 flex items-center gap-4">
+          <GoldRule width="2.5rem" />
+          <p className="label text-[10.5px] text-gold-light/90">{community.subtitleEn}</p>
         </Reveal>
 
-        <Reveal delay={0.25} className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-14">
+        <Reveal delay={0.24} className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-14">
           {community.paragraphs.map((p, i) => (
             <p
               key={i}
-              className={`text-[15px] leading-[1.85] ${i === 0 ? "text-cream/85" : "text-mist"}`}
+              className={`text-[15px] leading-[1.85] ${i === 0 ? "font-medium text-white/90" : "text-navy-mist"}`}
             >
               {p}
             </p>
@@ -133,11 +112,10 @@ export default function Community() {
 
         {/* Plataformas */}
         <div ref={listRef} className="relative mt-20 lg:mt-28">
-          {/* Raíl que se dibuja con el scroll */}
-          <div className="pointer-events-none absolute -left-4 top-0 hidden h-full w-px bg-cream/[0.07] xl:block" />
+          <div className="pointer-events-none absolute -left-5 top-0 hidden h-full w-[2px] bg-white/10 xl:block" />
           <motion.div
             style={{ scaleY: draw }}
-            className="pointer-events-none absolute -left-4 top-0 hidden h-full w-px origin-top bg-gradient-to-b from-gold via-gold to-transparent xl:block"
+            className="gradient-gold pointer-events-none absolute -left-5 top-0 hidden h-full w-[2px] origin-top xl:block"
           />
 
           <Stagger step={0.12}>
@@ -147,14 +125,15 @@ export default function Community() {
           </Stagger>
         </div>
 
-        {/* Cierre */}
-        <Reveal delay={0.15} className="mt-20 border-t border-cream/[0.09] pt-16 text-center lg:mt-24">
-          <p className="display mx-auto max-w-3xl text-[clamp(1.9rem,4.2vw,3.1rem)] leading-tight text-cream">
+        <Reveal delay={0.12} className="mt-20 border-t border-white/12 pt-16 text-center">
+          <p className="display mx-auto max-w-3xl text-[clamp(1.8rem,4vw,3rem)] leading-tight text-white">
             {community.closing}
           </p>
-          <DualCTA align="center" className="mt-10 items-center" />
+          <DualCTA theme="navy" align="center" className="mt-10 items-center" />
         </Reveal>
       </div>
+
+      <ArcDivider to="white" position="bottom" height={110} />
     </section>
   );
 }

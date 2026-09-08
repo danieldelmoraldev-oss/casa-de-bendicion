@@ -27,15 +27,15 @@ function Panel({ config, onClose }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 24, scale: 0.98 }}
       transition={{ type: "spring", stiffness: 260, damping: 28 }}
-      className="grain relative z-10 max-h-[92vh] w-full max-w-2xl overflow-y-auto overflow-x-hidden rounded-t-[28px] border border-cream/10 bg-carbon/95 p-6 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)] sm:rounded-[28px] sm:p-10"
+      className="relative z-10 max-h-[92vh] w-full max-w-2xl overflow-y-auto overflow-x-hidden rounded-t-2xl border border-white/10 bg-navy p-6 shadow-[0_40px_110px_-30px_rgba(18,35,63,0.9)] sm:rounded-2xl sm:p-10"
     >
       {/* Halo dorado superior */}
-      <div className="pointer-events-none absolute -left-24 -top-32 h-64 w-64 rounded-full bg-gold/16 blur-[90px]" />
+      <span aria-hidden="true" className="rule-gold pointer-events-none absolute inset-x-0 top-0 h-[4px]" />
 
       <button
         onClick={onClose}
         aria-label="Cerrar"
-        className="absolute right-5 top-5 z-20 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-cream/12 text-mist transition-colors duration-300 hover:border-gold/50 hover:text-gold"
+        className="absolute right-5 top-6 z-20 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md border border-white/15 text-navy-mist transition-colors duration-300 hover:border-gold hover:text-gold-light"
       >
         <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4">
           <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
@@ -47,21 +47,21 @@ function Panel({ config, onClose }) {
           <FormSuccess onClose={onClose} />
         ) : (
           <>
-            <p className="text-[10.5px] font-semibold uppercase tracking-[0.28em] text-gold">
+            <p className="label text-[10px] text-gold-light">
               {config.eyebrow}
             </p>
-            <h3 className="display mt-3 max-w-[22ch] text-3xl text-cream sm:text-[2.6rem]">
+            <h3 className="display mt-3 max-w-[24ch] text-[26px] text-white sm:text-[34px]">
               {config.title}
             </h3>
             {config.text && (
-              <p className="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-mist">
+              <p className="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-navy-mist">
                 {config.text}
               </p>
             )}
 
             {config.kind === "video" ? (
-              <div className="mt-8 flex aspect-video w-full items-center justify-center rounded-2xl border border-cream/10 bg-[radial-gradient(120%_120%_at_30%_10%,#1b2231_0%,#0c1017_60%,#070a10_100%)]">
-                <p className="text-[11px] uppercase tracking-[0.22em] text-mist">
+              <div className="mt-8 flex aspect-video w-full items-center justify-center rounded-lg border border-white/10 bg-navy-deep">
+                <p className="label text-[10px] text-navy-mist">
                   [Reproductor de vídeo]
                 </p>
               </div>
@@ -69,7 +69,7 @@ function Panel({ config, onClose }) {
               <form onSubmit={handleSubmit} className="mt-8">
                 <FormFields fields={config.fields} />
                 <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-                  <p className="order-2 text-[10px] uppercase tracking-[0.18em] text-mist/45 sm:order-1">
+                  <p className="label order-2 text-[9.5px] text-navy-mist/60 sm:order-1">
                     Tus datos están seguros con nosotros
                   </p>
                   <CTAButton type="submit" className="order-1 sm:order-2">
@@ -122,7 +122,7 @@ export default function Modal() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
             onClick={close}
-            className="absolute inset-0 bg-ink/80 backdrop-blur-md"
+            className="absolute inset-0 bg-navy-deep/85 backdrop-blur-md"
           />
         )}
         {config && <Panel key={activeKey} config={config} onClose={close} />}

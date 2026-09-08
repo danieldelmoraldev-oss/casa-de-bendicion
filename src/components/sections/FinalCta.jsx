@@ -3,85 +3,67 @@ import { finalCta } from "../../data/site";
 import { useModal } from "../../context/ModalContext";
 import { EASE, Reveal, SplitHeading, Stagger, StaggerItem } from "../ui/Motion";
 import CTAButton from "../ui/Button";
-import { Blob, Cylinder, GridLines, Ring, Sphere } from "../ui/BackgroundFX";
+import Logo from "../ui/Logo";
+import { Flame, GoldRule } from "../ui/Decor";
 import { ClockIcon, PinIcon } from "../ui/Icons";
 
-/** Cierre emocional antes del footer. */
+/** Cierre antes del footer. */
 export default function FinalCta() {
   const { open } = useModal();
 
   return (
-    <section className="relative isolate flex min-h-[92svh] items-center overflow-hidden bg-ink py-28 lg:py-40">
-      {/* Fondo */}
-      <div className="grain pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(130%_100%_at_50%_100%,#1a2130_0%,#0a0e16_50%,#06070b_100%)]" />
-        <GridLines columns={7} />
-        <Blob className="left-[-10%] bottom-[-10%]" color="var(--color-gold)" opacity={0.2} size={600} />
-        <Blob
-          className="right-[-12%] top-[-8%]"
-          color="var(--color-violet)"
-          opacity={0.17}
-          size={540}
-          duration={23}
-          delay={2}
-        />
-        <Ring className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" size={720} duration={90} />
-        <Cylinder
-          className="left-[7%] top-[16%] hidden opacity-70 xl:block"
-          width={72}
-          height={200}
-          duration={12}
-        />
-        <Sphere className="right-[9%] bottom-[18%] hidden opacity-70 xl:block" size={96} delay={0.6} />
-        <div className="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-ink to-transparent" />
-      </div>
+    <section className="relative isolate overflow-hidden bg-ivory py-28 lg:py-36">
+      <Flame className="pointer-events-none absolute -right-24 top-10 h-[480px] w-auto text-navy/[0.035]" />
+      <Flame className="pointer-events-none absolute -left-28 bottom-0 h-[380px] w-auto text-navy/[0.028]" />
 
-      <div className="shell relative w-full text-center">
+      <div className="shell relative text-center">
+        <Reveal className="mb-10 flex justify-center">
+          <Logo version="vertical" className="h-20 lg:h-24" />
+        </Reveal>
+
         <SplitHeading
           as="h2"
           lines={["Tu historia puede", "comenzar aquí."]}
-          italicLines={[1]}
+          accentLines={[1]}
           delay={0.05}
-          className="display mx-auto max-w-5xl text-[clamp(2.7rem,7vw,6rem)] text-cream"
+          className="display mx-auto max-w-5xl text-[clamp(2.4rem,6vw,5rem)] text-navy"
         />
 
-        {/* Los "quizás" en cascada */}
-        <Stagger step={0.12} delay={0.2} className="mx-auto mt-12 flex max-w-2xl flex-col gap-3">
+        <Stagger step={0.11} delay={0.2} className="mx-auto mt-11 flex max-w-2xl flex-col gap-2.5">
           {finalCta.lines.map((line) => (
             <StaggerItem key={line}>
-              <p className="text-[16px] leading-relaxed text-mist sm:text-[17px]">{line}</p>
+              <p className="text-[16px] leading-relaxed text-stone sm:text-[17px]">{line}</p>
             </StaggerItem>
           ))}
         </Stagger>
 
-        <Reveal delay={0.3} className="mt-14">
-          <div className="mx-auto h-px w-24 hairline-x" />
-          <p className="display mt-10 text-[clamp(1.8rem,4.2vw,3.2rem)] leading-tight text-gold-gradient">
+        <Reveal delay={0.28} className="mt-12">
+          <GoldRule className="mx-auto" width="4rem" />
+          <p className="display mt-9 text-[clamp(1.7rem,3.8vw,2.9rem)] leading-tight text-navy">
             {finalCta.closing}
           </p>
         </Reveal>
 
-        <Reveal delay={0.35} className="mt-12 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <Reveal delay={0.34} className="mt-11 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <CTAButton onClick={() => open("planifica-tu-visita")}>Planifica tu visita</CTAButton>
-          <CTAButton variant="ghost" onClick={() => open("quiero-conectarme")}>
+          <CTAButton variant="outline" onClick={() => open("quiero-conectarme")}>
             Conéctate con nosotros
           </CTAButton>
         </Reveal>
 
-        {/* Datos prácticos */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.9, delay: 0.45, ease: EASE }}
+          transition={{ duration: 0.85, delay: 0.42, ease: EASE }}
           className="mt-12 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
         >
-          <span className="inline-flex items-center gap-2.5 rounded-full border border-cream/12 bg-carbon/50 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-cream/80 backdrop-blur-md">
-            <ClockIcon className="h-3.5 w-3.5 text-gold" />
+          <span className="label inline-flex items-center gap-2.5 rounded-md border border-navy/12 bg-white px-5 py-3 text-[10.5px] text-navy/75">
+            <ClockIcon className="h-3.5 w-3.5 text-gold-deep" />
             {finalCta.meta.when}
           </span>
-          <span className="inline-flex items-center gap-2.5 rounded-full border border-cream/12 bg-carbon/50 px-5 py-3 text-[11px] font-medium tracking-[0.06em] text-cream/80 backdrop-blur-md">
-            <PinIcon className="h-3.5 w-3.5 text-gold" />
+          <span className="inline-flex items-center gap-2.5 rounded-md border border-navy/12 bg-white px-5 py-3 text-[12px] font-semibold text-navy/75">
+            <PinIcon className="h-3.5 w-3.5 text-gold-deep" />
             {finalCta.meta.where}
           </span>
         </motion.div>

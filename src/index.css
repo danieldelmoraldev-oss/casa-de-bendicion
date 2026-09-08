@@ -1,37 +1,38 @@
 @import "tailwindcss";
 
 /* ============================================================
-   CASA DE BENDICIÓN — Design tokens
-   Paleta: noche profunda + crema editorial + oro cálido
+   CASA DE BENDICIÓN — Sistema de identidad visual 2026
+   Valores tomados literalmente del Manual de Identidad
+   Corporativa (págs. 14-17 y 22-23).
    ============================================================ */
 @theme {
-  /* Tipografía */
-  --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* --- Tipografía ---------------------------------------------
+     El manual define SF Pro como principal, pero es una fuente
+     propietaria de Apple que no puede servirse en web. El propio
+     manual (pág. 23) autoriza Montserrat como alternativa
+     "en aplicaciones digitales donde SF Pro no esté disponible". */
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
 
-  /* Oscuros */
-  --color-ink: #06070b;
-  --color-night: #0b0e15;
-  --color-carbon: #121722;
-  --color-hairline: #1e2532;
+  /* --- Azul institucional primario · pág. 14 ------------------ */
+  --color-navy: #1c3661; /* HEX oficial · RGB 28,54,97 */
+  --color-navy-deep: #12233f; /* derivado, para profundidad */
+  --color-navy-soft: #2b4a7d; /* derivado, bordes y hovers */
+  --color-navy-mist: #8fa3c4; /* derivado, texto secundario sobre azul */
 
-  /* Claros */
-  --color-cream: #f8f5ee;
-  --color-sand: #ece3d3;
-  --color-clay: #ddd2be;
-  --color-stone: #7d786c;
-  --color-mist: #99a1b2;
+  /* --- Dorados institucionales · págs. 15 y 17 ---------------- */
+  --color-gold: #d08e08; /* dorado profundo  · RGB 208,142,8 */
+  --color-gold-light: #e2ad46; /* dorado luminoso */
+  --color-gold-deep: #a06d04; /* derivado, para texto sobre claro */
 
-  /* Acentos */
-  --color-gold: #d6a354;
-  --color-gold-soft: #f2d7a7;
-  --color-gold-deep: #9b6b29;
-  --color-ember: #c2542b;
-  --color-violet: #5b4bd6;
+  /* --- Neutros de soporte · pág. 16 --------------------------- */
+  --color-ivory: #f5f2ea; /* marfil cálido · RGB 245,242,234 */
+  --color-graphite: #343434; /* gris neutro oscuro · RGB 52,52,52 */
+  --color-stone: #6f6b63; /* derivado, texto secundario sobre claro */
+  --color-line: #e3ded2; /* derivado, hairlines sobre marfil */
 
-  /* Easings */
+  /* --- Easings ------------------------------------------------ */
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @layer base {
@@ -40,36 +41,34 @@
     scroll-padding-top: 6rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
   }
 
   body {
     margin: 0;
-    background-color: var(--color-ink);
-    color: var(--color-cream);
+    background-color: #ffffff;
+    color: var(--color-graphite);
     font-family: var(--font-sans);
     overflow-x: hidden;
   }
 
   ::selection {
     background: var(--color-gold);
-    color: var(--color-ink);
+    color: #ffffff;
   }
 
-  /* Scrollbar propia */
   ::-webkit-scrollbar {
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-ink);
+    background: var(--color-ivory);
   }
   ::-webkit-scrollbar-thumb {
-    background: #262f3f;
+    background: var(--color-navy);
     border-radius: 999px;
-    border: 3px solid var(--color-ink);
+    border: 3px solid var(--color-ivory);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-gold-deep);
+    background: var(--color-gold);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -90,61 +89,29 @@
    Utilidades de marca
    ============================================================ */
 
-/* Grano de película: se aplica sobre un contenedor relative */
-.grain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 20;
-  pointer-events: none;
-  opacity: 0.35;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* Degradado institucional · pág. 17:
+   siempre horizontal, de izquierda a derecha, del tono profundo
+   al luminoso. No debe alterarse el orden ni la dirección. */
+.gradient-gold {
+  background: linear-gradient(90deg, var(--color-gold) 0%, var(--color-gold-light) 100%);
 }
 
-/* Texto con degradado dorado */
 .text-gold-gradient {
-  background: linear-gradient(
-    100deg,
-    var(--color-gold-soft) 0%,
-    var(--color-gold) 45%,
-    var(--color-gold-deep) 100%
-  );
+  background: linear-gradient(90deg, var(--color-gold) 0%, var(--color-gold-light) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Regla fina con degradado */
-.hairline-x {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in oklab, var(--color-gold) 55%, transparent),
-    transparent
-  );
+/* Regla dorada fina */
+.rule-gold {
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light));
 }
 
-/* Malla de puntos decorativa */
-.dot-grid {
-  background-image: radial-gradient(
-    circle at 1px 1px,
-    color-mix(in oklab, var(--color-cream) 22%, transparent) 1px,
-    transparent 0
-  );
-  background-size: 28px 28px;
-}
-
-/* Máscara de desvanecido vertical para fondos */
-.mask-fade-b {
-  -webkit-mask-image: linear-gradient(to bottom, black 45%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 45%, transparent 100%);
-}
-
-/* Contenedor de sección estándar */
+/* Contenedor de sección */
 .shell {
   width: 100%;
-  max-width: 84rem;
+  max-width: 82rem;
   margin-inline: auto;
   padding-inline: 1.5rem;
 }
@@ -154,17 +121,39 @@
   }
 }
 
-/* Ajuste óptico para titulares display */
+/* Titular institucional: Montserrat en pesos altos, tracking cerrado */
 .display {
   font-family: var(--font-display);
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  line-height: 0.95;
-  font-variation-settings: "opsz" 120;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
 }
 
-/* Line-height cómodo para párrafos largos */
+.display-light {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+/* Versalitas de apoyo (eyebrows, etiquetas) */
+.label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+/* Malla de puntos muy tenue para dar textura a fondos claros */
+.dot-grid {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    color-mix(in oklab, var(--color-navy) 18%, transparent) 1px,
+    transparent 0
+  );
+  background-size: 30px 30px;
+}
+
 .prose-lead {
   max-width: 34rem;
-  line-height: 1.7;
+  line-height: 1.75;
 }

@@ -103,15 +103,53 @@ Cuando lleguen los recursos finales sólo hay que pasar `src`:
 
 ## Sistema visual
 
-- **Paleta**: noche profunda (`ink`/`night`/`carbon`) · crema editorial · oro cálido.
-  Donar es el único bloque con tratamiento cálido, para que destaque solo.
-- **Tipografía**: Fraunces (display, itálica en los acentos) + Inter (UI).
-- **Formas**: cilindros, esferas, aros y manchas difuminadas — 100 % CSS/SVG,
-  cero imágenes, con flotación continua y parallax por capas.
-- **Animación**: primitivas en `ui/Motion.jsx` (`Reveal`, `SplitHeading`,
-  `Stagger`, `DrawLine`). `Reveal`/`SplitHeading` aceptan `mount` para animar
-  al cargar en vez de al hacer scroll (imprescindible en el hero).
-  Todo respeta `prefers-reduced-motion`.
+Valores tomados literalmente del **Manual de Identidad Corporativa 2026**.
 
-Mobile-first, sin desbordamiento horizontal en 375 px, y `npm run build`
-limpio sin errores de consola.
+| Token | HEX | Uso | Manual |
+|---|---|---|---|
+| `navy` | `#1C3661` | Azul institucional. Color dominante. | pág. 14 |
+| `gold` | `#D08E08` | Dorado profundo. Inicio del degradado. | pág. 15 |
+| `gold-light` | `#E2AD46` | Dorado luminoso. Fin del degradado. | pág. 17 |
+| `ivory` | `#F5F2EA` | Marfil cálido. Alternativa al blanco puro. | pág. 16 |
+| `graphite` | `#343434` | Gris neutro oscuro. Texto. | pág. 16 |
+
+El **degradado institucional** (`.gradient-gold`) va siempre horizontal, de
+izquierda a derecha, del tono profundo al luminoso — la pág. 17 prohíbe
+alterar el orden o la dirección.
+
+**Tipografía.** El manual define *SF Pro* como principal, pero es propietaria
+de Apple y no puede servirse en web. La pág. 23 autoriza expresamente
+**Montserrat** como alternativa "en aplicaciones digitales donde SF Pro no
+esté disponible", con los pesos que el manual asigna a cada jerarquía.
+
+**Interfaz.** La pág. 32 pide construir la web "principalmente con blanco y
+azul institucional, utilizando los tonos dorados de manera estratégica en
+botones, enlaces, indicadores activos y llamadas a la acción". De ahí el
+esquema claro dominante con bloques azules y el dorado reservado a los CTA.
+
+**Lenguaje gráfico.** El arco barrido con filete dorado y el fuego como
+recurso decorativo (`ui/Decor.jsx`) traducen a web las formas curvas de las
+págs. 24-25. El fuego se dibuja como silueta propia: la pág. 21 prohíbe
+aplicar transparencias o efectos al identificador, así que el logo nunca se
+usa como marca de agua.
+
+**Marca.** `ui/Logo.jsx` sirve las versiones oficiales y elige positiva o
+negativa según el fondo. Respeta la reducción mínima de la pág. 12
+(isotipo 32 px, vertical 120 px, horizontal 240 px).
+
+### Dos desviaciones conscientes del manual
+
+1. **Texto de los botones dorados.** El mockup de la pág. 32 los pone en
+   blanco: contraste 2.8:1, insuficiente para WCAG AA. Aquí el texto va en
+   azul institucional sobre el degradado oficial (4.3:1 a 5.9:1). Se conserva
+   el color de marca; cambia sólo el color del texto.
+2. **Tipografía**, ya explicado arriba: Montserrat en lugar de SF Pro, usando
+   la alternativa que el propio manual autoriza.
+
+## Pendiente del cliente
+
+- Logo de **Community Outreach** (aparece como plataforma 03 pero no está en el Drive).
+- **KICK**: sólo hay versión apilada; faltan la horizontal y el isotipo.
+- Fotografías de **pastores** y de la sección **Bienvenida** (siguen como marcadores).
+- **Vídeo institucional**.
+- Los logos llegaron en PNG; en SVG el del navbar se vería más nítido.

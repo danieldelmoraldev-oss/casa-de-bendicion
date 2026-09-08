@@ -15,7 +15,7 @@
 export const brand = {
   name: "Casa de Bendición",
   short: "CDB",
-  tagline: "Más que iglesia… un movimiento.",
+  tagline: "Más que Iglesia, un Movimiento", // redacción oficial del manual (pág. 9)
   claim: "Un lugar para creer, crecer, pertenecer y vivir el propósito de Dios.",
   year: 2026,
 };
@@ -36,7 +36,7 @@ export const nav = [
 /* ------------------------------------------------------------------ */
 export const hero = {
   eyebrow: "Yonkers & Bronx · Nueva York",
-  title: ["Más que iglesia…", "un movimiento."],
+  title: ["Más que Iglesia,", "un Movimiento"],
   lead: "Un lugar para creer, crecer, pertenecer y vivir el propósito de Dios.",
   body: "Somos una comunidad cristiana comprometida con compartir el Evangelio, formar discípulos, fortalecer familias y servir a nuestra comunidad.",
   schedule: [
@@ -142,7 +142,7 @@ export const gatherings = {
     "Cada semana tenemos diferentes oportunidades para adorar, aprender, crecer en la Palabra, desarrollar nuestro propósito y compartir en comunidad.",
   cards: [
     {
-      logo: "Logo Blueprint Mentorship",
+      slug: "blueprint-mentorship",
       day: "Jueves",
       time: "7:30 PM",
       name: "Estudio Bíblico Interactivo",
@@ -151,7 +151,7 @@ export const gatherings = {
       by: "Una iniciativa de Blueprint Mentorship",
     },
     {
-      logo: "Logo Anhelo Ardiente Worship",
+      slug: "anhelo-ardiente",
       day: "Viernes",
       time: "7:30 PM",
       name: "Noche de Avivamiento",
@@ -160,7 +160,7 @@ export const gatherings = {
       by: "Una iniciativa de Anhelo Ardiente Worship",
     },
     {
-      logo: "Logo Casa de Bendición",
+      slug: null, // marca madre: se usa el identificador de Casa de Bendición
       day: "Domingos",
       time: "3:00 PM",
       name: "Servicio Familiar",
@@ -180,7 +180,7 @@ export const training = {
     "Además de nuestras reuniones congregacionales, ofrecemos espacios de formación bíblica para ayudarte a continuar creciendo.",
   courses: [
     {
-      logo: "Logo Rhema Academy",
+      slug: "rhema-academy",
       day: "Miércoles",
       time: "7:00 PM",
       name: "Fundamentos de la Fe",
@@ -189,7 +189,7 @@ export const training = {
       text: "Formación bíblica diseñada para establecer fundamentos sólidos de la fe cristiana y ayudar a cada creyente a crecer en el conocimiento de la Palabra de Dios.",
     },
     {
-      logo: "Logo Rhema Academy",
+      slug: "rhema-academy",
       day: "Domingos",
       time: "2:00 PM",
       name: "Nivel Avanzado",
@@ -212,55 +212,55 @@ export const ministries = {
   ],
   items: [
     {
-      logo: "Logo AMS",
+      slug: "ams",
       name: "AMS",
       text: "Un espacio para que las mujeres crezcan juntas en sabiduría, fe, propósito y comunidad.",
       by: "Una iniciativa de Blueprint Mentorship",
     },
     {
-      logo: "Logo Hombres de Valor",
+      slug: "hombres-de-valor",
       name: "Hombres de Valor",
       text: "Formando hombres de fe, carácter, responsabilidad y liderazgo espiritual.",
       by: "Una iniciativa de Blueprint Mentorship",
     },
     {
-      logo: "Logo Revival Youth",
+      slug: "revival-youth",
       name: "Revival Youth",
       text: "Una generación de jóvenes creciendo en Cristo, descubriendo su identidad y viviendo con propósito.",
       by: "Una iniciativa de Blueprint Mentorship",
     },
     {
-      logo: "Logo KICK",
+      slug: "kick",
       name: "KICK",
       text: "Un espacio seguro y dinámico donde nuestros niños pueden conocer a Jesús y crecer en la Palabra.",
       by: null,
     },
     {
-      logo: "Logo Dorcas",
+      slug: "dorcas",
       name: "Dorcas",
       text: "Sirviendo con compasión y convirtiendo el amor de Cristo en acciones que bendicen a quienes más lo necesitan.",
       by: "Una iniciativa de Community Outreach",
     },
     {
-      logo: "Logo Pescadores de Hombres",
+      slug: "pescadores",
       name: "Pescadores de Hombres",
       text: "Una iniciativa de alcance y movilización que lleva nuestra fe más allá de las paredes de la iglesia mediante servicio, conexión y participación comunitaria.",
       by: "Una iniciativa de Community Outreach",
     },
     {
-      logo: "Logo Anhelo Ardiente Worship",
+      slug: "anhelo-ardiente",
       name: "Anhelo Ardiente Worship",
       text: "Nuestro ministerio de adoración, dedicado a guiar a la congregación hacia una experiencia genuina de adoración y entrega a Dios.",
       by: null,
     },
     {
-      logo: "Logo Rhema Academy",
+      slug: "rhema-academy",
       name: "Rhema Academy",
       text: "Formación bíblica y capacitación ministerial para creyentes, servidores y líderes.",
       by: null,
     },
     {
-      logo: "Logo Blueprint Mentorship",
+      slug: "blueprint-mentorship",
       name: "Blueprint Mentorship",
       text: "Nuestra plataforma de mentoría y desarrollo para fortalecer personas y familias, desarrollar liderazgo y acompañar diferentes generaciones hacia propósito y crecimiento.",
       by: null,
@@ -269,11 +269,11 @@ export const ministries = {
   otherTeams: {
     title: "Otros equipos",
     list: [
-      "Intercesores",
-      "Ujieres y Hospitalidad",
-      "Echo Media",
-      "Operación Nehemías",
-      "y otros equipos de servicio",
+      { name: "Intercesores", slug: "intercesores" },
+      { name: "Ujieres y Hospitalidad", slug: "ujieres" },
+      { name: "Echo Media", slug: "echo-media" },
+      { name: "Operación Nehemías", slug: "operacion-nehemias" },
+      { name: "y otros equipos de servicio", slug: null },
     ],
     closing: "Encuentra tu lugar en Casa.",
   },
@@ -294,6 +294,7 @@ export const community = {
     {
       index: "01",
       name: "Blueprint Mentorship",
+      slug: "blueprint-mentorship",
       en: "Leadership & Family Development",
       text: "Plataforma de mentoría y desarrollo diseñada para fortalecer personas y familias, desarrollar liderazgo y acompañar a diferentes generaciones en procesos de crecimiento, propósito y participación comunitaria.",
       extensions: [],
@@ -301,6 +302,7 @@ export const community = {
     {
       index: "02",
       name: "Echo Media",
+      slug: "echo-media",
       en: "Community Leadership & Digital Innovation",
       text: "Echo Media utiliza comunicación, creatividad y herramientas digitales como vehículos para desarrollar habilidades, liderazgo y oportunidades de participación. Su enfoque incluye desarrollo de habilidades digitales, comunicación, creación de contenido, innovación y preparación profesional.",
       extensions: [],
@@ -308,12 +310,14 @@ export const community = {
     {
       index: "03",
       name: "Community Outreach",
+      slug: null, // pendiente: el cliente no ha entregado este logo
       en: "Neighborhood Engagement",
       text: "Community Outreach moviliza el servicio más allá de las actividades internas de la iglesia mediante participación comunitaria, voluntariado, apoyo práctico, conexión con recursos y colaboración.",
       extensions: [
-        { name: "Dorcas", text: "Servicio compasivo y apoyo práctico para personas y familias." },
+        { name: "Dorcas", slug: "dorcas", text: "Servicio compasivo y apoyo práctico para personas y familias." },
         {
           name: "Pescadores de Hombres",
+          slug: "pescadores",
           text: "Servicio, alcance, movilización y conexión comunitaria.",
         },
       ],

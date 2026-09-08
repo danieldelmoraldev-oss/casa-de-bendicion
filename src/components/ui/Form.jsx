@@ -9,9 +9,9 @@ import CTAButton from "./Button";
  */
 
 const fieldBase =
-  "w-full rounded-xl border border-cream/12 bg-cream/[0.035] px-4 py-3 text-[15px] text-cream " +
-  "placeholder:text-mist/50 outline-none transition-all duration-300 " +
-  "focus:border-gold/60 focus:bg-cream/[0.06] focus:ring-2 focus:ring-gold/15";
+  "w-full rounded-md border border-white/15 bg-white/[0.06] px-4 py-3 text-[15px] text-white " +
+  "placeholder:text-navy-mist/60 outline-none transition-all duration-300 " +
+  "focus:border-gold focus:bg-white/[0.1] focus:ring-2 focus:ring-gold/25";
 
 export function Field({ field }) {
   const id = `f-${field.name}`;
@@ -20,10 +20,10 @@ export function Field({ field }) {
     <div className={field.span === 2 ? "sm:col-span-2" : "sm:col-span-1"}>
       <label
         htmlFor={id}
-        className="mb-2 block text-[10.5px] font-semibold uppercase tracking-[0.18em] text-mist"
+        className="label mb-2 block text-[10px] text-navy-mist"
       >
         {field.label}
-        {field.required && <span className="ml-1 text-gold">*</span>}
+        {field.required && <span className="ml-1 text-gold-light">*</span>}
       </label>
 
       {field.type === "textarea" ? (
@@ -34,7 +34,7 @@ export function Field({ field }) {
             id={id}
             name={field.name}
             defaultValue=""
-            className={`${fieldBase} appearance-none pr-10 [&>option]:bg-carbon`}
+            className={`${fieldBase} appearance-none pr-10 [&>option]:bg-navy-deep`}
           >
             <option value="" disabled>
               Selecciona…
@@ -47,7 +47,7 @@ export function Field({ field }) {
           </select>
           <svg
             viewBox="0 0 24 24"
-            className="pointer-events-none absolute right-4 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-gold"
+            className="pointer-events-none absolute right-4 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-gold-light"
             fill="none"
           >
             <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
@@ -86,8 +86,8 @@ export function FormSuccess({ onClose, compact = false }) {
       transition={{ duration: 0.5, ease: EASE }}
       className={`flex flex-col items-center gap-5 text-center ${compact ? "py-6" : "py-10"}`}
     >
-      <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-gold/12">
-        <motion.svg viewBox="0 0 24 24" fill="none" className="h-7 w-7 text-gold">
+      <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-gold/15">
+        <motion.svg viewBox="0 0 24 24" fill="none" className="h-7 w-7 text-gold-light">
           <motion.path
             d="m4.5 12.5 5 5 10-11"
             stroke="currentColor"
@@ -99,20 +99,20 @@ export function FormSuccess({ onClose, compact = false }) {
             transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
           />
         </motion.svg>
-        <span className="absolute inset-0 animate-ping rounded-full bg-gold/10" />
+        <span className="absolute inset-0 animate-ping rounded-full bg-gold/12" />
       </div>
       <div>
-        <h4 className="display text-3xl text-cream">¡Gracias! Hemos recibido tu mensaje.</h4>
-        <p className="mt-2 text-sm text-mist">
+        <h4 className="display text-[26px] text-white">¡Gracias! Hemos recibido tu mensaje.</h4>
+        <p className="mt-2.5 text-sm text-navy-mist">
           Alguien de nuestro equipo se pondrá en contacto contigo muy pronto.
         </p>
       </div>
       {onClose && (
-        <CTAButton variant="ghost" icon={false} onClick={onClose}>
+        <CTAButton variant="light" icon={false} onClick={onClose}>
           Cerrar
         </CTAButton>
       )}
-      <p className="text-[10px] uppercase tracking-[0.2em] text-mist/40">
+      <p className="label text-[9.5px] text-navy-mist/50">
         Demo de interfaz · sin envío a backend
       </p>
     </motion.div>
