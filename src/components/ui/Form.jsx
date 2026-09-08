@@ -13,8 +13,9 @@ const fieldBase =
   "placeholder:text-navy-mist/60 outline-none transition-all duration-300 " +
   "focus:border-gold focus:bg-white/[0.1] focus:ring-2 focus:ring-gold/25";
 
-export function Field({ field }) {
+export function Field({ field, prefill }) {
   const id = `f-${field.name}`;
+  const preset = prefill?.[field.name];
 
   return (
     <div className={field.span === 2 ? "sm:col-span-2" : "sm:col-span-1"}>
@@ -33,7 +34,7 @@ export function Field({ field }) {
           <select
             id={id}
             name={field.name}
-            defaultValue=""
+            defaultValue={preset ?? ""}
             className={`${fieldBase} appearance-none pr-10 [&>option]:bg-navy-deep`}
           >
             <option value="" disabled>
@@ -59,6 +60,7 @@ export function Field({ field }) {
           name={field.name}
           type={field.type}
           min={field.min}
+          defaultValue={preset ?? undefined}
           className={fieldBase}
           placeholder={field.type === "email" ? "tunombre@email.com" : ""}
         />
@@ -67,11 +69,11 @@ export function Field({ field }) {
   );
 }
 
-export function FormFields({ fields, className = "" }) {
+export function FormFields({ fields, prefill, className = "" }) {
   return (
     <div className={`grid grid-cols-1 gap-x-5 gap-y-5 sm:grid-cols-2 ${className}`}>
       {fields.map((f) => (
-        <Field key={f.name} field={f} />
+        <Field key={f.name} field={f} prefill={prefill} />
       ))}
     </div>
   );

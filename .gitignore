@@ -26,3 +26,7 @@ dist-ssr
 # Artefactos de despliegue
 dist.tar.gz
 .vercel
+
+# Originales sin optimizar que entrega el cliente (las versiones
+# procesadas viven en public/ministerios, public/momentos y public/equipos)
+public/fotos/

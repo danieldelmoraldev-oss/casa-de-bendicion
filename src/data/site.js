@@ -143,6 +143,7 @@ export const gatherings = {
   cards: [
     {
       slug: "blueprint-mentorship",
+      photo: true,
       day: "Jueves",
       time: "7:30 PM",
       name: "Estudio Bíblico Interactivo",
@@ -152,6 +153,7 @@ export const gatherings = {
     },
     {
       slug: "anhelo-ardiente",
+      photo: true,
       day: "Viernes",
       time: "7:30 PM",
       name: "Noche de Avivamiento",
@@ -181,6 +183,7 @@ export const training = {
   courses: [
     {
       slug: "rhema-academy",
+      photo: true,
       day: "Miércoles",
       time: "7:00 PM",
       name: "Fundamentos de la Fe",
@@ -213,36 +216,42 @@ export const ministries = {
   items: [
     {
       slug: "ams",
+      photo: true,
       name: "AMS",
       text: "Un espacio para que las mujeres crezcan juntas en sabiduría, fe, propósito y comunidad.",
       by: "Una iniciativa de Blueprint Mentorship",
     },
     {
       slug: "hombres-de-valor",
+      photo: true,
       name: "Hombres de Valor",
       text: "Formando hombres de fe, carácter, responsabilidad y liderazgo espiritual.",
       by: "Una iniciativa de Blueprint Mentorship",
     },
     {
       slug: "revival-youth",
+      photo: false, // pendiente: el cliente no ha entregado la foto
       name: "Revival Youth",
       text: "Una generación de jóvenes creciendo en Cristo, descubriendo su identidad y viviendo con propósito.",
       by: "Una iniciativa de Blueprint Mentorship",
     },
     {
       slug: "kick",
+      photo: true,
       name: "KICK",
       text: "Un espacio seguro y dinámico donde nuestros niños pueden conocer a Jesús y crecer en la Palabra.",
       by: null,
     },
     {
       slug: "dorcas",
+      photo: true,
       name: "Dorcas",
       text: "Sirviendo con compasión y convirtiendo el amor de Cristo en acciones que bendicen a quienes más lo necesitan.",
       by: "Una iniciativa de Community Outreach",
     },
     {
       slug: "pescadores",
+      photo: true,
       name: "Pescadores de Hombres",
       text: "Una iniciativa de alcance y movilización que lleva nuestra fe más allá de las paredes de la iglesia mediante servicio, conexión y participación comunitaria.",
       by: "Una iniciativa de Community Outreach",
@@ -273,6 +282,8 @@ export const ministries = {
       { name: "Ujieres y Hospitalidad", slug: "ujieres" },
       { name: "Echo Media", slug: "echo-media" },
       { name: "Operación Nehemías", slug: "operacion-nehemias" },
+      { name: "Casa de Bendición Publishing", slug: "cdb-publishing" },
+      { name: "El Momento de la Verdad", slug: "momento-de-la-verdad" },
       { name: "y otros equipos de servicio", slug: null },
     ],
     closing: "Encuentra tu lugar en Casa.",
@@ -366,6 +377,45 @@ export const connect = {
       text: "Quiero conocer oportunidades para utilizar mis dones y talentos.",
     },
   ],
+};
+
+
+/* ------------------------------------------------------------------ */
+/* 11b · MOMENTOS QUE MARCAN                                           */
+/* Documento "Sección: Conéctate" — el cliente pidió una tarjeta por   */
+/* momento, cada una con foto y su llamada a la acción encima.         */
+/* ------------------------------------------------------------------ */
+export const moments = {
+  eyebrow: "Momentos que marcan",
+  title: ["Estamos contigo en cada etapa,", "celebración y circunstancia."],
+  paragraphs: [
+    "En Casa de Bendición creemos que no debemos caminar solos. Queremos acompañarte en los momentos que celebras, en los nuevos comienzos, en las dificultades y también en los momentos de pérdida.",
+    "A través de oración, Palabra, acompañamiento y servicio, queremos ser una comunidad presente cuando más lo necesitas.",
+  ],
+  lead: "Encuentra el momento que estás viviendo y conéctate con nosotros.",
+  items: [
+    { slug: "bautizos", name: "Bautizos", cta: "¿Listo para dar este paso de fe? Conéctate con nosotros.", photo: true },
+    { slug: "bodas", name: "Bodas", cta: "¿Preparándose para el gran día? Permítenos acompañarlos.", photo: true },
+    { slug: "presentacion-de-ninos", name: "Presentación de niños", cta: "Presenta a tu niño al Señor junto a nosotros.", photo: true },
+    { slug: "dedicaciones", name: "Dedicaciones", cta: "Invítanos a orar por tu hogar, negocio o proyecto.", photo: true },
+    { slug: "hospitales", name: "Visitas a hospitales", cta: "¿Tú o alguien está hospitalizado? Queremos acompañarlos.", photo: false },
+    { slug: "carceles", name: "Ministerio en cárceles", cta: "Conéctanos con alguien que necesite esperanza y acompañamiento.", photo: false },
+    { slug: "hogares", name: "Visitas a los hogares", cta: "Abre las puertas de tu hogar para compartir y orar.", photo: true },
+    { slug: "funerales", name: "Funerales y servicios conmemorativos", cta: "Permítenos acompañar a tu familia durante este momento.", photo: true },
+    { slug: "oracion", name: "Oración y bendición", cta: "Comparte tu petición. Queremos unirnos contigo en oración.", photo: false },
+    { slug: "bendiciones-familiares", name: "Bendiciones familiares", cta: "Conecta a tu familia con un momento de oración.", photo: true },
+    { slug: "nuevos-comienzos", name: "Nuevos comienzos", cta: "Comienza esta nueva etapa poniendo a Dios primero.", photo: true },
+    { slug: "acompanamiento-pastoral", name: "Acompañamiento pastoral", cta: "¿Necesitas hablar con alguien? Estamos aquí para acompañarte.", photo: true },
+  ],
+  closing: {
+    title: ["No importa el momento.", "No tienes que caminarlo solo."],
+    paragraphs: [
+      "Casa de Bendición está aquí para caminar contigo. En tus celebraciones. En tus nuevos comienzos. En tus luchas. En tus pérdidas. En tus momentos de fe.",
+      "Porque somos más que una iglesia; somos un movimiento que sirve, acompaña y bendice a nuestra comunidad.",
+    ],
+    question: "¿Estás viviendo un momento que marca tu vida?",
+    lead: "Permítenos acompañarte.",
+  },
 };
 
 /* ------------------------------------------------------------------ */

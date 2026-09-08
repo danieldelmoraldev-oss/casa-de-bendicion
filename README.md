@@ -147,8 +147,28 @@ negativa según el fondo. Respeta la reducción mínima de la pág. 12
 
 ## Pendiente del cliente
 
-- Logo de **Community Outreach** (aparece como plataforma 03 pero no está en el Drive).
-- **KICK**: sólo hay versión apilada; faltan la horizontal y el isotipo.
-- Fotografías de **pastores** y de la sección **Bienvenida** (siguen como marcadores).
+**Fotografías**
+- **Revival Youth** — es el único de los 9 ministerios sin foto.
+- **Momentos que marcan**: faltan 3 de 12 — *Visitas a hospitales*,
+  *Ministerio en cárceles* y *Oración y bendición*.
+- Retrato de los **pastores** y las dos fotos de **Bienvenida**.
 - **Vídeo institucional**.
+
+Las tarjetas sin foto se resuelven con el degradado azul institucional y una
+etiqueta discreta "Foto pendiente": no se ven rotas, pero se identifican.
+
+**Marca**
+- Logo de **Community Outreach** (aparece como plataforma 03 sin logo).
+- **KICK**: sólo hay versión apilada; faltan la horizontal y el isotipo.
 - Los logos llegaron en PNG; en SVG el del navbar se vería más nítido.
+
+**Ojo con dos archivos**
+`CDB Publishing.png` y `Echo Media.png` no son logos: son fotos con el
+identificador incrustado en semitransparencia y recortado por los bordes.
+Incumplen la pág. 21 del manual por partida doble (logo sobre fotografía y
+transparencia aplicada al identificador). En la web se usan los logos limpios
+del Drive; si el cliente los está publicando así en redes, conviene avisarle.
+
+**Backend**
+Los formularios son demo de interfaz. El `TODO(backend)` está en
+`ui/Modal.jsx` y `sections/FirstTime.jsx`.

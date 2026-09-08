@@ -9,7 +9,7 @@ import CTAButton from "./Button";
 /* ------------------------------------------------------------------ */
 /* Panel: se monta con key={activeKey}, así el estado se reinicia solo */
 /* ------------------------------------------------------------------ */
-function Panel({ config, onClose }) {
+function Panel({ config, onClose, prefill }) {
   const [sent, setSent] = useState(false);
 
   const handleSubmit = (e) => {
@@ -67,7 +67,7 @@ function Panel({ config, onClose }) {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="mt-8">
-                <FormFields fields={config.fields} />
+                <FormFields fields={config.fields} prefill={prefill} />
                 <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
                   <p className="label order-2 text-[9.5px] text-navy-mist/60 sm:order-1">
                     Tus datos están seguros con nosotros
@@ -87,8 +87,14 @@ function Panel({ config, onClose }) {
 
 /* ------------------------------------------------------------------ */
 export default function Modal() {
-  const { activeKey, close } = useModal();
+  const { activeKey, prefill, close } = useModal();
   const config = activeKey ? modalRegistry[activeKey] : null;
+
+  /* La clave incluye el valor preseleccionado: las 12 tarjetas de
+     "Momentos que marcan" comparten modal, y sin esto React reutiliza
+     el panel y `defaultValue` —que sólo se aplica al montar— seguiría
+     mostrando el momento de la tarjeta anterior. */
+  const panelKey = activeKey + (prefill ? `:${Object.values(prefill).join("|")}` : "");
 
   /* ESC para cerrar + bloqueo del scroll de fondo */
   useEffect(() => {
@@ -125,7 +131,7 @@ export default function Modal() {
             className="absolute inset-0 bg-navy-deep/85 backdrop-blur-md"
           />
         )}
-        {config && <Panel key={activeKey} config={config} onClose={close} />}
+        {config && <Panel key={panelKey} config={config} onClose={close} prefill={prefill} />}
       </AnimatePresence>
     </div>,
     document.body,

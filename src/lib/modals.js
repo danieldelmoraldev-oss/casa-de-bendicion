@@ -130,6 +130,41 @@ export const modalRegistry = {
     submit: "Quiero servir",
   },
 
+
+  /* Momentos que marcan — las 12 tarjetas comparten este formulario.
+     Cada una lo abre con su momento ya preseleccionado. */
+  "acompanamiento": {
+    eyebrow: "Momentos que marcan",
+    title: "Permítenos acompañarte.",
+    text: "Cuéntanos qué estás viviendo y nos ponemos en contacto contigo. Sea una celebración, un nuevo comienzo o una pérdida, no tienes que caminarlo solo.",
+    fields: [
+      ...contactBase,
+      {
+        name: "momento",
+        label: "¿Qué momento estás viviendo?",
+        type: "select",
+        span: 2,
+        required: true,
+        options: [
+          "Bautizos",
+          "Bodas",
+          "Presentación de niños",
+          "Dedicaciones",
+          "Visitas a hospitales",
+          "Ministerio en cárceles",
+          "Visitas a los hogares",
+          "Funerales y servicios conmemorativos",
+          "Oración y bendición",
+          "Bendiciones familiares",
+          "Nuevos comienzos",
+          "Acompañamiento pastoral",
+        ],
+      },
+      { name: "mensaje", label: "Cuéntanos un poco más", type: "textarea", span: 2 },
+    ],
+    submit: "Solicita acompañamiento",
+  },
+
   /* Vídeo institucional */
   video: {
     eyebrow: "Vídeo institucional",

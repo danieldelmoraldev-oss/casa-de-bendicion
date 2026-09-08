@@ -1,45 +1,25 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ministries } from "../../data/site";
 import { useModal } from "../../context/ModalContext";
-import { Reveal, SplitHeading, Stagger, StaggerItem } from "../ui/Motion";
+import { Reveal, SplitHeading, Stagger } from "../ui/Motion";
 import Eyebrow from "../ui/Eyebrow";
-import { DualCTA, Arrow } from "../ui/Button";
+import { DualCTA } from "../ui/Button";
 import { MinistryLogo } from "../ui/Logo";
+import PhotoCard from "../ui/PhotoCard";
 import { GoldRule } from "../ui/Decor";
 
 /* ------------------------------------------------------------------ */
+/* Tarjeta de ministerio: fotografía de fondo con el contenido encima  */
 function MinistryCard({ item, onOpen }) {
   return (
-    <StaggerItem>
-      <motion.button
-        onClick={onOpen}
-        whileHover={{ y: -8 }}
-        transition={{ type: "spring", stiffness: 300, damping: 24 }}
-        className="group relative flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-xl bg-white p-7 text-left shadow-[0_20px_50px_-38px_rgba(28,54,97,0.5)] transition-shadow duration-500 hover:shadow-[0_32px_70px_-38px_rgba(28,54,97,0.65)]"
-      >
-        {/* Filete dorado que aparece al pasar el ratón */}
-        <span
-          aria-hidden="true"
-          className="gradient-gold absolute inset-x-0 top-0 h-[4px] origin-left scale-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
-        />
-
-        {/* El logo es el título de la tarjeta: el nombre ya está en la marca */}
-        <div className="flex h-14 items-center">
-          <MinistryLogo slug={item.slug} name={item.name} height={44} />
-        </div>
-
-        <p className="mt-6 flex-1 text-[13.5px] leading-[1.75] text-stone">{item.text}</p>
-
-        <div className="mt-6 flex items-end justify-between gap-4 border-t border-line pt-5">
-          <span className="text-[9.5px] font-bold uppercase leading-tight tracking-[0.12em] text-navy/35">
-            {item.by ?? "Casa de Bendición"}
-          </span>
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-navy/12 text-navy/70 transition-all duration-400 group-hover:border-gold group-hover:bg-gold group-hover:text-navy">
-            <Arrow className="h-3 w-3" />
-          </span>
-        </div>
-      </motion.button>
-    </StaggerItem>
+    <PhotoCard
+      photo={item.photo ? `/ministerios/fotos/${item.slug}.jpg` : null}
+      alt={item.name}
+      brand={<MinistryLogo slug={item.slug} name={item.name} height={36} />}
+      text={item.text}
+      footnote={item.by ?? "Casa de Bendición"}
+      onClick={onOpen}
+    />
   );
 }
 
