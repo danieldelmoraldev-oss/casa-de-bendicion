@@ -22,6 +22,7 @@ export default function PhotoCard({
   footnote,
   onClick,
   minHeight = "27rem",
+  raiseOnMobile = false,
 }) {
   /* Red de seguridad: si la foto no existe o falla al cargar, la
      tarjeta cae al degradado institucional en vez de enseñar una
@@ -45,7 +46,16 @@ export default function PhotoCard({
             alt={alt}
             loading="lazy"
             onError={() => setFalloFoto(true)}
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
+            /* En móvil la tarjeta es vertical y la foto apaisada: se ve
+               entera de alto, así que los protagonistas caen en el centro
+               y el velo los tapa. Anclando la imagen abajo y dándole algo
+               más de alto, el encuadre sube y las personas quedan en la
+               franja visible. En pantallas grandes no hace falta. */
+            className={`absolute inset-x-0 w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06] ${
+              raiseOnMobile
+                ? "bottom-0 h-[124%] sm:top-0 sm:h-full"
+                : "inset-0 h-full"
+            }`}
           />
         ) : (
           <>

@@ -61,6 +61,7 @@ export default function Moments() {
               text={m.cta}
               footnote="Conéctate"
               minHeight="22rem"
+              raiseOnMobile
               onClick={() => open("acompanamiento", { momento: m.name })}
             />
           ))}

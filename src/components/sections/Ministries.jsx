@@ -18,6 +18,7 @@ function MinistryCard({ item, onOpen }) {
       brand={<MinistryLogo slug={item.slug} name={item.name} height={36} />}
       text={item.text}
       footnote={item.by ?? "Casa de Bendición"}
+      raiseOnMobile
       onClick={onOpen}
     />
   );

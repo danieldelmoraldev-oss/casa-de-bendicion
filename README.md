@@ -151,8 +151,6 @@ negativa según el fondo. Respeta la reducción mínima de la pág. 12
 
 **Fotografías**
 - **Revival Youth** — es el único de los 9 ministerios sin foto.
-- **Momentos que marcan**: faltan 3 de 12 — *Visitas a hospitales*,
-  *Ministerio en cárceles* y *Oración y bendición*.
 - Retrato de los **pastores** y las dos fotos de **Bienvenida**.
 - **Vídeo institucional**.
 
