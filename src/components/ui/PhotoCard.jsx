@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { StaggerItem } from "./Motion";
 import { Arrow } from "./Button";
@@ -22,6 +23,12 @@ export default function PhotoCard({
   onClick,
   minHeight = "27rem",
 }) {
+  /* Red de seguridad: si la foto no existe o falla al cargar, la
+     tarjeta cae al degradado institucional en vez de enseñar una
+     imagen rota. */
+  const [falloFoto, setFalloFoto] = useState(false);
+  const hayFoto = Boolean(photo) && !falloFoto;
+
   return (
     <StaggerItem className="h-full">
       <motion.button
@@ -32,11 +39,12 @@ export default function PhotoCard({
         style={{ minHeight }}
       >
         {/* Fotografía */}
-        {photo ? (
+        {hayFoto ? (
           <img
             src={photo}
             alt={alt}
             loading="lazy"
+            onError={() => setFalloFoto(true)}
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]"
           />
         ) : (

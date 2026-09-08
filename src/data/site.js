@@ -143,7 +143,6 @@ export const gatherings = {
   cards: [
     {
       slug: "blueprint-mentorship",
-      photo: true,
       day: "Jueves",
       time: "7:30 PM",
       name: "Estudio Bíblico Interactivo",
@@ -153,7 +152,6 @@ export const gatherings = {
     },
     {
       slug: "anhelo-ardiente",
-      photo: true,
       day: "Viernes",
       time: "7:30 PM",
       name: "Noche de Avivamiento",
@@ -183,7 +181,6 @@ export const training = {
   courses: [
     {
       slug: "rhema-academy",
-      photo: true,
       day: "Miércoles",
       time: "7:00 PM",
       name: "Fundamentos de la Fe",
@@ -258,18 +255,21 @@ export const ministries = {
     },
     {
       slug: "anhelo-ardiente",
+      photo: true,
       name: "Anhelo Ardiente Worship",
       text: "Nuestro ministerio de adoración, dedicado a guiar a la congregación hacia una experiencia genuina de adoración y entrega a Dios.",
       by: null,
     },
     {
       slug: "rhema-academy",
+      photo: true,
       name: "Rhema Academy",
       text: "Formación bíblica y capacitación ministerial para creyentes, servidores y líderes.",
       by: null,
     },
     {
       slug: "blueprint-mentorship",
+      photo: true,
       name: "Blueprint Mentorship",
       text: "Nuestra plataforma de mentoría y desarrollo para fortalecer personas y familias, desarrollar liderazgo y acompañar diferentes generaciones hacia propósito y crecimiento.",
       by: null,
