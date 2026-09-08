@@ -157,3 +157,18 @@
   max-width: 34rem;
   line-height: 1.75;
 }
+
+/* Encuadre de las fotos de tarjeta.
+   La tarjeta es vertical y las fotos apaisadas: se ven enteras de alto
+   y el velo con el texto tapa más de la mitad inferior, así que los
+   protagonistas quedan escondidos. Anclando la imagen abajo y dándole
+   algo más de alto, el encuadre sube.
+   Se aplica en todos los tamaños: la proporción de la tarjeta es
+   parecida en móvil (327x432) y en escritorio (389x432).
+   Cada tarjeta puede afinar su valor con --raise (0% = sin subir),
+   porque no todas las fotos tienen al sujeto en el centro. */
+.photo-raise {
+  top: auto;
+  bottom: 0;
+  height: calc(100% + var(--raise, 24%));
+}

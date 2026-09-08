@@ -27,6 +27,7 @@ export const nav = [
   { label: "Ministerios", href: "#ministerios" },
   { label: "Comunidad", href: "#comunidad" },
   { label: "Conéctate", href: "#conectate" },
+  { label: "Momentos", href: "#momentos" },
   { label: "Donar", href: "#donar" },
   { label: "Visítanos", href: "#visitanos" },
 ];
@@ -111,7 +112,7 @@ export const about = {
   // Cifras derivadas del propio documento (reuniones, ministerios y sedes listados)
   stats: [
     { value: "5", label: "Reuniones cada semana" },
-    { value: "9", label: "Ministerios activos" },
+    { value: "14", label: "Ministerios activos" },
     { value: "2", label: "Sedes en Nueva York" },
     { value: "3", label: "Plataformas de impacto" },
   ],
@@ -256,6 +257,9 @@ export const ministries = {
     {
       slug: "anhelo-ardiente",
       photo: true,
+      // Su foto es vertical y la cantante ya queda alta en el recorte:
+      // subirla le cortaba la cara.
+      raise: 0,
       name: "Anhelo Ardiente Worship",
       text: "Nuestro ministerio de adoración, dedicado a guiar a la congregación hacia una experiencia genuina de adoración y entrega a Dios.",
       by: null,
@@ -306,6 +310,9 @@ export const community = {
       index: "01",
       name: "Blueprint Mentorship",
       slug: "blueprint-mentorship",
+      photoSlug: "blueprint-mentorship",
+      photo: false, // pendiente de subir
+
       en: "Leadership & Family Development",
       text: "Plataforma de mentoría y desarrollo diseñada para fortalecer personas y familias, desarrollar liderazgo y acompañar a diferentes generaciones en procesos de crecimiento, propósito y participación comunitaria.",
       extensions: [],
@@ -314,6 +321,9 @@ export const community = {
       index: "02",
       name: "Echo Media",
       slug: "echo-media",
+      photoSlug: "echo-media",
+      photo: false, // pendiente de subir
+
       en: "Community Leadership & Digital Innovation",
       text: "Echo Media utiliza comunicación, creatividad y herramientas digitales como vehículos para desarrollar habilidades, liderazgo y oportunidades de participación. Su enfoque incluye desarrollo de habilidades digitales, comunicación, creación de contenido, innovación y preparación profesional.",
       extensions: [],
@@ -321,7 +331,9 @@ export const community = {
     {
       index: "03",
       name: "Community Outreach",
-      slug: null, // pendiente: el cliente no ha entregado este logo
+      slug: null, // sin marca propia: usa el identificador de Casa de Bendición
+      photoSlug: "community-outreach",
+      photo: false, // pendiente de subir
       en: "Neighborhood Engagement",
       text: "Community Outreach moviliza el servicio más allá de las actividades internas de la iglesia mediante participación comunitaria, voluntariado, apoyo práctico, conexión con recursos y colaboración.",
       extensions: [
@@ -518,4 +530,6 @@ export const socials = [
   { name: "Facebook", href: "https://www.facebook.com/p/Casa-De-Bendicion-61583118900335/" },
   { name: "YouTube", href: "https://youtube.com/@casa.de.bendicion-mpi" },
   { name: "TikTok", href: "https://www.tiktok.com/@casa.de.bendicion_mpi" },
+  { name: "Email", href: "mailto:houseofblessingsny@gmail.com" },
+  // TODO: falta el teléfono; el cliente aún no tiene número.
 ];

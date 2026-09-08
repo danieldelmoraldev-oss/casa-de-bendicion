@@ -48,7 +48,7 @@ export CDB_HOST=usuario@mi-servidor   # acceso SSH por clave
 | — | Testimonios de las familias | `sections/Testimonials` | `#testimonios` |
 | 10 | ¿Es tu primera vez? + formulario | `sections/FirstTime` | `#visitanos` |
 | 11 | Conéctate (4 modales) | `sections/Connect` | `#conectate` |
-| — | Momentos que marcan (12 tarjetas) | `sections/Moments` | `#conectate` |
+| — | Momentos que marcan (12 tarjetas) | `sections/Moments` | `#momentos` |
 | 12 | Donar | `sections/Donate` | `#donar` |
 | — | Cierre "Tu historia puede comenzar aquí" | `sections/FinalCta` | — |
 | — | Footer | `layout/Footer` | — |
@@ -150,6 +150,8 @@ negativa según el fondo. Respeta la reducción mínima de la pág. 12
 
 **Fotografías**
 - **Revival Youth** — es el único de los 9 ministerios sin foto.
+- Fotos de la sección **Comunidad**: las tres plataformas ya tienen el
+  hueco preparado y salen con "Foto pendiente" hasta que lleguen.
 - Retrato de los **pastores** y las dos fotos de **Bienvenida**.
 - **Vídeo institucional**.
 
@@ -157,7 +159,6 @@ Las tarjetas sin foto se resuelven con el degradado azul institucional y una
 etiqueta discreta "Foto pendiente": no se ven rotas, pero se identifican.
 
 **Marca**
-- Logo de **Community Outreach** (aparece como plataforma 03 sin logo).
 - **KICK**: sólo hay versión apilada; faltan la horizontal y el isotipo.
 - Los logos llegaron en PNG; en SVG el del navbar se vería más nítido.
 
@@ -169,8 +170,8 @@ transparencia aplicada al identificador). En la web se usan los logos limpios
 del Drive; si el cliente los está publicando así en redes, conviene avisarle.
 
 **Contacto**
-Faltan el correo y el teléfono para completar la columna "Conecta" del
-footer. Las cuatro redes ya están enlazadas.
+Falta el teléfono; el cliente todavía no tiene número. Las cuatro redes
+y el correo ya están enlazados.
 
 **Backend**
 Los formularios son demo de interfaz. El `TODO(backend)` está en

@@ -1,10 +1,8 @@
-import { useRef } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
 import { community } from "../../data/site";
 import { Reveal, SplitHeading, Stagger, StaggerItem } from "../ui/Motion";
 import Eyebrow from "../ui/Eyebrow";
 import { DualCTA } from "../ui/Button";
-import { MinistryLogo } from "../ui/Logo";
+import Logo, { MinistryLogo } from "../ui/Logo";
 import { ArcDivider, FlameWatermark, GoldRule } from "../ui/Decor";
 
 /* El título del documento son tres frases: una por línea. */
@@ -13,60 +11,81 @@ const titleLines = community.title
   .map((s, i, a) => (i < a.length - 1 ? `${s}.` : s));
 
 /* ------------------------------------------------------------------ */
+/* Cada plataforma es una tarjeta con fotografía ancha a todo el       */
+/* ancho del bloque y el contenido debajo.                             */
 function Platform({ platform }) {
   return (
     <StaggerItem>
-      <article className="group relative border-t border-white/12 py-12 lg:py-16">
-        <span
-          aria-hidden="true"
-          className="gradient-gold pointer-events-none absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
-        />
+      <article className="group relative mb-6 overflow-hidden rounded-xl bg-navy-deep/60 shadow-[0_26px_60px_-40px_rgba(0,0,0,0.9)] lg:mb-8">
+        <span aria-hidden="true" className="gradient-gold absolute inset-x-0 top-0 z-20 h-[4px]" />
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-1">
-            <span className="display text-gold-gradient text-[clamp(2.4rem,3.6vw,3.2rem)] leading-none">
+        {/* Banner: la foto ocupa todo el ancho de la subdivisión */}
+        <div className="relative h-[220px] overflow-hidden sm:h-[280px] lg:h-[320px]">
+          {platform.photo ? (
+            <img
+              src={`/comunidad/${platform.photoSlug}.jpg`}
+              alt={platform.name}
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+            />
+          ) : (
+            <>
+              <div className="absolute inset-0 bg-[linear-gradient(150deg,#24406f_0%,#1c3661_55%,#12233f_100%)]" />
+              <span className="label absolute right-4 top-5 z-20 rounded-md border border-white/20 px-2.5 py-1.5 text-[8.5px] text-white/55">
+                Foto pendiente
+              </span>
+            </>
+          )}
+
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/75 to-navy-deep/20"
+          />
+
+          <div className="relative flex h-full flex-col justify-between p-6 sm:p-8">
+            <span className="display text-gold-gradient text-[clamp(2.2rem,3.4vw,3rem)] leading-none">
               {platform.index}
             </span>
-          </div>
 
-          <div className="lg:col-span-4">
-            {/* Los logos son a color y necesitan fondo claro (pág. 10) */}
-            {platform.slug ? (
-              <div className="mb-6 inline-flex rounded-lg bg-white px-5 py-3.5">
-                <MinistryLogo slug={platform.slug} name={platform.name} height={40} />
-              </div>
-            ) : (
-              <div className="mb-6 inline-flex rounded-lg border border-white/15 px-5 py-3.5">
-                {/* TODO: el cliente aún no ha entregado el logo de Community Outreach */}
-                <span className="label text-[10px] text-navy-mist">[Logo pendiente]</span>
-              </div>
-            )}
-            <h3 className="display text-[clamp(1.6rem,2.8vw,2.2rem)] leading-tight text-white transition-colors duration-400 group-hover:text-gold-light">
-              {platform.name}
-            </h3>
-            <p className="label mt-2.5 text-[10px] text-gold-light/85">{platform.en}</p>
+            <div>
+              {/* Los logos son a color: van sobre placa blanca (pág. 10).
+                  Community Outreach no tiene marca propia, así que usa
+                  el identificador de Casa de Bendición. */}
+              <span className="mb-5 inline-flex rounded-md bg-white px-4 py-3 shadow-[0_8px_22px_-12px_rgba(0,0,0,0.7)]">
+                {platform.slug ? (
+                  <MinistryLogo slug={platform.slug} name={platform.name} height={34} />
+                ) : (
+                  <Logo version="horizontal" className="h-8" alt={platform.name} />
+                )}
+              </span>
+              <h3 className="display text-[clamp(1.5rem,2.6vw,2.1rem)] leading-tight text-white transition-colors duration-400 group-hover:text-gold-light">
+                {platform.name}
+              </h3>
+              <p className="label mt-2 text-[10px] text-gold-light/85">{platform.en}</p>
+            </div>
           </div>
+        </div>
 
-          <div className="lg:col-span-6 lg:col-start-7">
-            <p className="text-[15px] leading-[1.85] text-navy-mist">{platform.text}</p>
+        {/* Cuerpo */}
+        <div className="p-6 sm:p-8">
+          <p className="max-w-[80ch] text-[15px] leading-[1.85] text-navy-mist">{platform.text}</p>
 
-            {platform.extensions.length > 0 && (
-              <div className="mt-8">
-                <p className="label text-[9.5px] text-white/40">Extensiones</p>
-                <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  {platform.extensions.map((ext) => (
-                    <div
-                      key={ext.name}
-                      className="rounded-lg bg-white p-5 transition-transform duration-400 hover:-translate-y-1"
-                    >
-                      <MinistryLogo slug={ext.slug} name={ext.name} height={36} />
-                      <p className="mt-4 text-[12.5px] leading-relaxed text-stone">{ext.text}</p>
-                    </div>
-                  ))}
-                </div>
+          {platform.extensions.length > 0 && (
+            <div className="mt-8">
+              <p className="label text-[9.5px] text-white/40">Extensiones</p>
+              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {platform.extensions.map((ext) => (
+                  <div
+                    key={ext.name}
+                    className="rounded-lg bg-white p-5 transition-transform duration-400 hover:-translate-y-1"
+                  >
+                    <MinistryLogo slug={ext.slug} name={ext.name} height={36} />
+                    <p className="mt-4 text-[12.5px] leading-relaxed text-stone">{ext.text}</p>
+                  </div>
+                ))}
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </article>
     </StaggerItem>
@@ -75,10 +94,6 @@ function Platform({ platform }) {
 
 /* ------------------------------------------------------------------ */
 export default function Community() {
-  const listRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: listRef, offset: ["start 80%", "end 70%"] });
-  const draw = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 });
-
   return (
     <section id="comunidad" className="relative isolate overflow-hidden bg-navy py-28 lg:py-36">
       <FlameWatermark className="-right-24 top-24 text-white" size={520} opacity={0.035} />
@@ -111,13 +126,7 @@ export default function Community() {
         </Reveal>
 
         {/* Plataformas */}
-        <div ref={listRef} className="relative mt-20 lg:mt-28">
-          <div className="pointer-events-none absolute -left-5 top-0 hidden h-full w-[2px] bg-white/10 xl:block" />
-          <motion.div
-            style={{ scaleY: draw }}
-            className="gradient-gold pointer-events-none absolute -left-5 top-0 hidden h-full w-[2px] origin-top xl:block"
-          />
-
+        <div className="relative mt-20 lg:mt-28">
           <Stagger step={0.12}>
             {community.platforms.map((p) => (
               <Platform key={p.name} platform={p} />

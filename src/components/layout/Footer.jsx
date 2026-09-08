@@ -31,21 +31,30 @@ export default function Footer() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-2.5">
-                {socials.map((red) => (
+                {socials.map((red) => {
+                  /* mailto: y tel: no deben abrirse en pestaña nueva:
+                     dejarían una pestaña en blanco detrás. */
+                  const externo = red.href.startsWith("http");
+                  return (
                   <motion.a
                     key={red.name}
                     href={red.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${brand.name} en ${red.name}`}
-                    title={red.name}
+                    target={externo ? "_blank" : undefined}
+                    rel={externo ? "noopener noreferrer" : undefined}
+                    aria-label={
+                      externo
+                        ? `${brand.name} en ${red.name}`
+                        : `Escríbenos a ${red.href.replace("mailto:", "")}`
+                    }
+                    title={externo ? red.name : red.href.replace("mailto:", "")}
                     whileHover={{ y: -3 }}
                     transition={{ type: "spring", stiffness: 400, damping: 22 }}
                     className="grid h-10 w-10 place-items-center rounded-md border border-white/15 text-navy-mist transition-colors duration-400 hover:border-gold hover:bg-gold hover:text-navy"
                   >
                     <SocialIcon name={red.name} />
                   </motion.a>
-                ))}
+                  );
+                })}
               </div>
             </Reveal>
           </div>

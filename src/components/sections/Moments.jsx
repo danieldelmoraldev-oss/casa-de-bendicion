@@ -9,9 +9,10 @@ import { Flame, GoldRule } from "../ui/Decor";
 /**
  * "Momentos que marcan" — continuación de Conéctate.
  *
- * Comparte ancla con Conéctate (#conectate): son la misma parada del
- * menú. Las 4 opciones de arriba responden a "qué quiero hacer" y
- * estas 12 tarjetas a "qué estoy viviendo".
+ * Tiene su propia parada en el menú (#momentos, justo después de
+ * Conéctate) por petición del cliente. Las 4 opciones de Conéctate
+ * responden a "qué quiero hacer" y estas 12 tarjetas a "qué estoy
+ * viviendo".
  *
  * Las doce abren el mismo formulario con su momento ya
  * preseleccionado, en lugar de doce modales casi idénticos.
@@ -20,7 +21,7 @@ export default function Moments() {
   const { open } = useModal();
 
   return (
-    <section className="relative isolate overflow-hidden bg-white py-24 lg:py-32">
+    <section id="momentos" className="relative isolate overflow-hidden bg-white py-24 lg:py-32">
       <Flame className="pointer-events-none absolute -right-24 top-32 h-[440px] w-auto text-navy/[0.03]" />
 
       <div className="shell relative">
@@ -61,7 +62,7 @@ export default function Moments() {
               text={m.cta}
               footnote="Conéctate"
               minHeight="22rem"
-              raiseOnMobile
+              raise={24}
               onClick={() => open("acompanamiento", { momento: m.name })}
             />
           ))}
