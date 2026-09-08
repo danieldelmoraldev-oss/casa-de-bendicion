@@ -97,7 +97,6 @@ Cuando lleguen los recursos finales sólo hay que pasar `src`:
 |-------|-----------|
 | `ui/Modal.jsx` | POST del formulario al CRM / servicio de email |
 | `sections/FirstTime.jsx` | Mismo endpoint para el formulario embebido |
-| `layout/Footer.jsx` | URLs reales de redes sociales, `mailto:` y `tel:` |
 | `sections/Pastors.jsx` | Enlazar a `/pastores` cuando exista esa página |
 
 ---
@@ -168,6 +167,10 @@ identificador incrustado en semitransparencia y recortado por los bordes.
 Incumplen la pág. 21 del manual por partida doble (logo sobre fotografía y
 transparencia aplicada al identificador). En la web se usan los logos limpios
 del Drive; si el cliente los está publicando así en redes, conviene avisarle.
+
+**Contacto**
+Faltan el correo y el teléfono para completar la columna "Conecta" del
+footer. Las cuatro redes ya están enlazadas.
 
 **Backend**
 Los formularios son demo de interfaz. El `TODO(backend)` está en

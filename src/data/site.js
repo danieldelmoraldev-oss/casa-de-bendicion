@@ -504,4 +504,18 @@ export const weeklySchedule = [
   { day: "Domingo", time: "3:00 PM", name: "Servicio Familiar", place: "Yonkers" },
 ];
 
-export const socials = ["Instagram", "Facebook", "YouTube", "TikTok", "Email", "Teléfono"];
+/* Redes sociales.
+   Las URLs vienen limpias: los enlaces que envió el cliente traían
+   parámetros de compartición personales (`si`, `stkn`, `_t`,
+   `mibextid`) que identifican a quien compartió y no pintan nada en
+   una web pública. El de Facebook era un redirector /share/…; aquí va
+   la dirección canónica que devuelve la propia página.
+
+   TODO: falta el correo y el teléfono de contacto para completar la
+   columna "Conecta" del footer con mailto: y tel:. */
+export const socials = [
+  { name: "Instagram", href: "https://www.instagram.com/casa.de.bendicion_mpi" },
+  { name: "Facebook", href: "https://www.facebook.com/p/Casa-De-Bendicion-61583118900335/" },
+  { name: "YouTube", href: "https://youtube.com/@casa.de.bendicion-mpi" },
+  { name: "TikTok", href: "https://www.tiktok.com/@casa.de.bendicion_mpi" },
+];

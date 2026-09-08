@@ -6,9 +6,6 @@ import Logo from "../ui/Logo";
 import { FlameWatermark } from "../ui/Decor";
 import { SocialIcon, PinIcon } from "../ui/Icons";
 
-/* TODO: sustituir "#" por las URLs reales de cada red / mailto / tel */
-const socialHref = "#";
-
 function ColumnTitle({ children }) {
   return <p className="label text-[10px] text-gold-light">{children}</p>;
 }
@@ -34,17 +31,19 @@ export default function Footer() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-2.5">
-                {socials.map((s) => (
+                {socials.map((red) => (
                   <motion.a
-                    key={s}
-                    href={socialHref}
-                    aria-label={s}
-                    title={s}
+                    key={red.name}
+                    href={red.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${brand.name} en ${red.name}`}
+                    title={red.name}
                     whileHover={{ y: -3 }}
                     transition={{ type: "spring", stiffness: 400, damping: 22 }}
                     className="grid h-10 w-10 place-items-center rounded-md border border-white/15 text-navy-mist transition-colors duration-400 hover:border-gold hover:bg-gold hover:text-navy"
                   >
-                    <SocialIcon name={s} />
+                    <SocialIcon name={red.name} />
                   </motion.a>
                 ))}
               </div>
