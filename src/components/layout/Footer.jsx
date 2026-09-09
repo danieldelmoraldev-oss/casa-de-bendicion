@@ -1,11 +1,10 @@
 import { motion } from "framer-motion";
-import { brand, locations, meetings, nav, socials, weeklySchedule } from "../../data/site";
+import { brand, locations, nav, socials, weeklySchedule } from "../../data/site";
 import { useModal } from "../../context/ModalContext";
 import { Reveal } from "../ui/Motion";
 import Logo from "../ui/Logo";
 import { FlameWatermark } from "../ui/Decor";
 import { SocialIcon, PinIcon } from "../ui/Icons";
-import MeetingActions from "../ui/MeetingActions";
 import { mapsUrl } from "../../lib/calendar";
 
 function ColumnTitle({ children }) {
@@ -97,7 +96,7 @@ export default function Footer() {
           <div className="lg:col-span-3">
             <Reveal delay={0.1}>
               <ColumnTitle>Reuniones</ColumnTitle>
-              <ul className="mt-6 space-y-5">
+              <ul className="mt-6 space-y-4">
                 {weeklySchedule.map((m) => (
                   <li key={`${m.day}-${m.time}`}>
                     <p className="label flex flex-wrap items-baseline gap-x-2 text-[10.5px] text-white/85">
@@ -109,7 +108,6 @@ export default function Footer() {
                       {m.name}
                       <span className="text-navy-mist/60"> · {m.place}</span>
                     </p>
-                    <MeetingActions meeting={meetings[m.meeting]} theme="navy" className="mt-2" />
                   </li>
                 ))}
               </ul>
