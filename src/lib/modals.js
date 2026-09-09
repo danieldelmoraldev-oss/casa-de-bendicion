@@ -43,8 +43,9 @@ export const modalRegistry = {
           "Domingo • 3:00 PM — Servicio Familiar (Yonkers)",
           "Viernes • 7:30 PM — Noche de Avivamiento (Bronx)",
           "Jueves • 7:30 PM — Estudio Bíblico Interactivo (Yonkers)",
-          "Domingo • 2:00 PM — Rhema Academy, Nivel Avanzado (Yonkers)",
+          "Domingo • 2:00 PM — Rhema Academy, Escuela Bíblica (Yonkers)",
           "Miércoles • 7:00 PM — Fundamentos de la Fe (Zoom)",
+          "Miércoles • 9:00 PM — Formación Prematrimonial (Online)",
         ],
       },
       {
