@@ -3,7 +3,8 @@ import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useModal } from "../../context/ModalContext";
 import { modalRegistry } from "../../lib/modals";
-import { FormFields, FormSuccess } from "./Form";
+import { contact } from "../../data/site";
+import { FormFields, FormMaintenance, FormSuccess } from "./Form";
 import CTAButton from "./Button";
 
 /* ------------------------------------------------------------------ */
@@ -33,6 +34,7 @@ function Panel({ config, onClose, prefill }) {
       <span aria-hidden="true" className="rule-gold pointer-events-none absolute inset-x-0 top-0 h-[4px]" />
 
       <button
+        type="button"
         onClick={onClose}
         aria-label="Cerrar"
         className="absolute right-5 top-6 z-20 flex h-9 w-9 cursor-pointer items-center justify-center rounded-md border border-white/15 text-navy-mist transition-colors duration-300 hover:border-gold hover:text-gold-light"
@@ -67,15 +69,32 @@ function Panel({ config, onClose, prefill }) {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="mt-8">
-                <FormFields fields={config.fields} prefill={prefill} />
-                <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-                  <p className="label order-2 text-[9.5px] text-navy-mist/60 sm:order-1">
-                    Tus datos están seguros con nosotros
-                  </p>
-                  <CTAButton type="submit" className="order-1 sm:order-2">
-                    {config.submit}
-                  </CTAButton>
+                {/* Mientras no haya envío real los campos se muestran
+                    apagados: se ve qué se va a pedir, pero nadie cree
+                    haber mandado algo que no sale de aquí. */}
+                <div
+                  className={contact.formsEnabled ? "" : "pointer-events-none select-none opacity-40"}
+                  aria-hidden={!contact.formsEnabled}
+                >
+                  <FormFields
+                    fields={config.fields}
+                    prefill={prefill}
+                    disabled={!contact.formsEnabled}
+                  />
                 </div>
+
+                {contact.formsEnabled ? (
+                  <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+                    <p className="label order-2 text-[9.5px] text-navy-mist/60 sm:order-1">
+                      Tus datos están seguros con nosotros
+                    </p>
+                    <CTAButton type="submit" className="order-1 sm:order-2">
+                      {config.submit}
+                    </CTAButton>
+                  </div>
+                ) : (
+                  <FormMaintenance config={config} prefill={prefill} className="mt-7" />
+                )}
               </form>
             )}
           </>

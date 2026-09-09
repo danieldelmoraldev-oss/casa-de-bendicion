@@ -20,6 +20,20 @@ export const brand = {
   year: 2026,
 };
 
+/* ------------------------------------------------------------------ */
+/* CONTACTO Y ESTADO DE LOS FORMULARIOS                                */
+/* ------------------------------------------------------------------ */
+/* La web es estática: no hay servidor que pueda enviar correo. Hasta
+   que se conecte un servicio de envío, los formularios se muestran en
+   mantenimiento y derivan a escribir directamente.
+
+   Para activarlos: poner formsEnabled en true e implementar el envío
+   en el TODO(backend) de ui/Modal.jsx y sections/FirstTime.jsx.       */
+export const contact = {
+  email: "houseofblessingsny@gmail.com",
+  formsEnabled: false,
+};
+
 export const nav = [
   { label: "Inicio", href: "#inicio" },
   { label: "Conócenos", href: "#conocenos" },

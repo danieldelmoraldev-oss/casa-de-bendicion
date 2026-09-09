@@ -185,6 +185,19 @@ del Drive; si el cliente los está publicando así en redes, conviene avisarle.
 Falta el teléfono; el cliente todavía no tiene número. Las cuatro redes
 y el correo ya están enlazados.
 
-**Backend**
-Los formularios son demo de interfaz. El `TODO(backend)` está en
-`ui/Modal.jsx` y `sections/FirstTime.jsx`.
+**Formularios**
+No hay envío: la web es estática y no hay servidor que pueda mandar
+correo. Los 8 formularios se muestran **en mantenimiento** —campos
+apagados y un aviso que deriva a escribir a `contact.email`, con el
+asunto y una plantilla generada desde los propios campos.
+
+Para activarlos cuando haya servicio de envío:
+
+1. `data/site.js` → `contact.formsEnabled = true`
+2. implementar el `TODO(backend)` en `ui/Modal.jsx` y
+   `sections/FirstTime.jsx` (son los dos únicos sitios que envían).
+
+Opciones valoradas: Web3Forms (rápido, sin servidor), función serverless
+en Vercel + Resend (correo a nombre de la iglesia, requiere dominio) o
+Google Sheets. Pendiente de decidir; más adelante irá a un panel con
+automatizaciones.

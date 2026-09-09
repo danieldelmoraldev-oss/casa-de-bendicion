@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { firstTime } from "../../data/site";
+import { contact, firstTime } from "../../data/site";
 import { modalRegistry } from "../../lib/modals";
 import { Reveal, SplitHeading, Stagger, StaggerItem } from "../ui/Motion";
 import Eyebrow from "../ui/Eyebrow";
 import CTAButton from "../ui/Button";
-import { FormFields, FormSuccess } from "../ui/Form";
+import { FormFields, FormMaintenance, FormSuccess } from "../ui/Form";
 import { GoldRule } from "../ui/Decor";
 
 /* Mismo esquema que el modal "Planifica tu visita": una sola fuente de verdad */
@@ -101,15 +101,30 @@ export default function FirstTime() {
                       </p>
 
                       <form onSubmit={handleSubmit} className="mt-8">
-                        <FormFields fields={visitForm.fields} />
-                        <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-                          <p className="label order-2 text-[9.5px] text-navy-mist/60 sm:order-1">
-                            Tus datos están seguros con nosotros
-                          </p>
-                          <CTAButton type="submit" className="order-1 w-full sm:order-2 sm:w-auto">
-                            {visitForm.submit}
-                          </CTAButton>
+                        <div
+                          className={
+                            contact.formsEnabled ? "" : "pointer-events-none select-none opacity-40"
+                          }
+                          aria-hidden={!contact.formsEnabled}
+                        >
+                          <FormFields
+                            fields={visitForm.fields}
+                            disabled={!contact.formsEnabled}
+                          />
                         </div>
+
+                        {contact.formsEnabled ? (
+                          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+                            <p className="label order-2 text-[9.5px] text-navy-mist/60 sm:order-1">
+                              Tus datos están seguros con nosotros
+                            </p>
+                            <CTAButton type="submit" className="order-1 w-full sm:order-2 sm:w-auto">
+                              {visitForm.submit}
+                            </CTAButton>
+                          </div>
+                        ) : (
+                          <FormMaintenance config={visitForm} className="mt-7" />
+                        )}
                       </form>
                     </>
                   )}

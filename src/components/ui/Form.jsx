@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { contact } from "../../data/site";
 import { EASE } from "./Motion";
 import CTAButton from "./Button";
 
@@ -13,7 +14,7 @@ const fieldBase =
   "placeholder:text-navy-mist/60 outline-none transition-all duration-300 " +
   "focus:border-gold focus:bg-white/[0.1] focus:ring-2 focus:ring-gold/25";
 
-export function Field({ field, prefill }) {
+export function Field({ field, prefill, disabled = false }) {
   const id = `f-${field.name}`;
   const preset = prefill?.[field.name];
 
@@ -28,12 +29,13 @@ export function Field({ field, prefill }) {
       </label>
 
       {field.type === "textarea" ? (
-        <textarea id={id} name={field.name} rows={3} className={`${fieldBase} resize-none`} />
+        <textarea id={id} name={field.name} rows={3} disabled={disabled} className={`${fieldBase} resize-none`} />
       ) : field.type === "select" ? (
         <div className="relative">
           <select
             id={id}
             name={field.name}
+            disabled={disabled}
             defaultValue={preset ?? ""}
             className={`${fieldBase} appearance-none pr-10 [&>option]:bg-navy-deep`}
           >
@@ -60,6 +62,7 @@ export function Field({ field, prefill }) {
           name={field.name}
           type={field.type}
           min={field.min}
+          disabled={disabled}
           defaultValue={preset ?? undefined}
           className={fieldBase}
           placeholder={field.type === "email" ? "tunombre@email.com" : ""}
@@ -69,12 +72,59 @@ export function Field({ field, prefill }) {
   );
 }
 
-export function FormFields({ fields, prefill, className = "" }) {
+export function FormFields({ fields, prefill, disabled = false, className = "" }) {
   return (
     <div className={`grid grid-cols-1 gap-x-5 gap-y-5 sm:grid-cols-2 ${className}`}>
       {fields.map((f) => (
-        <Field key={f.name} field={f} prefill={prefill} />
+        <Field key={f.name} field={f} prefill={prefill} disabled={disabled} />
       ))}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Modo mantenimiento                                                  */
+/* ------------------------------------------------------------------ */
+
+const SALTO = "\n";
+
+/** Plantilla de correo con los mismos campos que el formulario, para
+    que quien escriba no tenga que adivinar qué contar. */
+function cuerpoCorreo(config, prefill) {
+  const lineas = config.fields.map((f) => {
+    const valor = prefill?.[f.name] ?? "";
+    return `${f.label}: ${valor}`;
+  });
+  return ["Hola, escribo desde la web.", "", ...lineas, "", "Gracias."].join(SALTO);
+}
+
+export function mailtoFor(config, prefill) {
+  const asunto = `[Web] ${config.eyebrow}`;
+  return (
+    `mailto:${contact.email}` +
+    `?subject=${encodeURIComponent(asunto)}` +
+    `&body=${encodeURIComponent(cuerpoCorreo(config, prefill))}`
+  );
+}
+
+/** Aviso que sustituye al botón de enviar mientras no haya envío real. */
+export function FormMaintenance({ config, prefill, className = "" }) {
+  return (
+    <div
+      className={`rounded-lg border border-gold/35 bg-gold/[0.08] p-5 text-center sm:p-6 ${className}`}
+    >
+      <p className="label text-[9.5px] text-gold-light">Temporalmente inactivo</p>
+      <p className="mx-auto mt-3 max-w-[46ch] text-[14px] leading-relaxed text-white/85">
+        Este formulario está en mantenimiento y todavía no envía nada. Escríbenos
+        directamente y te respondemos igual de rápido.
+      </p>
+      <a
+        href={mailtoFor(config, prefill)}
+        className="gradient-gold label mt-5 inline-flex items-center gap-2.5 rounded-md px-6 py-3 text-[11px] text-navy transition-shadow duration-400 hover:shadow-[0_10px_26px_-10px_rgba(208,142,8,0.9)]"
+      >
+        Escríbenos por correo
+      </a>
+      <p className="mt-3.5 text-[12px] text-navy-mist">{contact.email}</p>
     </div>
   );
 }
