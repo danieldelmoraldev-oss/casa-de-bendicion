@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
-import { brand, locations, nav, socials, weeklySchedule } from "../../data/site";
+import { brand, locations, meetings, nav, socials, weeklySchedule } from "../../data/site";
 import { useModal } from "../../context/ModalContext";
 import { Reveal } from "../ui/Motion";
 import Logo from "../ui/Logo";
 import { FlameWatermark } from "../ui/Decor";
 import { SocialIcon, PinIcon } from "../ui/Icons";
+import MeetingActions from "../ui/MeetingActions";
+import { mapsUrl } from "../../lib/calendar";
 
 function ColumnTitle({ children }) {
   return <p className="label text-[10px] text-gold-light">{children}</p>;
@@ -75,6 +77,16 @@ export default function Footer() {
                       <br />
                       {l.region}
                     </p>
+                    <a
+                      href={mapsUrl(`${l.street}, ${l.region}`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Cómo llegar a la sede de ${l.city}`}
+                      className="label mt-2.5 ml-[22px] inline-flex items-center gap-2 rounded-md border border-white/20 px-3 py-1.5 text-[9px] text-white/75 transition-colors duration-400 hover:border-gold hover:bg-gold hover:text-navy"
+                    >
+                      <PinIcon className="h-3 w-3" />
+                      Cómo llegar
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -85,7 +97,7 @@ export default function Footer() {
           <div className="lg:col-span-3">
             <Reveal delay={0.1}>
               <ColumnTitle>Reuniones</ColumnTitle>
-              <ul className="mt-6 space-y-4">
+              <ul className="mt-6 space-y-5">
                 {weeklySchedule.map((m) => (
                   <li key={`${m.day}-${m.time}`}>
                     <p className="label flex flex-wrap items-baseline gap-x-2 text-[10.5px] text-white/85">
@@ -97,6 +109,7 @@ export default function Footer() {
                       {m.name}
                       <span className="text-navy-mist/60"> · {m.place}</span>
                     </p>
+                    <MeetingActions meeting={meetings[m.meeting]} theme="navy" className="mt-2" />
                   </li>
                 ))}
               </ul>

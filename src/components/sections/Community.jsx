@@ -1,7 +1,8 @@
 import { community } from "../../data/site";
+import { useModal } from "../../context/ModalContext";
 import { Reveal, SplitHeading, Stagger, StaggerItem } from "../ui/Motion";
 import Eyebrow from "../ui/Eyebrow";
-import { DualCTA } from "../ui/Button";
+import { DualCTA, Arrow } from "../ui/Button";
 import Logo, { MinistryLogo } from "../ui/Logo";
 import { ArcDivider, FlameWatermark, GoldRule } from "../ui/Decor";
 
@@ -13,7 +14,7 @@ const titleLines = community.title
 /* ------------------------------------------------------------------ */
 /* Cada plataforma es una tarjeta con fotografía ancha a todo el       */
 /* ancho del bloque y el contenido debajo.                             */
-function Platform({ platform }) {
+function Platform({ platform, onAction }) {
   return (
     <StaggerItem>
       <article className="group relative mb-6 overflow-hidden rounded-xl bg-navy-deep/60 shadow-[0_26px_60px_-40px_rgba(0,0,0,0.9)] lg:mb-8">
@@ -26,6 +27,9 @@ function Platform({ platform }) {
               src={`/comunidad/${platform.photoSlug}.jpg`}
               alt={platform.name}
               loading="lazy"
+              /* El banner es muy apaisado y el navegador recorta el alto:
+                 cada plataforma elige qué banda de la foto se ve. */
+              style={{ objectPosition: `center ${platform.photoFocus ?? "50%"}` }}
               className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
             />
           ) : (
@@ -77,10 +81,21 @@ function Platform({ platform }) {
                 {platform.extensions.map((ext) => (
                   <div
                     key={ext.name}
-                    className="rounded-lg bg-white p-5 transition-transform duration-400 hover:-translate-y-1"
+                    className="flex flex-col rounded-lg bg-white p-5 transition-transform duration-400 hover:-translate-y-1"
                   >
                     <MinistryLogo slug={ext.slug} name={ext.name} height={36} />
-                    <p className="mt-4 text-[12.5px] leading-relaxed text-stone">{ext.text}</p>
+                    <p className="mt-4 flex-1 text-[12.5px] leading-relaxed text-stone">
+                      {ext.text}
+                    </p>
+                    {ext.action && (
+                      <button
+                        onClick={() => onAction(ext.action.modal)}
+                        className="group/btn mt-5 inline-flex w-fit cursor-pointer items-center gap-2.5 rounded-md border-2 border-navy/20 px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.14em] text-navy transition-colors duration-400 hover:border-gold hover:bg-gold"
+                      >
+                        {ext.action.label}
+                        <Arrow className="h-3 w-3 transition-transform duration-400 group-hover/btn:translate-x-0.5" />
+                      </button>
+                    )}
                   </div>
                 ))}
               </div>
@@ -94,6 +109,8 @@ function Platform({ platform }) {
 
 /* ------------------------------------------------------------------ */
 export default function Community() {
+  const { open } = useModal();
+
   return (
     <section id="comunidad" className="relative isolate overflow-hidden bg-navy py-28 lg:py-36">
       <FlameWatermark className="-right-24 top-24 text-white" size={520} opacity={0.035} />
@@ -129,7 +146,7 @@ export default function Community() {
         <div className="relative mt-20 lg:mt-28">
           <Stagger step={0.12}>
             {community.platforms.map((p) => (
-              <Platform key={p.name} platform={p} />
+              <Platform key={p.name} platform={p} onAction={open} />
             ))}
           </Stagger>
         </div>

@@ -32,6 +32,107 @@ export const nav = [
   { label: "Visítanos", href: "#visitanos" },
 ];
 
+
+/* ------------------------------------------------------------------ */
+/* REUNIONES — fuente única                                            */
+/* ------------------------------------------------------------------ */
+/* Aquí vive todo lo que necesitan los botones de "cómo llegar" y
+   "añadir al calendario". Las secciones (Hero, Reuniones, Crece y
+   fórmate y footer) referencian estas claves en vez de repetir la
+   dirección y la recurrencia cuatro veces.
+
+   weekday: 0 = domingo … 6 = sábado
+   recur:   WEEKLY, o MONTHLY con `nth` para "1er/3er martes"        */
+
+export const DIRECCIONES = {
+  yonkers: "266 Riverdale Ave., Yonkers, NY",
+  bronx: "1688 Boston Rd., Bronx, NY",
+};
+
+export const meetings = {
+  servicioFamiliar: {
+    address: DIRECCIONES.yonkers,
+    event: {
+      title: "Servicio Familiar · Casa de Bendición",
+      description:
+        "Nuestro encuentro congregacional principal de la semana: adoración, Palabra y comunidad.",
+      location: DIRECCIONES.yonkers,
+      weekday: 0, hour: 15, minute: 0, durationMin: 120,
+      recur: { freq: "WEEKLY" },
+    },
+  },
+  nocheAvivamiento: {
+    address: DIRECCIONES.bronx,
+    event: {
+      title: "Noche de Avivamiento · Anhelo Ardiente Worship",
+      description: "Una noche de adoración, oración y Palabra.",
+      location: DIRECCIONES.bronx,
+      weekday: 5, hour: 19, minute: 30, durationMin: 120,
+      recur: { freq: "WEEKLY" },
+    },
+  },
+  estudioBiblico: {
+    address: DIRECCIONES.yonkers,
+    event: {
+      title: "Estudio Bíblico Interactivo · Blueprint Mentorship",
+      description: "Una noche de crecimiento, conversación y formación.",
+      location: DIRECCIONES.yonkers,
+      weekday: 4, hour: 19, minute: 30, durationMin: 90,
+      recur: { freq: "WEEKLY" },
+    },
+  },
+  fundamentosFe: {
+    address: null, // virtual por Zoom
+    event: {
+      title: "Fundamentos de la Fe · Rhema Academy",
+      description: "Formación bíblica online. Virtual por Zoom.",
+      location: "Virtual por Zoom",
+      weekday: 3, hour: 19, minute: 0, durationMin: 90,
+      recur: { freq: "WEEKLY" },
+    },
+  },
+  escuelaBiblica: {
+    address: DIRECCIONES.yonkers,
+    event: {
+      title: "Escuela Bíblica · Rhema Academy",
+      description: "Formación bíblica presencial en Yonkers.",
+      location: DIRECCIONES.yonkers,
+      weekday: 0, hour: 14, minute: 0, durationMin: 60,
+      recur: { freq: "WEEKLY" },
+    },
+  },
+  prematrimonial: {
+    address: null, // online
+    event: {
+      title: "Formación Prematrimonial · Antes del Sí, Vol. 1",
+      description: "Formación prematrimonial online de Rhema Academy.",
+      location: "Online",
+      weekday: 3, hour: 21, minute: 0, durationMin: 90,
+      recur: { freq: "WEEKLY" },
+    },
+  },
+  amsVirtual: {
+    address: null, // online
+    event: {
+      title: "Asociación de Mujeres Sabias · Blueprint Mentorship",
+      description: "Encuentro mensual online para mujeres. Primer martes de cada mes.",
+      location: "Online",
+      weekday: 2, hour: 19, minute: 30, durationMin: 90,
+      recur: { freq: "MONTHLY", nth: 1 },
+    },
+  },
+  hombresDeValorVirtual: {
+    address: null, // online
+    event: {
+      title: "Hombres de Valor · Blueprint Mentorship",
+      description: "Encuentro mensual online para hombres. Tercer martes de cada mes.",
+      location: "Online",
+      weekday: 2, hour: 19, minute: 30, durationMin: 90,
+      recur: { freq: "MONTHLY", nth: 3 },
+    },
+  },
+};
+
 /* ------------------------------------------------------------------ */
 /* 01 · HERO                                                           */
 /* ------------------------------------------------------------------ */
@@ -41,8 +142,8 @@ export const hero = {
   lead: "Un lugar para creer, crecer, pertenecer y vivir el propósito de Dios.",
   body: "Somos una comunidad cristiana comprometida con compartir el Evangelio, formar discípulos, fortalecer familias y servir a nuestra comunidad.",
   schedule: [
-    { day: "Domingos", time: "3:00 PM", place: "Yonkers, NY", label: "Servicio Familiar" },
-    { day: "Viernes", time: "7:30 PM", place: "Bronx, NY", label: "Noche de Avivamiento" },
+    { day: "Domingos", time: "3:00 PM", place: "Yonkers, NY", label: "Servicio Familiar", meeting: "servicioFamiliar" },
+    { day: "Viernes", time: "7:30 PM", place: "Bronx, NY", label: "Noche de Avivamiento", meeting: "nocheAvivamiento" },
   ],
   media: {
     label: "Imagen: plano abierto de la congregación adorando, luz cálida lateral",
@@ -146,6 +247,7 @@ export const gatherings = {
       slug: "blueprint-mentorship",
       day: "Jueves",
       time: "7:30 PM",
+      meeting: "estudioBiblico",
       name: "Estudio Bíblico Interactivo",
       place: "266 Riverdale Ave., Yonkers, NY",
       text: "Una noche de crecimiento, conversación y formación como parte de Blueprint Mentorship, donde profundizamos juntos en la Palabra de Dios y desarrollamos principios de fe, propósito, liderazgo, relaciones y crecimiento personal.",
@@ -155,6 +257,7 @@ export const gatherings = {
       slug: "anhelo-ardiente",
       day: "Viernes",
       time: "7:30 PM",
+      meeting: "nocheAvivamiento",
       name: "Noche de Avivamiento",
       place: "1688 Boston Rd., Bronx, NY",
       text: "Una noche de adoración, oración y Palabra dirigida por Anhelo Ardiente Worship, creada para buscar juntos la presencia de Dios y fomentar una cultura de adoración y avivamiento.",
@@ -164,6 +267,7 @@ export const gatherings = {
       slug: null, // marca madre: se usa el identificador de Casa de Bendición
       day: "Domingos",
       time: "3:00 PM",
+      meeting: "servicioFamiliar",
       name: "Servicio Familiar",
       place: "266 Riverdale Ave., Yonkers, NY",
       text: "Nuestro encuentro congregacional principal de la semana. Un tiempo para adorar juntos, recibir la Palabra de Dios, orar y compartir como familia.",
@@ -182,6 +286,7 @@ export const training = {
   courses: [
     {
       slug: "rhema-academy",
+      meeting: "fundamentosFe",
       day: "Miércoles",
       time: "7:00 PM",
       name: "Fundamentos de la Fe",
@@ -191,12 +296,43 @@ export const training = {
     },
     {
       slug: "rhema-academy",
+      meeting: "escuelaBiblica",
       day: "Domingos",
       time: "2:00 PM",
-      name: "Nivel Avanzado",
+      name: "Escuela Bíblica",
       place: "266 Riverdale Ave., Yonkers, NY",
       online: false,
-      text: "Formación bíblica avanzada para quienes desean profundizar en las Escrituras, fortalecer sus fundamentos y continuar avanzando hacia la madurez cristiana.",
+      text: "Formación bíblica para quienes desean profundizar en las Escrituras, fortalecer sus fundamentos y continuar avanzando hacia la madurez cristiana.",
+    },
+    {
+      slug: "rhema-academy",
+      meeting: "prematrimonial",
+      day: "Miércoles",
+      time: "9:00 PM",
+      name: "Formación Prematrimonial — Antes del Sí, Vol. 1",
+      place: "Online",
+      online: true,
+      text: "Antes del Sí, Vol. 1 es una formación prematrimonial diseñada para acompañar a parejas que están considerando el matrimonio a examinar, conversar y fortalecer los fundamentos esenciales de su relación antes de llegar al altar. A través de principios bíblicos, reflexión personal, conversaciones guiadas y herramientas prácticas, las parejas exploran áreas importantes como la fe, comunicación, carácter, expectativas, familia, finanzas, intimidad, resolución de conflictos, compromiso y propósito matrimonial.",
+    },
+    {
+      slug: "blueprint-mentorship",
+      meeting: "amsVirtual",
+      day: "1er martes de cada mes",
+      time: "7:30 PM",
+      name: "Asociación de Mujeres Sabias",
+      place: "Online",
+      online: true,
+      text: "AMS Virtual es un espacio de encuentro para mujeres que desean crecer en fe, sabiduría, propósito y comunidad, compartiendo enseñanzas, conversaciones y experiencias que fortalecen su vida espiritual y personal desde la comodidad de su hogar.",
+    },
+    {
+      slug: "blueprint-mentorship",
+      meeting: "hombresDeValorVirtual",
+      day: "3er martes de cada mes",
+      time: "7:30 PM",
+      name: "Hombres de Valor",
+      place: "Online",
+      online: true,
+      text: "Hombres de Valor Virtual es un espacio de encuentro para hombres que desean crecer en fe, carácter, liderazgo y propósito, fortaleciendo su vida espiritual, familiar y personal mediante enseñanzas, conversaciones y mentoría en comunidad.",
     },
   ],
 };
@@ -228,7 +364,7 @@ export const ministries = {
     },
     {
       slug: "revival-youth",
-      photo: false, // pendiente: el cliente no ha entregado la foto
+      photo: true,
       name: "Revival Youth",
       text: "Una generación de jóvenes creciendo en Cristo, descubriendo su identidad y viviendo con propósito.",
       by: "Una iniciativa de Blueprint Mentorship",
@@ -322,6 +458,8 @@ export const community = {
       name: "Echo Media",
       slug: "echo-media",
       photoSlug: "echo-media",
+      // Baja el encuadre para que entre la mesa de mezclas
+      photoFocus: "78%",
       photo: true,
 
       en: "Community Leadership & Digital Innovation",
@@ -333,15 +471,25 @@ export const community = {
       name: "Community Outreach",
       slug: null, // sin marca propia: usa el identificador de Casa de Bendición
       photoSlug: "community-outreach",
+      photoFocus: "42%",
       photo: true,
       en: "Neighborhood Engagement",
       text: "Community Outreach moviliza el servicio más allá de las actividades internas de la iglesia mediante participación comunitaria, voluntariado, apoyo práctico, conexión con recursos y colaboración.",
       extensions: [
-        { name: "Dorcas", slug: "dorcas", text: "Servicio compasivo y apoyo práctico para personas y familias." },
+        {
+          name: "Dorcas",
+          slug: "dorcas",
+          text: "Servicio compasivo y apoyo práctico para personas y familias.",
+          // La petición entra, Community Outreach la revisa y la deriva
+          // al programa o recurso adecuado.
+          action: { label: "Necesito ayuda", modal: "necesito-ayuda" },
+        },
         {
           name: "Pescadores de Hombres",
           slug: "pescadores",
           text: "Servicio, alcance, movilización y conexión comunitaria.",
+          // Voluntario -> intereses y disponibilidad -> Community Outreach.
+          action: { label: "Quiero ayudar", modal: "quiero-ayudar" },
         },
       ],
     },
@@ -509,11 +657,14 @@ export const locations = [
 ];
 
 export const weeklySchedule = [
-  { day: "Miércoles", time: "7:00 PM", name: "Rhema Academy — Fundamentos de la Fe", place: "Virtual por Zoom" },
-  { day: "Jueves", time: "7:30 PM", name: "Blueprint Mentorship — Estudio Bíblico Interactivo", place: "Yonkers" },
-  { day: "Viernes", time: "7:30 PM", name: "Noche de Avivamiento — Anhelo Ardiente Worship", place: "Bronx" },
-  { day: "Domingo", time: "2:00 PM", name: "Rhema Academy — Nivel Avanzado", place: "Yonkers" },
-  { day: "Domingo", time: "3:00 PM", name: "Servicio Familiar", place: "Yonkers" },
+  { day: "Miércoles", time: "7:00 PM", name: "Rhema Academy — Fundamentos de la Fe", place: "Virtual por Zoom", meeting: "fundamentosFe" },
+  { day: "Miércoles", time: "9:00 PM", name: "Rhema Academy — Formación Prematrimonial", place: "Online", meeting: "prematrimonial" },
+  { day: "Jueves", time: "7:30 PM", name: "Blueprint Mentorship — Estudio Bíblico Interactivo", place: "Yonkers", meeting: "estudioBiblico" },
+  { day: "Viernes", time: "7:30 PM", name: "Noche de Avivamiento — Anhelo Ardiente Worship", place: "Bronx", meeting: "nocheAvivamiento" },
+  { day: "Domingo", time: "2:00 PM", name: "Rhema Academy — Escuela Bíblica", place: "Yonkers", meeting: "escuelaBiblica" },
+  { day: "Domingo", time: "3:00 PM", name: "Servicio Familiar", place: "Yonkers", meeting: "servicioFamiliar" },
+  { day: "1er martes", time: "7:30 PM", name: "Blueprint Mentorship — Asociación de Mujeres Sabias", place: "Online", meeting: "amsVirtual" },
+  { day: "3er martes", time: "7:30 PM", name: "Blueprint Mentorship — Hombres de Valor", place: "Online", meeting: "hombresDeValorVirtual" },
 ];
 
 /* Redes sociales.

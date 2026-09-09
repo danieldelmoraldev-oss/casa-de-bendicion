@@ -1,12 +1,13 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { hero } from "../../data/site";
+import { hero, meetings } from "../../data/site";
 import { useModal } from "../../context/ModalContext";
 import { EASE, Reveal, SplitHeading } from "../ui/Motion";
 import Eyebrow from "../ui/Eyebrow";
 import CTAButton, { Arrow } from "../ui/Button";
 import { ArcEdge, ArcDivider, FlameWatermark } from "../ui/Decor";
 import { ClockIcon, PinIcon } from "../ui/Icons";
+import MeetingActions from "../ui/MeetingActions";
 
 /* ------------------------------------------------------------------ */
 /* Barra inferior con los horarios — equivale a la franja de accesos   */
@@ -23,20 +24,23 @@ function ScheduleBar() {
       <div className="shell">
         <div className="grid grid-cols-1 divide-y divide-line md:grid-cols-3 md:divide-x md:divide-y-0">
           {hero.schedule.map((s) => (
-            <div key={s.day} className="group flex items-center gap-4 py-6 md:pr-8 md:first:pl-0">
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-navy text-white transition-colors duration-400 group-hover:bg-gold group-hover:text-navy">
-                <ClockIcon className="h-4 w-4" />
-              </span>
-              <div className="min-w-0">
-                <p className="label text-[10.5px] text-gold-deep">
-                  {s.day} · {s.time}
-                </p>
-                <p className="mt-1 truncate text-[14.5px] font-semibold text-navy">{s.label}</p>
-                <p className="mt-0.5 flex items-center gap-1.5 text-[12.5px] text-stone">
-                  <PinIcon className="h-3 w-3 shrink-0 text-gold-deep" />
-                  {s.place}
-                </p>
+            <div key={s.day} className="group flex flex-col gap-3 py-6 md:pr-8 md:first:pl-0">
+              <div className="flex items-center gap-4">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-navy text-white transition-colors duration-400 group-hover:bg-gold group-hover:text-navy">
+                  <ClockIcon className="h-4 w-4" />
+                </span>
+                <div className="min-w-0">
+                  <p className="label text-[10.5px] text-gold-deep">
+                    {s.day} · {s.time}
+                  </p>
+                  <p className="mt-1 truncate text-[14.5px] font-semibold text-navy">{s.label}</p>
+                  <p className="mt-0.5 flex items-center gap-1.5 text-[12.5px] text-stone">
+                    <PinIcon className="h-3 w-3 shrink-0 text-gold-deep" />
+                    {s.place}
+                  </p>
+                </div>
               </div>
+              <MeetingActions meeting={meetings[s.meeting]} className="pl-[60px]" />
             </div>
           ))}
 

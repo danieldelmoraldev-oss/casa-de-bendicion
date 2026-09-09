@@ -63,6 +63,7 @@ src/
 ├─ index.css                  Design system (tokens @theme + utilidades)
 ├─ data/site.js               TODO el copy del documento, centralizado
 ├─ lib/modals.js              Esquema de los formularios de cada modal
+├─ lib/calendar.js            Generación de .ics y enlaces a mapas
 ├─ context/ModalContext.jsx   useModal() → open('soy-nuevo')
 ├─ hooks/useActiveSection.js  Scrollspy con IntersectionObserver
 ├─ components/
@@ -146,10 +147,23 @@ negativa según el fondo. Respeta la reducción mínima de la pág. 12
 2. **Tipografía**, ya explicado arriba: Montserrat en lugar de SF Pro, usando
    la alternativa que el propio manual autoriza.
 
+## Reuniones y calendario
+
+`data/site.js` → `meetings` es la fuente única: dirección, día, hora,
+duración y recurrencia de cada reunión. Hero, Reuniones, Crece y fórmate
+y el footer leen de ahí, así que un cambio de horario se toca en un
+único sitio.
+
+Los botones "Añadir al calendario" descargan un `.ics` en vez de enlazar
+a Google Calendar: funciona igual en Google, Apple y Outlook, sin exigir
+cuenta de Google. Todos los eventos salen **recurrentes** — semanales las
+reuniones, mensuales las dos formaciones de Blueprint (1er y 3er martes)
+— y con `TZID=America/New_York`, para que caigan a la hora correcta
+aunque quien los añada esté en otro huso.
+
 ## Pendiente del cliente
 
 **Fotografías**
-- **Revival Youth** — es el único de los 9 ministerios sin foto.
 - Retrato de los **pastores** y las dos fotos de **Bienvenida**.
 - **Vídeo institucional**.
 

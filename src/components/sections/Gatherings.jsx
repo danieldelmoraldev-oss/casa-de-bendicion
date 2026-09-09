@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
-import { gatherings } from "../../data/site";
+import { gatherings, meetings } from "../../data/site";
 import { useModal } from "../../context/ModalContext";
 import { Reveal, SplitHeading, Stagger, StaggerItem } from "../ui/Motion";
 import Eyebrow from "../ui/Eyebrow";
 import { DualCTA, Arrow } from "../ui/Button";
 import Logo, { MinistryLogo } from "../ui/Logo";
 import { PinIcon } from "../ui/Icons";
+import MeetingActions from "../ui/MeetingActions";
 
 /* Escalonado que rompe la cuadrícula en desktop */
 const offsets = ["lg:mt-0", "lg:mt-12", "lg:mt-24"];
@@ -48,7 +49,9 @@ function GatheringCard({ card, index, onPlan }) {
 
           <p className="mt-5 flex-1 text-[14px] leading-[1.75] text-stone">{card.text}</p>
 
-          <div className="mt-7 flex items-center justify-between gap-4 border-t border-line pt-5">
+          <MeetingActions meeting={meetings[card.meeting]} className="mt-6" />
+
+          <div className="mt-6 flex items-center justify-between gap-4 border-t border-line pt-5">
             <span className="max-w-[60%] text-[10px] font-bold uppercase leading-tight tracking-[0.12em] text-navy/40">
               {card.by}
             </span>

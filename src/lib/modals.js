@@ -1,3 +1,10 @@
+import { training } from "../data/site";
+
+/* Las opciones del desplegable se generan desde las propias tarjetas
+   de "Crece y fórmate": así no puede haber desajuste entre lo que se
+   ve en la sección y lo que llega en el formulario. */
+export const etiquetaFormacion = (c) => `${c.name} — ${c.day} ${c.time} (${c.place})`;
+
 /**
  * Registro de modales.
  * Cada entrada define título, subtítulo y los campos del formulario.
@@ -163,6 +170,111 @@ export const modalRegistry = {
       { name: "mensaje", label: "Cuéntanos un poco más", type: "textarea", span: 2 },
     ],
     submit: "Solicita acompañamiento",
+  },
+
+
+  /* Crece y fórmate — una tarjeta, una plaza reservada */
+  inscripcion: {
+    eyebrow: "Crece y fórmate",
+    title: "Reserva tu plaza.",
+    text: "Déjanos tus datos y te confirmamos el acceso, el horario y lo que necesitas para empezar.",
+    fields: [
+      ...contactBase,
+      {
+        name: "formacion",
+        label: "¿En qué formación quieres inscribirte?",
+        type: "select",
+        span: 2,
+        required: true,
+        options: training.courses.map(etiquetaFormacion),
+      },
+      { name: "mensaje", label: "¿Algo que quieras contarnos?", type: "textarea", span: 2 },
+    ],
+    submit: "Registrarme",
+  },
+
+  /* Community Outreach — recibir ayuda.
+     El flujo que pidió el cliente: la petición entra, Community
+     Outreach la revisa y la deriva al programa o recurso adecuado. */
+  "necesito-ayuda": {
+    eyebrow: "Community Outreach",
+    title: "Necesito ayuda.",
+    text: "Cuéntanos qué necesitas. Nuestro equipo de Community Outreach revisa cada petición y te pone en contacto con el programa o el recurso que mejor pueda acompañarte.",
+    fields: [
+      ...contactBase,
+      {
+        name: "necesidad",
+        label: "¿En qué necesitas ayuda?",
+        type: "select",
+        span: 2,
+        required: true,
+        options: [
+          "Alimentos y artículos de primera necesidad",
+          "Apoyo a la familia",
+          "Acompañamiento espiritual y oración",
+          "Orientación y recursos comunitarios",
+          "Visita a domicilio u hospital",
+          "Otra necesidad",
+        ],
+      },
+      {
+        name: "urgencia",
+        label: "¿Con qué urgencia?",
+        type: "select",
+        span: 2,
+        options: ["Lo antes posible", "Esta semana", "Sin prisa"],
+      },
+      {
+        name: "detalle",
+        label: "Cuéntanos tu situación",
+        type: "textarea",
+        span: 2,
+        required: true,
+      },
+    ],
+    submit: "Enviar petición",
+  },
+
+  /* Community Outreach — servir.
+     Flujo: voluntario -> intereses y disponibilidad -> Community Outreach. */
+  "quiero-ayudar": {
+    eyebrow: "Community Outreach",
+    title: "Quiero ayudar.",
+    text: "Súmate como voluntario. Dinos qué te mueve y cuándo puedes, y Community Outreach te conecta con el equipo donde más falta haces.",
+    fields: [
+      ...contactBase,
+      {
+        name: "interes",
+        label: "¿En qué te gustaría servir?",
+        type: "select",
+        span: 2,
+        required: true,
+        options: [
+          "Reparto de alimentos — Dorcas",
+          "Alcance en la calle — Pescadores de Hombres",
+          "Visitas a hogares y hospitales",
+          "Apoyo en eventos comunitarios",
+          "Acompañamiento y mentoría",
+          "Donde más se necesite",
+        ],
+      },
+      {
+        name: "disponibilidad",
+        label: "¿Cuándo puedes?",
+        type: "select",
+        span: 2,
+        required: true,
+        options: [
+          "Entre semana, por la mañana",
+          "Entre semana, por la tarde",
+          "Fines de semana",
+          "Puntualmente, en eventos",
+          "Flexible",
+        ],
+      },
+      { name: "mensaje", label: "Cuéntanos sobre ti", type: "textarea", span: 2 },
+    ],
+    submit: "Quiero ser voluntario",
   },
 
   /* Vídeo institucional */
