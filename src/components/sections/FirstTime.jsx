@@ -5,7 +5,8 @@ import { modalRegistry } from "../../lib/modals";
 import { Reveal, SplitHeading, Stagger, StaggerItem } from "../ui/Motion";
 import Eyebrow from "../ui/Eyebrow";
 import CTAButton from "../ui/Button";
-import { FormFields, FormMaintenance, FormSuccess } from "../ui/Form";
+import { enviarFormulario } from "../../lib/forms";
+import { FormError, FormFields, FormMaintenance, FormSuccess } from "../ui/Form";
 import { GoldRule } from "../ui/Decor";
 
 /* Mismo esquema que el modal "Planifica tu visita": una sola fuente de verdad */
@@ -37,12 +38,20 @@ function Faq({ item, index }) {
 }
 
 export default function FirstTime() {
-  const [sent, setSent] = useState(false);
+  /* idle · enviando · enviado · error */
+  const [estado, setEstado] = useState("idle");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO(backend): mismo endpoint que el modal "Planifica tu visita".
-    setSent(true);
+    if (estado === "enviando") return;
+    const form = e.currentTarget;
+    setEstado("enviando");
+    try {
+      await enviarFormulario(visitForm, form);
+      setEstado("enviado");
+    } catch {
+      setEstado("error");
+    }
   };
 
   return (
@@ -87,7 +96,7 @@ export default function FirstTime() {
                 <span aria-hidden="true" className="gradient-gold absolute inset-x-0 top-0 h-[4px]" />
 
                 <div className="relative">
-                  {sent ? (
+                  {estado === "enviado" ? (
                     <FormSuccess compact />
                   ) : (
                     <>
@@ -113,17 +122,27 @@ export default function FirstTime() {
                           />
                         </div>
 
-                        {contact.formsEnabled ? (
+                        {!contact.formsEnabled ? (
+                          <FormMaintenance config={visitForm} className="mt-7" />
+                        ) : estado === "error" ? (
+                          <FormError
+                            config={visitForm}
+                            onRetry={() => setEstado("idle")}
+                            className="mt-7"
+                          />
+                        ) : (
                           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
                             <p className="label order-2 text-[9.5px] text-navy-mist/60 sm:order-1">
                               Tus datos están seguros con nosotros
                             </p>
-                            <CTAButton type="submit" className="order-1 w-full sm:order-2 sm:w-auto">
-                              {visitForm.submit}
+                            <CTAButton
+                              type="submit"
+                              disabled={estado === "enviando"}
+                              className={`order-1 w-full sm:order-2 sm:w-auto ${estado === "enviando" ? "pointer-events-none opacity-60" : ""}`}
+                            >
+                              {estado === "enviando" ? "Enviando…" : visitForm.submit}
                             </CTAButton>
                           </div>
-                        ) : (
-                          <FormMaintenance config={visitForm} className="mt-7" />
                         )}
                       </form>
                     </>

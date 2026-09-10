@@ -23,15 +23,25 @@ export const brand = {
 /* ------------------------------------------------------------------ */
 /* CONTACTO Y ESTADO DE LOS FORMULARIOS                                */
 /* ------------------------------------------------------------------ */
-/* La web es estática: no hay servidor que pueda enviar correo. Hasta
-   que se conecte un servicio de envío, los formularios se muestran en
-   mantenimiento y derivan a escribir directamente.
+/* La web es estática: no hay servidor propio que pueda enviar correo.
+   Hasta que llegue la integración con ChMeetings, los formularios salen
+   por Web3Forms, que recibe el envío y lo reenvía a `email`. La lógica
+   vive en lib/forms.js y es el único sitio a tocar cuando cambie el
+   destino.
 
-   Para activarlos: poner formsEnabled en true e implementar el envío
-   en el TODO(backend) de ui/Modal.jsx y sections/FirstTime.jsx.       */
+   La clave se inyecta al compilar desde la variable de entorno
+   VITE_WEB3FORMS_KEY. Es pública por diseño, no un secreto: viaja en el
+   bundle igual que el resto del código de cliente.
+
+   Si no hay clave, `formsEnabled` queda en false y los formularios
+   vuelven solos al modo mantenimiento. Preferimos un aviso honesto a un
+   formulario que acepta datos y los tira.                              */
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY ?? "";
+
 export const contact = {
   email: "houseofblessingsny@gmail.com",
-  formsEnabled: false,
+  web3formsKey: WEB3FORMS_KEY,
+  formsEnabled: Boolean(WEB3FORMS_KEY),
 };
 
 export const nav = [

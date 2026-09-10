@@ -63,6 +63,7 @@ src/
 ├─ index.css                  Design system (tokens @theme + utilidades)
 ├─ data/site.js               TODO el copy del documento, centralizado
 ├─ lib/modals.js              Esquema de los formularios de cada modal
+├─ lib/forms.js               Envío de los formularios (Web3Forms)
 ├─ lib/calendar.js            Generación de .ics y enlaces a mapas
 ├─ context/ModalContext.jsx   useModal() → open('soy-nuevo')
 ├─ hooks/useActiveSection.js  Scrollspy con IntersectionObserver
@@ -96,8 +97,6 @@ Cuando lleguen los recursos finales sólo hay que pasar `src`:
 
 | Dónde | Qué falta |
 |-------|-----------|
-| `ui/Modal.jsx` | POST del formulario al CRM / servicio de email |
-| `sections/FirstTime.jsx` | Mismo endpoint para el formulario embebido |
 | `sections/Pastors.jsx` | Enlazar a `/pastores` cuando exista esa página |
 
 ---
@@ -186,18 +185,32 @@ Falta el teléfono; el cliente todavía no tiene número. Las cuatro redes
 y el correo ya están enlazados.
 
 **Formularios**
-No hay envío: la web es estática y no hay servidor que pueda mandar
-correo. Los 8 formularios se muestran **en mantenimiento** —campos
-apagados y un aviso que deriva a escribir a `contact.email`, con el
-asunto y una plantilla generada desde los propios campos.
+Los 8 formularios envían de verdad. Como la web es estática y no tiene
+servidor propio, el envío sale por **Web3Forms**: recibe el POST y
+reenvía el contenido por correo a `contact.email`. Toda la lógica vive
+en `lib/forms.js`, que es el único archivo a tocar cuando el destino
+cambie.
 
-Para activarlos cuando haya servicio de envío:
+Es una solución puente. El destino final es ChMeetings, el sistema de
+gestión que ya usa la iglesia.
 
-1. `data/site.js` → `contact.formsEnabled = true`
-2. implementar el `TODO(backend)` en `ui/Modal.jsx` y
-   `sections/FirstTime.jsx` (son los dos únicos sitios que envían).
+**Hace falta una variable de entorno.** `VITE_WEB3FORMS_KEY` con la
+clave que Web3Forms envía al correo de destino. Ver `.env.example`.
 
-Opciones valoradas: Web3Forms (rápido, sin servidor), función serverless
-en Vercel + Resend (correo a nombre de la iglesia, requiere dominio) o
-Google Sheets. Pendiente de decidir; más adelante irá a un panel con
-automatizaciones.
+- **En local:** copiar `.env.example` a `.env.local` y rellenar.
+- **En Vercel:** Settings → Environment Variables, y **redesplegar**.
+  Las variables `VITE_` se incrustan al compilar, no en tiempo de
+  ejecución, así que sin un despliegue nuevo no surten efecto.
+
+Sin clave, `contact.formsEnabled` queda en `false` y los formularios
+vuelven solos al modo mantenimiento: campos apagados y un aviso que
+deriva a escribir a `contact.email`, con el asunto y una plantilla
+generada desde los propios campos. Nunca aceptan datos que no puedan
+entregar.
+
+Ese mismo mailto es la red de seguridad si un envío falla: el aviso de
+error conserva lo escrito y ofrece reintentar o escribir directamente.
+
+Los formularios llevan una trampa antispam (`botcheck`), un campo oculto
+que sólo rellenan los bots. Si llega con contenido, el envío se descarta
+en silencio.

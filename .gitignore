@@ -30,3 +30,8 @@ dist.tar.gz
 # Originales sin optimizar que entrega el cliente (las versiones
 # procesadas viven en public/ministerios, public/momentos y public/equipos)
 public/fotos/
+
+# Claves de servicios (Web3Forms). Nunca al repositorio.
+.env
+.env.*
+!.env.example

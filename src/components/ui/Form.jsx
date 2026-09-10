@@ -78,13 +78,28 @@ export function FormFields({ fields, prefill, disabled = false, className = "" }
       {fields.map((f) => (
         <Field key={f.name} field={f} prefill={prefill} disabled={disabled} />
       ))}
+      {/* Trampa antispam: invisible para una persona, irresistible para
+          los bots que rellenan todo lo que encuentran. Si llega con
+          contenido, lib/forms.js descarta el envío en silencio. */}
+      <input
+        type="text"
+        name="botcheck"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+      />
     </div>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* Modo mantenimiento                                                  */
+/* Plantilla de correo, mantenimiento y error                          */
 /* ------------------------------------------------------------------ */
+/* El mailto sigue vivo por dos motivos: es el aviso que se muestra si
+   no hay servicio de envío configurado, y es la salida de emergencia
+   cuando un envío falla. Un formulario caído no puede dejar a nadie
+   sin manera de escribir.                                             */
 
 const SALTO = "\n";
 
@@ -164,9 +179,34 @@ export function FormSuccess({ onClose, compact = false }) {
           Cerrar
         </CTAButton>
       )}
-      <p className="label text-[9.5px] text-navy-mist/50">
-        Demo de interfaz · sin envío a backend
-      </p>
     </motion.div>
+  );
+}
+
+/** El envío ha fallado. Se conserva lo que la persona escribió y se le
+    ofrece reintentar o escribir por correo, para no perder el contacto. */
+export function FormError({ config, prefill, onRetry, className = "" }) {
+  return (
+    <div
+      className={`rounded-lg border border-gold/35 bg-gold/[0.08] p-5 text-center sm:p-6 ${className}`}
+    >
+      <p className="label text-[9.5px] text-gold-light">No hemos podido enviarlo</p>
+      <p className="mx-auto mt-3 max-w-[46ch] text-[14px] leading-relaxed text-white/85">
+        Algo ha fallado por el camino y tu mensaje no ha salido. No hemos
+        borrado nada de lo que escribiste: prueba otra vez, o escríbenos
+        directamente y te respondemos igual.
+      </p>
+      <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <CTAButton type="button" icon={false} onClick={onRetry}>
+          Reintentar
+        </CTAButton>
+        <a
+          href={mailtoFor(config, prefill)}
+          className="label rounded-md border-2 border-white/30 px-6 py-3 text-[11px] text-white transition-colors duration-400 hover:border-white"
+        >
+          Escríbenos por correo
+        </a>
+      </div>
+    </div>
   );
 }

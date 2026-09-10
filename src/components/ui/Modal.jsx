@@ -4,19 +4,30 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useModal } from "../../context/ModalContext";
 import { modalRegistry } from "../../lib/modals";
 import { contact } from "../../data/site";
-import { FormFields, FormMaintenance, FormSuccess } from "./Form";
+import { enviarFormulario } from "../../lib/forms";
+import { FormError, FormFields, FormMaintenance, FormSuccess } from "./Form";
 import CTAButton from "./Button";
 
 /* ------------------------------------------------------------------ */
 /* Panel: se monta con key={activeKey}, así el estado se reinicia solo */
 /* ------------------------------------------------------------------ */
 function Panel({ config, onClose, prefill }) {
-  const [sent, setSent] = useState(false);
+  /* idle · enviando · enviado · error */
+  const [estado, setEstado] = useState("idle");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO(backend): aquí irá el POST al CRM / servicio de email.
-    setSent(true);
+    if (estado === "enviando") return;
+    /* El elemento se guarda antes del await: React limpia currentTarget
+       en cuanto el manejador devuelve el control. */
+    const form = e.currentTarget;
+    setEstado("enviando");
+    try {
+      await enviarFormulario(config, form);
+      setEstado("enviado");
+    } catch {
+      setEstado("error");
+    }
   };
 
   return (
@@ -45,7 +56,7 @@ function Panel({ config, onClose, prefill }) {
       </button>
 
       <div className="relative">
-        {sent ? (
+        {estado === "enviado" ? (
           <FormSuccess onClose={onClose} />
         ) : (
           <>
@@ -69,9 +80,9 @@ function Panel({ config, onClose, prefill }) {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="mt-8">
-                {/* Mientras no haya envío real los campos se muestran
-                    apagados: se ve qué se va a pedir, pero nadie cree
-                    haber mandado algo que no sale de aquí. */}
+                {/* Sin servicio de envío configurado los campos se
+                    muestran apagados: se ve qué se va a pedir, pero
+                    nadie cree haber mandado algo que no sale de aquí. */}
                 <div
                   className={contact.formsEnabled ? "" : "pointer-events-none select-none opacity-40"}
                   aria-hidden={!contact.formsEnabled}
@@ -83,17 +94,28 @@ function Panel({ config, onClose, prefill }) {
                   />
                 </div>
 
-                {contact.formsEnabled ? (
+                {!contact.formsEnabled ? (
+                  <FormMaintenance config={config} prefill={prefill} className="mt-7" />
+                ) : estado === "error" ? (
+                  <FormError
+                    config={config}
+                    prefill={prefill}
+                    onRetry={() => setEstado("idle")}
+                    className="mt-7"
+                  />
+                ) : (
                   <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
                     <p className="label order-2 text-[9.5px] text-navy-mist/60 sm:order-1">
                       Tus datos están seguros con nosotros
                     </p>
-                    <CTAButton type="submit" className="order-1 sm:order-2">
-                      {config.submit}
+                    <CTAButton
+                      type="submit"
+                      disabled={estado === "enviando"}
+                      className={`order-1 sm:order-2 ${estado === "enviando" ? "pointer-events-none opacity-60" : ""}`}
+                    >
+                      {estado === "enviando" ? "Enviando…" : config.submit}
                     </CTAButton>
                   </div>
-                ) : (
-                  <FormMaintenance config={config} prefill={prefill} className="mt-7" />
                 )}
               </form>
             )}
