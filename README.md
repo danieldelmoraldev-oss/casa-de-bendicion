@@ -163,8 +163,9 @@ aunque quien los añada esté en otro huso.
 ## Pendiente del cliente
 
 **Fotografías**
-- Retrato de los **pastores** y las dos fotos de **Bienvenida**.
-- **Vídeo institucional**.
+- **Foto definitiva del hero.** La actual, un aniversario, la pidió el
+  cliente "mientras tanto". La anterior sigue en `public/congregacion.jpg`.
+- **Vídeo institucional** y su póster.
 
 Las tarjetas sin foto se resuelven con el degradado azul institucional y una
 etiqueta discreta "Foto pendiente": no se ven rotas, pero se identifican.

@@ -29,7 +29,8 @@ export default function Welcome() {
             <motion.div style={{ y: yMain }}>
               <Reveal y={44} duration={1.05}>
                 <ImagePlaceholder
-                  label={welcome.media.main}
+                  src={welcome.media.main.src}
+                  alt={welcome.media.main.alt}
                   tone="light"
                   ratio="4/5"
                   className="shadow-[0_40px_80px_-45px_rgba(28,54,97,0.45)]"
@@ -50,7 +51,8 @@ export default function Welcome() {
               <Reveal y={54} delay={0.2} duration={1.05}>
                 <div className="rounded-lg bg-white p-2 shadow-[0_30px_70px_-35px_rgba(28,54,97,0.55)]">
                   <ImagePlaceholder
-                    label={welcome.media.inset}
+                    src={welcome.media.inset.src}
+                    alt={welcome.media.inset.alt}
                     tone="light"
                     ratio="4/3"
                     rounded="rounded-md"

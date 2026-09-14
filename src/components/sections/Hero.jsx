@@ -76,8 +76,8 @@ export default function Hero() {
         {/* ---------------- Fotografía ---------------- */}
         <div className="relative order-1 h-[42vh] min-h-[280px] overflow-hidden lg:order-2 lg:h-auto lg:min-h-[640px]">
           <motion.img
-            src="/congregacion.jpg"
-            alt="La congregación de Casa de Bendición durante una reunión"
+            src={hero.media.src}
+            alt={hero.media.alt}
             style={{ y: yPhoto, scale: scalePhoto }}
             className="absolute inset-0 h-full w-full object-cover object-center"
             fetchPriority="high"

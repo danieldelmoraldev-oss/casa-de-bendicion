@@ -169,8 +169,11 @@ export const hero = {
     { day: "Domingos", time: "3:00 PM", place: "Yonkers, NY", label: "Servicio Familiar", meeting: "servicioFamiliar" },
     { day: "Viernes", time: "7:30 PM", place: "Bronx, NY", label: "Noche de Avivamiento", meeting: "nocheAvivamiento" },
   ],
+  /* Foto provisional: el cliente la pidió "mientras tanto". La anterior,
+     /congregacion.jpg, sigue en public/ por si vuelve. */
   media: {
-    label: "Imagen: plano abierto de la congregación adorando, luz cálida lateral",
+    src: "/inicio/aniversario.jpg",
+    alt: "Familias de Casa de Bendición celebrando juntas un aniversario",
   },
 };
 
@@ -192,8 +195,14 @@ export const welcome = {
     "Descubrir tu propósito",
   ],
   media: {
-    main: "Imagen: familia recibida en la entrada del templo, formato vertical",
-    inset: "Imagen: detalle de manos alzadas / abrazo en el pasillo",
+    main: {
+      src: "/bienvenida/familia-entrada.jpg",
+      alt: "Una familia recibida en la puerta del templo",
+    },
+    inset: {
+      src: "/bienvenida/abrazo.jpg",
+      alt: "Un abrazo entre dos hermanos en el templo",
+    },
   },
 };
 
@@ -254,7 +263,7 @@ export const pastors = {
     "Servimos juntos con el deseo de construir una iglesia centrada en Cristo, fundamentada en Su Palabra y comprometida con acompañar a las personas y familias en su crecimiento espiritual.",
     "Nuestra visión pastoral es formar una comunidad donde las personas puedan encontrar fe, familia, propósito y oportunidades para servir.",
   ],
-  media: { label: "Foto: Pastores Willy & Carolina Burgos, retrato editorial" },
+  media: { src: "/pastores/willy-y-carolina.jpg", alt: "Pastores Willy y Carolina Burgos" },
   // Nota del documento: las biografías completas se reservan para la futura página "Pastores".
 };
 
@@ -272,6 +281,10 @@ export const gatherings = {
       day: "Jueves",
       time: "7:30 PM",
       meeting: "estudioBiblico",
+      photo: {
+        src: "/reuniones/estudio-biblico.jpg",
+        alt: "Un grupo conversa con la Biblia abierta durante un estudio bíblico",
+      },
       name: "Estudio Bíblico Interactivo",
       place: "266 Riverdale Ave., Yonkers, NY",
       text: "Una noche de crecimiento, conversación y formación como parte de Blueprint Mentorship, donde profundizamos juntos en la Palabra de Dios y desarrollamos principios de fe, propósito, liderazgo, relaciones y crecimiento personal.",
@@ -282,6 +295,10 @@ export const gatherings = {
       day: "Viernes",
       time: "7:30 PM",
       meeting: "nocheAvivamiento",
+      photo: {
+        src: "/reuniones/noche-de-avivamiento.jpg",
+        alt: "Manos alzadas en adoración durante la Noche de Avivamiento",
+      },
       name: "Noche de Avivamiento",
       place: "1688 Boston Rd., Bronx, NY",
       text: "Una noche de adoración, oración y Palabra dirigida por Anhelo Ardiente Worship, creada para buscar juntos la presencia de Dios y fomentar una cultura de adoración y avivamiento.",
@@ -292,6 +309,10 @@ export const gatherings = {
       day: "Domingos",
       time: "3:00 PM",
       meeting: "servicioFamiliar",
+      photo: {
+        src: "/reuniones/servicio-familiar.jpg",
+        alt: "Una hermana aplaude de pie durante la adoración del Servicio Familiar",
+      },
       name: "Servicio Familiar",
       place: "266 Riverdale Ave., Yonkers, NY",
       text: "Nuestro encuentro congregacional principal de la semana. Un tiempo para adorar juntos, recibir la Palabra de Dios, orar y compartir como familia.",
@@ -432,17 +453,20 @@ export const ministries = {
       by: null,
     },
     {
-      slug: "blueprint-mentorship",
+      slug: "intercesores",
       photo: true,
-      name: "Blueprint Mentorship",
-      text: "Nuestra plataforma de mentoría y desarrollo para fortalecer personas y familias, desarrollar liderazgo y acompañar diferentes generaciones hacia propósito y crecimiento.",
+      // Las cabezas están en el tercio superior de la foto: con la subida
+      // por defecto (24) el pelo de la primera fila tocaba el borde.
+      raise: 12,
+      name: "Intercesores",
+      text: "Intercesores es el ministerio de oración de Casa de Bendición, dedicado a interceder por la iglesia, las familias, la comunidad y las necesidades de otros, cultivando una vida de oración, unidad y sensibilidad a la dirección de Dios.",
       by: null,
     },
   ],
   otherTeams: {
     title: "Otros equipos",
     list: [
-      { name: "Intercesores", slug: "intercesores" },
+      { name: "Blueprint Mentorship", slug: "blueprint-mentorship" },
       { name: "Ujieres y Hospitalidad", slug: "ujieres" },
       { name: "Echo Media", slug: "echo-media" },
       { name: "Operación Nehemías", slug: "operacion-nehemias" },

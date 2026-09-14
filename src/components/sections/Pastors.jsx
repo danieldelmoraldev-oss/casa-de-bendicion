@@ -32,7 +32,8 @@ export default function Pastors() {
           <Reveal y={0} blur={false} duration={1.1}>
             <div className="relative">
               <ImagePlaceholder
-                label={pastors.media.label}
+                src={pastors.media.src}
+                alt={pastors.media.alt}
                 tone="light"
                 ratio="4/5"
                 rounded="rounded-none lg:rounded-r-2xl"

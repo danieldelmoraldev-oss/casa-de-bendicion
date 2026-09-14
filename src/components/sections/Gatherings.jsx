@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { gatherings, meetings } from "../../data/site";
 import { useModal } from "../../context/ModalContext";
@@ -11,6 +12,32 @@ import MeetingActions from "../ui/MeetingActions";
 /* Escalonado que rompe la cuadrícula en desktop */
 const offsets = ["lg:mt-0", "lg:mt-12", "lg:mt-24"];
 
+/* Cabecera fotográfica de la tarjeta. El logo no se superpone: sigue
+   debajo, sobre blanco, como pide la pág. 21 del manual. Si la foto
+   falla, queda el degradado institucional en lugar de un hueco roto. */
+function CardPhoto({ photo }) {
+  const [fallo, setFallo] = useState(false);
+
+  return (
+    <div className="relative aspect-[16/10] shrink-0 overflow-hidden bg-[linear-gradient(150deg,#24406f_0%,#1c3661_55%,#12233f_100%)]">
+      {!fallo && (
+        <img
+          src={photo.src}
+          alt={photo.alt}
+          loading="lazy"
+          onError={() => setFallo(true)}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+        />
+      )}
+      {/* Velo suave: asienta la foto sobre la tarjeta sin apagarla */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-t from-navy/30 via-navy/5 to-transparent"
+      />
+    </div>
+  );
+}
+
 function GatheringCard({ card, index, onPlan }) {
   return (
     <StaggerItem className={`group relative ${offsets[index]}`}>
@@ -21,6 +48,8 @@ function GatheringCard({ card, index, onPlan }) {
       >
         {/* Filete dorado superior */}
         <span aria-hidden="true" className="gradient-gold h-[4px] w-full" />
+
+        {card.photo && <CardPhoto photo={card.photo} />}
 
         <div className="flex h-full flex-col p-7 sm:p-8">
           {/* Identidad de la iniciativa */}
