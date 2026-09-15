@@ -519,7 +519,9 @@ export const community = {
       name: "Community Outreach",
       slug: null, // sin marca propia: usa el identificador de Casa de Bendición
       photoSlug: "community-outreach",
-      photoFocus: "42%",
+      // Foto nueva (la anterior tenía las caras deformadas). Las cabezas
+      // quedan altas: con este foco no se cortan en el banner de escritorio.
+      photoFocus: "29%",
       photo: true,
       en: "Neighborhood Engagement",
       text: "Community Outreach moviliza el servicio más allá de las actividades internas de la iglesia mediante participación comunitaria, voluntariado, apoyo práctico, conexión con recursos y colaboración.",
