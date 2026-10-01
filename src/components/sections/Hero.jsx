@@ -165,12 +165,15 @@ export default function Hero() {
         )}
         {/* Velo azul para unificar la imagen con la identidad */}
         <div className="absolute inset-0 bg-navy/25 mix-blend-multiply lg:hidden" />
-        {/* En escritorio el titular va sobre el vídeo. El velo sigue
-            siendo un degradado lateral, pero medido contra el vídeo real:
-            con estos valores el titular queda en 3,3:1, por encima del
-            mínimo de 3:1 para texto grande, y la imagen se sigue viendo
-            por debajo. El lado izquierdo ya no es una pared opaca. */}
-        <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(28,54,97,0.79)_0%,rgba(28,54,97,0.66)_28%,rgba(28,54,97,0.42)_58%,rgba(28,54,97,0.25)_82%)] lg:block" />
+        {/* En escritorio el titular va sobre el vídeo y necesita un velo
+            detrás. El velo es negro, no azul, por una razón medida: a
+            igualdad de legibilidad el negro necesita menos opacidad que
+            el azul institucional (60% frente a 79% en el borde
+            izquierdo), así que deja ver más vídeo y no tiñe de azul los
+            tonos de piel. Con estos valores el titular queda en 3,3:1,
+            por encima del mínimo de 3:1 para texto grande; aclararlo más
+            lo baja de ese umbral. */}
+        <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(0,0,0,0.60)_0%,rgba(0,0,0,0.50)_28%,rgba(0,0,0,0.32)_58%,rgba(0,0,0,0.19)_82%)] lg:block" />
         {/* Curva de transición en móvil */}
         <ArcDivider to="navy" position="bottom" height={70} className="lg:hidden" />
       </div>

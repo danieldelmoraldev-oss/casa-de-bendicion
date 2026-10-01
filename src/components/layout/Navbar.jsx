@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from "framer-motion";
 import { nav, locations } from "../../data/site";
 import { useModal } from "../../context/ModalContext";
@@ -12,21 +12,64 @@ const SECTION_IDS = nav.map((n) => n.href.replace("#", ""));
 
 /**
  * Barra de navegación.
- * El manual (pág. 32) pide la versión positiva horizontal del
- * identificador sobre fondo blanco o claro, así que la barra es
- * sólida desde el inicio: el logo nunca queda sobre la fotografía,
- * uso que la pág. 21 prohíbe expresamente.
+ *
+ * Sobre el hero de escritorio la barra se vuelve transparente y usa la
+ * versión negativa del identificador, que es la que el manual reserva
+ * para fondos oscuros. Lo pidió el cliente para que el vídeo llegue
+ * hasta arriba del todo.
+ *
+ * Es una desviación consciente: la pág. 21 prohíbe el identificador
+ * sobre fotografía. Se mitiga con un velo negro degradado bajo la
+ * barra, de modo que el logo se apoya en una banda oscura y no
+ * directamente sobre la imagen, y sin aplicarle ninguna transparencia
+ * ni efecto al propio logo.
+ *
+ * En cuanto el hero queda atrás, la barra vuelve a ser blanca con la
+ * versión positiva, como pide la pág. 32. En móvil no cambia nunca.
  */
 export default function Navbar() {
   const { open } = useModal();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [sobreHero, setSobreHero] = useState(true);
+  const [esEscritorio, setEsEscritorio] = useState(false);
   const active = useActiveSection(SECTION_IDS);
 
   const { scrollYProgress, scrollY } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
 
+  /* El alto del hero se cachea: leerlo en cada evento de scroll obligaría
+     al navegador a recalcular la maquetación sesenta veces por segundo. */
+  const altoHero = useRef(0);
+
+  useEffect(() => {
+    const ancha = window.matchMedia("(min-width: 1024px)");
+    /* El margen de 120 px devuelve la barra a blanco un poco antes de que
+       el hero termine, para que el cambio no coincida justo con el borde
+       y se vea como un salto. */
+    const evaluar = () =>
+      setSobreHero(window.scrollY < altoHero.current - 120);
+    const medir = () => {
+      altoHero.current = document.getElementById("inicio")?.offsetHeight ?? 0;
+      setEsEscritorio(ancha.matches);
+      evaluar();
+    };
+
+    medir();
+    window.addEventListener("resize", medir);
+    window.addEventListener("scroll", evaluar, { passive: true });
+    ancha.addEventListener("change", medir);
+    return () => {
+      window.removeEventListener("resize", medir);
+      window.removeEventListener("scroll", evaluar);
+      ancha.removeEventListener("change", medir);
+    };
+  }, []);
+
   useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 30));
+
+  /* Con el menú móvil abierto manda el panel azul, no el hero. */
+  const transparente = esEscritorio && sobreHero && !menuOpen;
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -41,19 +84,36 @@ export default function Navbar() {
         initial={{ y: -70, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
-        className="fixed inset-x-0 top-0 z-50 bg-white"
+        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
+          transparente ? "bg-transparent" : "bg-white"
+        }`}
       >
         <motion.div
           aria-hidden="true"
           className="absolute inset-0 shadow-[0_1px_24px_-6px_rgba(28,54,97,0.18)]"
           initial={false}
-          animate={{ opacity: scrolled ? 1 : 0 }}
+          animate={{ opacity: scrolled && !transparente ? 1 : 0 }}
           transition={{ duration: 0.4, ease: EASE }}
+        />
+
+        {/* Velo bajo la barra transparente: da fondo al logo y a los
+            enlaces para que no queden directamente sobre el vídeo. */}
+        <motion.div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-[170px] bg-gradient-to-b from-black/80 via-black/45 to-transparent"
+          initial={false}
+          animate={{ opacity: transparente ? 1 : 0 }}
+          transition={{ duration: 0.5, ease: EASE }}
         />
 
         <nav className="shell relative flex h-[74px] items-center justify-between lg:h-[86px]">
           <a href="#inicio" aria-label="Casa de Bendición · Inicio" className="shrink-0">
-            <Logo version="horizontal" className="h-9 lg:h-11" priority />
+            <Logo
+              version="horizontal"
+              tone={transparente ? "negative" : "positive"}
+              className="h-9 lg:h-11"
+              priority
+            />
           </a>
 
           {/* Enlaces (desktop) */}
@@ -66,7 +126,13 @@ export default function Navbar() {
                   <a
                     href={item.href}
                     className={`relative block px-3.5 py-2 text-[13px] font-semibold transition-colors duration-300 ${
-                      isActive ? "text-navy" : "text-navy/55 hover:text-navy"
+                      transparente
+                        ? isActive
+                          ? "text-white"
+                          : "text-white/70 hover:text-white"
+                        : isActive
+                          ? "text-navy"
+                          : "text-navy/55 hover:text-navy"
                     }`}
                   >
                     {item.label}
@@ -97,17 +163,21 @@ export default function Navbar() {
               onClick={() => setMenuOpen((v) => !v)}
               aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={menuOpen}
-              className="relative z-[60] flex h-11 w-11 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-md border border-navy/15 transition-colors duration-300 hover:border-navy/40 xl:hidden"
+              className={`relative z-[60] flex h-11 w-11 cursor-pointer flex-col items-center justify-center gap-[5px] rounded-md border transition-colors duration-300 xl:hidden ${
+                transparente
+                  ? "border-white/35 hover:border-white/70"
+                  : "border-navy/15 hover:border-navy/40"
+              }`}
             >
               <motion.span
                 animate={menuOpen ? { rotate: 45, y: 3.5 } : { rotate: 0, y: 0 }}
                 transition={{ duration: 0.35, ease: EASE }}
-                className="block h-[2px] w-4 rounded-full bg-navy"
+                className={`block h-[2px] w-4 rounded-full ${transparente ? "bg-white" : "bg-navy"}`}
               />
               <motion.span
                 animate={menuOpen ? { rotate: -45, y: -3.5 } : { rotate: 0, y: 0 }}
                 transition={{ duration: 0.35, ease: EASE }}
-                className="block h-[2px] w-4 rounded-full bg-navy"
+                className={`block h-[2px] w-4 rounded-full ${transparente ? "bg-white" : "bg-navy"}`}
               />
             </button>
           </div>

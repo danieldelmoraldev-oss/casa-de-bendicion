@@ -163,11 +163,27 @@ aunque quien los añada esté en otro huso.
 ## Vídeo del hero
 
 En escritorio el hero ocupa una pantalla completa, con el vídeo de fondo
-y el texto encima sobre un degradado azul lateral. Ese degradado está
-medido, no elegido a ojo: sobre los fotogramas reales del vídeo deja el
-titular en 3,3:1, por encima del mínimo de 3:1 para texto grande. Por eso
-no puede aclararse más sin perder la lectura. El párrafo pequeño pasa a
-blanco sobre el vídeo, porque el gris secundario se quedaba en 1,1:1. La barra de horarios
+y el texto encima sobre un degradado lateral. Ese degradado está medido,
+no elegido a ojo: sobre los fotogramas reales del vídeo deja el titular
+en 3,3:1, por encima del mínimo de 3:1 para texto grande. Por eso no
+puede aclararse más sin perder la lectura. El párrafo pequeño pasa a
+blanco sobre el vídeo, porque el gris secundario se quedaba en 1,1:1.
+
+**El velo del hero es negro, no azul.** Es la tercera desviación
+consciente del manual y la pidió el cliente. A igualdad de legibilidad el
+negro necesita menos opacidad que el azul institucional, 60% frente a
+79% en el borde izquierdo, así que deja ver más vídeo y no tiñe de azul
+los tonos de piel. El azul sigue presente en el hero a través de la
+barra de horarios, los botones y el panel de móvil.
+
+**Sobre el hero la barra de navegación es transparente y usa la versión
+negativa del identificador.** Cuarta desviación consciente, también
+pedida por el cliente, para que el vídeo llegue hasta arriba del todo. La
+pág. 21 prohíbe el identificador sobre fotografía: se mitiga con un velo
+negro degradado bajo la barra, de modo que el logo se apoya en una banda
+oscura y no directamente sobre la imagen, y sin aplicarle ninguna
+transparencia ni efecto al propio logo. En cuanto el hero queda atrás la
+barra vuelve a blanca con la versión positiva. En móvil no cambia nunca. La barra de horarios
 cierra abajo, dentro de esa misma pantalla, para que las horas de los
 servicios no queden por debajo del pliegue. En móvil se mantiene el
 diseño apilado de siempre: bloque de vídeo arriba y panel azul debajo.
