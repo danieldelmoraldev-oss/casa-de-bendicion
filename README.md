@@ -162,12 +162,26 @@ aunque quien los añada esté en otro huso.
 
 ## Vídeo del hero
 
+En escritorio el hero ocupa una pantalla completa, con el vídeo de fondo
+y el texto encima sobre un degradado azul lateral. La barra de horarios
+cierra abajo, dentro de esa misma pantalla, para que las horas de los
+servicios no queden por debajo del pliegue. En móvil se mantiene el
+diseño apilado de siempre: bloque de vídeo arriba y panel azul debajo.
+
 El original entregado por el cliente son 97 MB: 1920x1080, 80 segundos,
-con audio y a 9,8 Mbps. En el hero sólo se ve la franja central, así que
-se recorta a 4:3 antes de comprimir y los bits se gastan en lo que de
-verdad se ve. Queda en 6,4 MB.
+con audio y a 9,8 Mbps. Se publican **dos cortes** del mismo vídeo y se
+elige por ancho de pantalla, porque los dos huecos tienen formas muy
+distintas.
 
 ```bash
+# Ancho (16:9) — hero a pantalla completa, a partir de 1024 px. 9,3 MB
+ffmpeg -i final.mp4 -an -vf "fps=24,scale=1280:720:flags=lanczos" \
+  -c:v libx264 -preset slow -b:v 950k -g 48 -pass 1 -f null -
+ffmpeg -i final.mp4 -an -vf "fps=24,scale=1280:720:flags=lanczos" \
+  -c:v libx264 -preset slow -b:v 950k -g 48 -pass 2 \
+  -profile:v main -pix_fmt yuv420p -movflags +faststart hero-ancho.mp4
+
+# Estrecho (4:3) — bloque vertical de móvil. 6,4 MB
 ffmpeg -i final.mp4 -an -vf "fps=24,crop=1440:1080:240:0,scale=960:720:flags=lanczos" \
   -c:v libx264 -preset slow -b:v 650k -g 48 -pass 1 -f null -
 ffmpeg -i final.mp4 -an -vf "fps=24,crop=1440:1080:240:0,scale=960:720:flags=lanczos" \
@@ -175,9 +189,14 @@ ffmpeg -i final.mp4 -an -vf "fps=24,crop=1440:1080:240:0,scale=960:720:flags=lan
   -profile:v main -pix_fmt yuv420p -movflags +faststart hero.mp4
 ```
 
-Sin audio, porque un fondo que se reproduce solo tiene que ir mudo de
-todas formas. Con `+faststart`, para que empiece a verse sin esperar a
-la descarga completa.
+El corte estrecho se recorta a 4:3 antes de comprimir porque el bloque de
+móvil sólo enseña la franja central: así los bits se gastan en lo que de
+verdad se ve. Sin ese recorte, al mismo peso se notaban bloques en las
+caras.
+
+Los dos van sin audio, porque un fondo que se reproduce solo tiene que ir
+mudo de todas formas. Con `+faststart`, para que empiecen a verse sin
+esperar a la descarga completa.
 
 El `<video>` se reproduce en todos los tamaños, móvil incluido: la mayor
 parte del tráfico llega desde Instagram y WhatsApp, así que dejar el hero

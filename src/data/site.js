@@ -173,6 +173,10 @@ export const hero = {
      un fotograma suyo: se ve mientras el vídeo carga y es lo único que
      se descarga en móvil o con el movimiento reducido. */
   media: {
+    /* Dos cortes del mismo vídeo: el ancho para el hero a pantalla
+       completa y el estrecho para el bloque vertical de móvil. */
+    videoAncho: "/inicio/hero-ancho.mp4",
+    posterAncho: "/inicio/hero-ancho-poster.jpg",
     video: "/inicio/hero.mp4",
     poster: "/inicio/hero-poster.jpg",
     alt: "Momentos de la vida de Casa de Bendición: adoración, servicio y comunidad",

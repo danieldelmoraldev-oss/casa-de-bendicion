@@ -5,7 +5,7 @@ import { useModal } from "../../context/ModalContext";
 import { EASE, Reveal, SplitHeading } from "../ui/Motion";
 import Eyebrow from "../ui/Eyebrow";
 import CTAButton, { Arrow } from "../ui/Button";
-import { ArcEdge, ArcDivider, FlameWatermark } from "../ui/Decor";
+import { ArcDivider, FlameWatermark } from "../ui/Decor";
 import { ClockIcon, PinIcon } from "../ui/Icons";
 import MeetingActions from "../ui/MeetingActions";
 
@@ -69,125 +69,146 @@ function ScheduleBar() {
    Sólo se queda el póster en dos casos, y los dos los pide el visitante:
    si ha activado el ahorro de datos o si ha pedido reducir el
    movimiento. El póster es un fotograma del propio vídeo, así que el
-   hero nunca se ve vacío.                                              */
-function useFondoAnimado() {
-  const [animado, setAnimado] = useState(false);
+   hero nunca se ve vacío.
+
+   Hay dos cortes del mismo vídeo y se elige por ancho de pantalla: el
+   ancho (16:9) para el hero a pantalla completa y el estrecho (4:3)
+   para el bloque vertical de móvil, donde un 16:9 perdería media
+   escena por los lados.                                                */
+function useFondo() {
+  const [fondo, setFondo] = useState(() => ({
+    animado: false,
+    /* Se resuelve ya en el primer render para no pedir el corte
+       equivocado y tener que cambiarlo después. */
+    ancho: window.matchMedia("(min-width: 1024px)").matches,
+  }));
 
   useEffect(() => {
+    const ancha = window.matchMedia("(min-width: 1024px)");
     const quieto = window.matchMedia("(prefers-reduced-motion: reduce)");
     /* No todos los navegadores traen la API de red; si no está, se
        entiende que no hay ahorro de datos activo. */
     const ahorro = () => navigator.connection?.saveData === true;
-    const evaluar = () => setAnimado(!quieto.matches && !ahorro());
+    const evaluar = () =>
+      setFondo({ animado: !quieto.matches && !ahorro(), ancho: ancha.matches });
 
     evaluar();
+    ancha.addEventListener("change", evaluar);
     quieto.addEventListener("change", evaluar);
     navigator.connection?.addEventListener("change", evaluar);
     return () => {
+      ancha.removeEventListener("change", evaluar);
       quieto.removeEventListener("change", evaluar);
       navigator.connection?.removeEventListener("change", evaluar);
     };
   }, []);
 
-  return animado;
+  return fondo;
 }
 
 /* ------------------------------------------------------------------ */
 export default function Hero() {
   const ref = useRef(null);
   const { open } = useModal();
-  const animado = useFondoAnimado();
+  const { animado, ancho } = useFondo();
+  const fuente = ancho
+    ? { video: hero.media.videoAncho, poster: hero.media.posterAncho }
+    : { video: hero.media.video, poster: hero.media.poster };
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yPhoto = useTransform(scrollYProgress, [0, 1], [0, 110]);
   const scalePhoto = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
 
   return (
-    <section id="inicio" ref={ref} className="relative isolate bg-navy pt-[74px] lg:pt-[86px]">
-      <div className="relative flex flex-col lg:grid lg:grid-cols-[57fr_43fr] lg:items-stretch">
-        {/* ---------------- Fotografía ---------------- */}
-        <div className="relative order-1 h-[42vh] min-h-[280px] overflow-hidden lg:order-2 lg:h-auto lg:min-h-[640px]">
-          {animado ? (
-            /* Decorativo: el contenido del hero ya está en el titular, así
-               que el vídeo no añade nada que leer en voz alta. */
-            <motion.video
-              src={hero.media.video}
-              poster={hero.media.poster}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-hidden="true"
-              style={{ y: yPhoto, scale: scalePhoto }}
-              className="absolute inset-0 h-full w-full object-cover object-center"
-            />
-          ) : (
-            <motion.img
-              src={hero.media.poster}
-              alt={hero.media.alt}
-              style={{ y: yPhoto, scale: scalePhoto }}
-              className="absolute inset-0 h-full w-full object-cover object-center"
-              fetchPriority="high"
-            />
-          )}
-          {/* Velo azul para unificar la foto con la identidad */}
-          <div className="absolute inset-0 bg-navy/25 mix-blend-multiply" />
-          {/* Curva de transición en móvil */}
-          <ArcDivider to="navy" position="bottom" height={70} className="lg:hidden" />
-        </div>
-
-        {/* ---------------- Panel azul ---------------- */}
-        <div className="relative order-2 flex items-center bg-navy py-16 lg:order-1 lg:py-28">
-          <FlameWatermark
-            className="-left-16 top-4 text-white"
-            size={420}
-            opacity={0.045}
-            duration={16}
+    <section
+      id="inicio"
+      ref={ref}
+      className="relative isolate bg-navy pt-[74px] lg:flex lg:min-h-screen lg:flex-col lg:pt-[86px]"
+    >
+      {/* ---------------- Fondo ----------------
+          En móvil es un bloque por encima del panel azul. En escritorio
+          cubre toda la sección y el texto va encima, a pantalla completa
+          como pidió el cliente. El navbar es blanco y opaco, así que la
+          pantalla completa es todo lo que queda por debajo de él.      */}
+      <div className="relative h-[42vh] min-h-[280px] overflow-hidden lg:absolute lg:inset-0 lg:h-auto lg:min-h-0">
+        {animado ? (
+          /* Decorativo: el contenido del hero ya está en el titular, así
+             que el vídeo no añade nada que leer en voz alta. */
+          <motion.video
+            key={fuente.video}
+            src={fuente.video}
+            poster={fuente.poster}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+            style={{ y: yPhoto, scale: scalePhoto }}
+            className="absolute inset-0 h-full w-full object-cover object-center"
           />
-
-          {/* Borde curvo hacia la fotografía (desktop) */}
-          <ArcEdge
-            fill="navy"
-            width={130}
-            className="right-0 z-10 hidden translate-x-[calc(100%-1px)] lg:block"
+        ) : (
+          <motion.img
+            src={fuente.poster}
+            alt={hero.media.alt}
+            style={{ y: yPhoto, scale: scalePhoto }}
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            fetchPriority="high"
           />
+        )}
+        {/* Velo azul para unificar la imagen con la identidad */}
+        <div className="absolute inset-0 bg-navy/25 mix-blend-multiply lg:hidden" />
+        {/* En escritorio el titular va sobre el vídeo, así que el velo
+            pasa a ser un degradado lateral: opaco donde está el texto y
+            casi limpio sobre la imagen. */}
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-navy via-navy/80 to-navy/20 lg:block" />
+        {/* Curva de transición en móvil */}
+        <ArcDivider to="navy" position="bottom" height={70} className="lg:hidden" />
+      </div>
 
-          <div className="relative z-20 w-full pl-6 pr-6 lg:pl-[max(3rem,calc((100vw-82rem)/2+3rem))] lg:pr-16">
-            <div className="max-w-2xl">
-              <Eyebrow theme="navy">{hero.eyebrow}</Eyebrow>
+      {/* ---------------- Panel ---------------- */}
+      <div className="relative flex items-center bg-navy py-16 lg:z-10 lg:flex-1 lg:bg-transparent">
+        <FlameWatermark
+          className="-left-16 top-4 text-white lg:hidden"
+          size={420}
+          opacity={0.045}
+          duration={16}
+        />
 
-              <SplitHeading
-                as="h1"
-                mount
-                lines={hero.title}
-                accentLines={[1]}
-                delay={0.2}
-                className="display mt-6 text-[clamp(2.3rem,4.6vw,4rem)] text-white"
-              />
+        <div className="relative z-20 w-full pl-6 pr-6 lg:pl-[max(3rem,calc((100vw-82rem)/2+3rem))] lg:pr-16">
+          <div className="max-w-2xl">
+            <Eyebrow theme="navy">{hero.eyebrow}</Eyebrow>
 
-              <Reveal mount delay={0.7} className="mt-7">
-                <p className="text-[18px] font-medium leading-relaxed text-white/90 sm:text-[20px]">
-                  {hero.lead}
-                </p>
-                <p className="mt-4 max-w-xl text-[14.5px] leading-relaxed text-navy-mist">
-                  {hero.body}
-                </p>
-              </Reveal>
+            <SplitHeading
+              as="h1"
+              mount
+              lines={hero.title}
+              accentLines={[1]}
+              delay={0.2}
+              className="display mt-6 text-[clamp(2.3rem,4.6vw,4rem)] text-white"
+            />
 
-              <Reveal
-                mount
-                delay={0.85}
-                className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
-              >
-                <CTAButton onClick={() => open("planifica-tu-visita")}>
-                  Planifica tu visita
-                </CTAButton>
-                <CTAButton variant="light" onClick={() => open("quiero-conectarme")}>
-                  Conéctate con nosotros
-                </CTAButton>
-              </Reveal>
-            </div>
+            <Reveal mount delay={0.7} className="mt-7">
+              <p className="text-[18px] font-medium leading-relaxed text-white/90 sm:text-[20px]">
+                {hero.lead}
+              </p>
+              <p className="mt-4 max-w-xl text-[14.5px] leading-relaxed text-navy-mist">
+                {hero.body}
+              </p>
+            </Reveal>
+
+            <Reveal
+              mount
+              delay={0.85}
+              className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
+            >
+              <CTAButton onClick={() => open("planifica-tu-visita")}>
+                Planifica tu visita
+              </CTAButton>
+              <CTAButton variant="light" onClick={() => open("quiero-conectarme")}>
+                Conéctate con nosotros
+              </CTAButton>
+            </Reveal>
           </div>
         </div>
       </div>
