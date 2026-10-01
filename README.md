@@ -160,12 +160,34 @@ reuniones, mensuales las dos formaciones de Blueprint (1er y 3er martes)
 — y con `TZID=America/New_York`, para que caigan a la hora correcta
 aunque quien los añada esté en otro huso.
 
+## Vídeo del hero
+
+El original entregado por el cliente son 97 MB: 1920x1080, 80 segundos,
+con audio y a 9,8 Mbps. En el hero sólo se ve la franja central, así que
+se recorta a 4:3 antes de comprimir y los bits se gastan en lo que de
+verdad se ve. Queda en 6,4 MB.
+
+```bash
+ffmpeg -i final.mp4 -an -vf "fps=24,crop=1440:1080:240:0,scale=960:720:flags=lanczos" \
+  -c:v libx264 -preset slow -b:v 650k -g 48 -pass 1 -f null -
+ffmpeg -i final.mp4 -an -vf "fps=24,crop=1440:1080:240:0,scale=960:720:flags=lanczos" \
+  -c:v libx264 -preset slow -b:v 650k -g 48 -pass 2 \
+  -profile:v main -pix_fmt yuv420p -movflags +faststart hero.mp4
+```
+
+Sin audio, porque un fondo que se reproduce solo tiene que ir mudo de
+todas formas. Con `+faststart`, para que empiece a verse sin esperar a
+la descarga completa.
+
+El `<video>` sólo se monta a partir de 1024 px y si el visitante no ha
+pedido reducir el movimiento. En el resto de casos se sirve el póster,
+que es un fotograma del propio vídeo: en móvil nadie se descarga los
+6 MB para ver un fondo recortado.
+
 ## Pendiente del cliente
 
-**Fotografías**
-- **Foto definitiva del hero.** La actual, un aniversario, la pidió el
-  cliente "mientras tanto". La anterior sigue en `public/congregacion.jpg`.
-- **Vídeo institucional** y su póster.
+**Vídeo institucional** y su póster. El cliente lo espera para la primera
+semana de noviembre de 2026.
 
 Las tarjetas sin foto se resuelven con el degradado azul institucional y una
 etiqueta discreta "Foto pendiente": no se ven rotas, pero se identifican.

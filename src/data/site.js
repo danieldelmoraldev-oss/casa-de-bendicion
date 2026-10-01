@@ -169,11 +169,13 @@ export const hero = {
     { day: "Domingos", time: "3:00 PM", place: "Yonkers, NY", label: "Servicio Familiar", meeting: "servicioFamiliar" },
     { day: "Viernes", time: "7:30 PM", place: "Bronx, NY", label: "Noche de Avivamiento", meeting: "nocheAvivamiento" },
   ],
-  /* Foto provisional: el cliente la pidió "mientras tanto". La anterior,
-     /congregacion.jpg, sigue en public/ por si vuelve. */
+  /* El fondo del hero es el vídeo que entregó el cliente. El póster es
+     un fotograma suyo: se ve mientras el vídeo carga y es lo único que
+     se descarga en móvil o con el movimiento reducido. */
   media: {
-    src: "/inicio/aniversario.jpg",
-    alt: "Familias de Casa de Bendición celebrando juntas un aniversario",
+    video: "/inicio/hero.mp4",
+    poster: "/inicio/hero-poster.jpg",
+    alt: "Momentos de la vida de Casa de Bendición: adoración, servicio y comunidad",
   },
 };
 

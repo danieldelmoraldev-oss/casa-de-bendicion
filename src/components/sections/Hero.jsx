@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { hero, meetings } from "../../data/site";
 import { useModal } from "../../context/ModalContext";
@@ -62,9 +62,35 @@ function ScheduleBar() {
 }
 
 /* ------------------------------------------------------------------ */
+/* El vídeo de fondo sólo se carga en pantallas grandes y si el visitante
+   no ha pedido reducir el movimiento: en móvil serían 6 MB de datos a
+   cambio de un fondo que además se ve muy recortado. Allí se queda el
+   póster, que es un fotograma del propio vídeo.                        */
+function useFondoAnimado() {
+  const [animado, setAnimado] = useState(false);
+
+  useEffect(() => {
+    const ancha = window.matchMedia("(min-width: 1024px)");
+    const quieto = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const evaluar = () => setAnimado(ancha.matches && !quieto.matches);
+
+    evaluar();
+    ancha.addEventListener("change", evaluar);
+    quieto.addEventListener("change", evaluar);
+    return () => {
+      ancha.removeEventListener("change", evaluar);
+      quieto.removeEventListener("change", evaluar);
+    };
+  }, []);
+
+  return animado;
+}
+
+/* ------------------------------------------------------------------ */
 export default function Hero() {
   const ref = useRef(null);
   const { open } = useModal();
+  const animado = useFondoAnimado();
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yPhoto = useTransform(scrollYProgress, [0, 1], [0, 110]);
@@ -75,13 +101,30 @@ export default function Hero() {
       <div className="relative flex flex-col lg:grid lg:grid-cols-[57fr_43fr] lg:items-stretch">
         {/* ---------------- Fotografía ---------------- */}
         <div className="relative order-1 h-[42vh] min-h-[280px] overflow-hidden lg:order-2 lg:h-auto lg:min-h-[640px]">
-          <motion.img
-            src={hero.media.src}
-            alt={hero.media.alt}
-            style={{ y: yPhoto, scale: scalePhoto }}
-            className="absolute inset-0 h-full w-full object-cover object-center"
-            fetchPriority="high"
-          />
+          {animado ? (
+            /* Decorativo: el contenido del hero ya está en el titular, así
+               que el vídeo no añade nada que leer en voz alta. */
+            <motion.video
+              src={hero.media.video}
+              poster={hero.media.poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-hidden="true"
+              style={{ y: yPhoto, scale: scalePhoto }}
+              className="absolute inset-0 h-full w-full object-cover object-center"
+            />
+          ) : (
+            <motion.img
+              src={hero.media.poster}
+              alt={hero.media.alt}
+              style={{ y: yPhoto, scale: scalePhoto }}
+              className="absolute inset-0 h-full w-full object-cover object-center"
+              fetchPriority="high"
+            />
+          )}
           {/* Velo azul para unificar la foto con la identidad */}
           <div className="absolute inset-0 bg-navy/25 mix-blend-multiply" />
           {/* Curva de transición en móvil */}
