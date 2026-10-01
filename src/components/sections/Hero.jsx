@@ -197,7 +197,12 @@ export default function Hero() {
               lines={hero.title}
               accentLines={[1]}
               delay={0.2}
-              className="display mt-6 text-[clamp(2.3rem,4.6vw,4rem)] text-white lg:[text-shadow:0_2px_20px_rgba(18,35,63,0.8)]"
+              /* Aquí la sombra va como filtro, no como text-shadow: la
+                 línea en dorado se pinta recortando un degradado sobre
+                 texto transparente, y una text-shadow se vería a través
+                 del hueco y apagaría el dorado. drop-shadow trabaja
+                 sobre el resultado ya pintado y lo respeta. */
+              className="display mt-6 text-[clamp(2.3rem,4.6vw,4rem)] text-white lg:drop-shadow-[0_2px_16px_rgba(0,0,0,0.7)]"
             />
 
             <Reveal mount delay={0.7} className="mt-7">
