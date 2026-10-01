@@ -9,6 +9,13 @@ import { ArcDivider, FlameWatermark } from "../ui/Decor";
 import { ClockIcon, PinIcon } from "../ui/Icons";
 import MeetingActions from "../ui/MeetingActions";
 
+/* Sobre vídeo, la sombra `lg:[text-shadow:…]` sostiene el texto en los
+   fotogramas más claros. No cuenta para el contraste medido, pero en
+   movimiento es la diferencia entre leer cómodo y entornar los ojos. Va
+   escrita entera en cada sitio: Tailwind sólo genera las clases que
+   encuentra literales, nunca las que se componen en tiempo de
+   ejecución.                                                           */
+
 /* ------------------------------------------------------------------ */
 /* Barra inferior con los horarios — equivale a la franja de accesos   */
 /* rápidos del mockup del manual (pág. 32)                             */
@@ -158,10 +165,12 @@ export default function Hero() {
         )}
         {/* Velo azul para unificar la imagen con la identidad */}
         <div className="absolute inset-0 bg-navy/25 mix-blend-multiply lg:hidden" />
-        {/* En escritorio el titular va sobre el vídeo, así que el velo
-            pasa a ser un degradado lateral: opaco donde está el texto y
-            casi limpio sobre la imagen. */}
-        <div className="absolute inset-0 hidden bg-gradient-to-r from-navy via-navy/80 to-navy/20 lg:block" />
+        {/* En escritorio el titular va sobre el vídeo. El velo sigue
+            siendo un degradado lateral, pero medido contra el vídeo real:
+            con estos valores el titular queda en 3,3:1, por encima del
+            mínimo de 3:1 para texto grande, y la imagen se sigue viendo
+            por debajo. El lado izquierdo ya no es una pared opaca. */}
+        <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(28,54,97,0.79)_0%,rgba(28,54,97,0.66)_28%,rgba(28,54,97,0.42)_58%,rgba(28,54,97,0.25)_82%)] lg:block" />
         {/* Curva de transición en móvil */}
         <ArcDivider to="navy" position="bottom" height={70} className="lg:hidden" />
       </div>
@@ -185,14 +194,14 @@ export default function Hero() {
               lines={hero.title}
               accentLines={[1]}
               delay={0.2}
-              className="display mt-6 text-[clamp(2.3rem,4.6vw,4rem)] text-white"
+              className="display mt-6 text-[clamp(2.3rem,4.6vw,4rem)] text-white lg:[text-shadow:0_2px_20px_rgba(18,35,63,0.8)]"
             />
 
             <Reveal mount delay={0.7} className="mt-7">
-              <p className="text-[18px] font-medium leading-relaxed text-white/90 sm:text-[20px]">
+              <p className="text-[18px] font-medium leading-relaxed text-white/90 sm:text-[20px] lg:text-white lg:[text-shadow:0_2px_20px_rgba(18,35,63,0.8)]">
                 {hero.lead}
               </p>
-              <p className="mt-4 max-w-xl text-[14.5px] leading-relaxed text-navy-mist">
+              <p className="mt-4 max-w-xl text-[14.5px] leading-relaxed text-navy-mist lg:text-white/90 lg:[text-shadow:0_2px_20px_rgba(18,35,63,0.8)]">
                 {hero.body}
               </p>
             </Reveal>

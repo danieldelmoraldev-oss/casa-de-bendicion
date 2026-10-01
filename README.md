@@ -163,7 +163,11 @@ aunque quien los añada esté en otro huso.
 ## Vídeo del hero
 
 En escritorio el hero ocupa una pantalla completa, con el vídeo de fondo
-y el texto encima sobre un degradado azul lateral. La barra de horarios
+y el texto encima sobre un degradado azul lateral. Ese degradado está
+medido, no elegido a ojo: sobre los fotogramas reales del vídeo deja el
+titular en 3,3:1, por encima del mínimo de 3:1 para texto grande. Por eso
+no puede aclararse más sin perder la lectura. El párrafo pequeño pasa a
+blanco sobre el vídeo, porque el gris secundario se quedaba en 1,1:1. La barra de horarios
 cierra abajo, dentro de esa misma pantalla, para que las horas de los
 servicios no queden por debajo del pliegue. En móvil se mantiene el
 diseño apilado de siempre: bloque de vídeo arriba y panel azul debajo.
