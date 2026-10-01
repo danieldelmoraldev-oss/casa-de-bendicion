@@ -179,10 +179,13 @@ Sin audio, porque un fondo que se reproduce solo tiene que ir mudo de
 todas formas. Con `+faststart`, para que empiece a verse sin esperar a
 la descarga completa.
 
-El `<video>` sólo se monta a partir de 1024 px y si el visitante no ha
-pedido reducir el movimiento. En el resto de casos se sirve el póster,
-que es un fotograma del propio vídeo: en móvil nadie se descarga los
-6 MB para ver un fondo recortado.
+El `<video>` se reproduce en todos los tamaños, móvil incluido: la mayor
+parte del tráfico llega desde Instagram y WhatsApp, así que dejar el hero
+congelado ahí vaciaría de sentido tener vídeo.
+
+Sólo se queda el póster cuando lo pide el visitante: con el ahorro de
+datos activado o con el movimiento reducido. El póster es un fotograma
+del propio vídeo, así que el hero nunca se ve vacío.
 
 ## Pendiente del cliente
 

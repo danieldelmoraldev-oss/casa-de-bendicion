@@ -62,24 +62,30 @@ function ScheduleBar() {
 }
 
 /* ------------------------------------------------------------------ */
-/* El vídeo de fondo sólo se carga en pantallas grandes y si el visitante
-   no ha pedido reducir el movimiento: en móvil serían 6 MB de datos a
-   cambio de un fondo que además se ve muy recortado. Allí se queda el
-   póster, que es un fotograma del propio vídeo.                        */
+/* El vídeo de fondo se reproduce en todos los tamaños, móvil incluido:
+   la mayor parte del tráfico llega desde Instagram y WhatsApp, así que
+   dejar el hero congelado justo ahí vaciaría de sentido tener vídeo.
+
+   Sólo se queda el póster en dos casos, y los dos los pide el visitante:
+   si ha activado el ahorro de datos o si ha pedido reducir el
+   movimiento. El póster es un fotograma del propio vídeo, así que el
+   hero nunca se ve vacío.                                              */
 function useFondoAnimado() {
   const [animado, setAnimado] = useState(false);
 
   useEffect(() => {
-    const ancha = window.matchMedia("(min-width: 1024px)");
     const quieto = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const evaluar = () => setAnimado(ancha.matches && !quieto.matches);
+    /* No todos los navegadores traen la API de red; si no está, se
+       entiende que no hay ahorro de datos activo. */
+    const ahorro = () => navigator.connection?.saveData === true;
+    const evaluar = () => setAnimado(!quieto.matches && !ahorro());
 
     evaluar();
-    ancha.addEventListener("change", evaluar);
     quieto.addEventListener("change", evaluar);
+    navigator.connection?.addEventListener("change", evaluar);
     return () => {
-      ancha.removeEventListener("change", evaluar);
       quieto.removeEventListener("change", evaluar);
+      navigator.connection?.removeEventListener("change", evaluar);
     };
   }, []);
 
