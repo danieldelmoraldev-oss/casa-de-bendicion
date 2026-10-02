@@ -4,7 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#1C3661" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <!-- Dos iconos de pestaña: el isotipo positivo tiene el tejado en azul
+         marino y se pierde sobre las barras oscuras del navegador, así que
+         con el tema oscuro se sirve la versión negativa. El orden importa:
+         un navegador que no entienda `media` se queda con el último, y la
+         negativa al menos conserva la llama dorada visible sobre claro. -->
+    <link rel="icon" type="image/png" href="/favicon.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" href="/favicon-oscuro.png" media="(prefers-color-scheme: dark)" />
     <title>Casa de Bendición – Más que iglesia, un movimiento</title>
     <meta
       name="description"
