@@ -226,6 +226,27 @@ Sólo se queda el póster cuando lo pide el visitante: con el ahorro de
 datos activado o con el movimiento reducido. El póster es un fotograma
 del propio vídeo, así que el hero nunca se ve vacío.
 
+## Vista previa al compartir
+
+Las etiquetas Open Graph y de Twitter viven en `index.html`, no en React.
+Es a propósito: los rastreadores de WhatsApp, Facebook e iMessage no
+ejecutan JavaScript, pero sí leen la cabecera del HTML servido. Por eso
+esta parte funciona bien aunque la web siga siendo una aplicación de una
+sola página.
+
+La imagen es `public/og.jpg`, 1200x630, y va declarada con URL absoluta
+porque una ruta relativa no les sirve. Se compone con la foto de la
+congregación, un velo azul profundo al 55% y el identificador en versión
+negativa centrado.
+
+Ojo al probar cambios: estas plataformas cachean la vista previa por URL
+durante días. Para forzar una nueva, compartir el enlace con un parámetro
+distinto (`?v=2`) o usar el depurador de Facebook.
+
+Queda pendiente, y necesita la reestructuración técnica: que cada página
+tenga su propio título, descripción y vista previa, los datos
+estructurados de iglesia con las dos sedes, el sitemap y el robots.
+
 ## Pendiente del cliente
 
 **Vídeo institucional** y su póster. El cliente lo espera para la primera
