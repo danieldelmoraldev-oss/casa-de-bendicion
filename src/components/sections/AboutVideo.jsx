@@ -101,11 +101,14 @@ export default function AboutVideo() {
           <motion.div
             onMouseMove={handleMove}
             onMouseLeave={handleLeave}
-            style={playing ? { scale: 1, rotateX: 0, transformStyle: "flat" } : { scale, rotateX: tilt, transformStyle: "preserve-3d" }}
+            style={playing ? { scale: 1, rotateX: 0 } : { scale, rotateX: tilt }}
             className="relative"
           >
             <motion.div
-              style={playing ? { rotateX: 0, rotateY: 0, transformStyle: "flat" } : { rotateX, rotateY, transformStyle: "preserve-3d" }}
+              // Sin preserve-3d: con él, Chrome de escritorio calcula los clics en 3D
+              // y las zonas inclinadas "hacia dentro" quedan detrás y no reciben
+              // el clic. Con transformPerspective el giro se ve igual de 3D.
+              style={playing ? { rotateX: 0, rotateY: 0 } : { rotateX, rotateY, transformPerspective: 1400 }}
               // Toda la tarjeta arranca el vídeo, y al pulsar (pointerdown), no
               // al soltar: la inclinación 3D sigue al ratón, y si la tarjeta se
               // mueve entre pulsar y soltar, el navegador no da el clic por bueno.
