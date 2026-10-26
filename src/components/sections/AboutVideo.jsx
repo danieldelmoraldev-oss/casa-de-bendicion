@@ -97,16 +97,25 @@ export default function AboutVideo() {
         </div>
 
         {/* Marco de vídeo */}
-        <motion.div ref={frameRef} style={{ perspective: 1400 }} className="mt-14 lg:mt-20">
+        <motion.div ref={frameRef} style={{ perspective: playing ? "none" : 1400 }} className="mt-14 lg:mt-20">
           <motion.div
             onMouseMove={handleMove}
             onMouseLeave={handleLeave}
-            style={{ scale, rotateX: tilt, transformStyle: "preserve-3d" }}
+            style={playing ? { scale: 1, rotateX: 0, transformStyle: "flat" } : { scale, rotateX: tilt, transformStyle: "preserve-3d" }}
             className="relative"
           >
             <motion.div
-              style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-              className="relative isolate overflow-hidden rounded-xl bg-navy shadow-[0_50px_110px_-45px_rgba(28,54,97,0.75)]"
+              style={playing ? { rotateX: 0, rotateY: 0, transformStyle: "flat" } : { rotateX, rotateY, transformStyle: "preserve-3d" }}
+              // Toda la tarjeta arranca el vídeo, no solo el botón: con la
+              // tarjeta inclinada en 3D, Chrome de escritorio a veces no
+              // le pasa el clic al botón.
+              onClick={() => {
+                if (!ytId || playing) return;
+                mx.set(0);
+                my.set(0);
+                setPlaying(true);
+              }}
+              className={`relative isolate overflow-hidden rounded-xl bg-navy ${ytId && !playing ? "cursor-pointer" : ""} shadow-[0_50px_110px_-45px_rgba(28,54,97,0.75)]`}
             >
               {ytId ? (
                 <img
