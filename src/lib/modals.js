@@ -282,8 +282,8 @@ export const modalRegistry = {
   video: {
     eyebrow: "Vídeo institucional",
     title: "Casa de Bendición",
-    text: "Aquí se incrustará el reproductor (YouTube / Vimeo) cuando esté disponible el material final.",
     kind: "video",
+    youtubeId: "IH1RK6dmnN8",
   },
 };
 

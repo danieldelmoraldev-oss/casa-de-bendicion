@@ -73,10 +73,17 @@ function Panel({ config, onClose, prefill }) {
             )}
 
             {config.kind === "video" ? (
-              <div className="mt-8 flex aspect-video w-full items-center justify-center rounded-lg border border-white/10 bg-navy-deep">
-                <p className="label text-[10px] text-navy-mist">
-                  [Reproductor de vídeo]
-                </p>
+              <div className="mt-8 aspect-video w-full overflow-hidden rounded-lg border border-white/10 bg-navy-deep">
+                {/* Se reproduce dentro de la web (sin salir a YouTube); al
+                    terminar, rel=0 solo sugiere vídeos del propio canal. */}
+                <iframe
+                  className="h-full w-full"
+                  src={`https://www.youtube-nocookie.com/embed/${config.youtubeId}?autoplay=1&rel=0&playsinline=1`}
+                  title={config.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="mt-8">
