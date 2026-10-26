@@ -106,10 +106,10 @@ export default function AboutVideo() {
           >
             <motion.div
               style={playing ? { rotateX: 0, rotateY: 0, transformStyle: "flat" } : { rotateX, rotateY, transformStyle: "preserve-3d" }}
-              // Toda la tarjeta arranca el vídeo, no solo el botón: con la
-              // tarjeta inclinada en 3D, Chrome de escritorio a veces no
-              // le pasa el clic al botón.
-              onClick={() => {
+              // Toda la tarjeta arranca el vídeo, y al pulsar (pointerdown), no
+              // al soltar: la inclinación 3D sigue al ratón, y si la tarjeta se
+              // mueve entre pulsar y soltar, el navegador no da el clic por bueno.
+              onPointerDown={() => {
                 if (!ytId || playing) return;
                 mx.set(0);
                 my.set(0);
