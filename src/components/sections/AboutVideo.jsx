@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { about } from "../../data/site";
 import { useModal } from "../../context/ModalContext";
@@ -39,6 +39,9 @@ function PlayButton({ onClick }) {
 export default function AboutVideo() {
   const { open } = useModal();
   const frameRef = useRef(null);
+  // El vídeo se reproduce dentro de la propia tarjeta (sin salir a YouTube).
+  const [playing, setPlaying] = useState(false);
+  const ytId = about.video.youtubeId;
 
   const { scrollYProgress } = useScroll({ target: frameRef, offset: ["start end", "center center"] });
   const scale = useSpring(useTransform(scrollYProgress, [0, 1], [0.9, 1]), {
@@ -58,6 +61,7 @@ export default function AboutVideo() {
   const shineX = useTransform(mx, [-0.5, 0.5], ["25%", "75%"]);
 
   const handleMove = (e) => {
+    if (playing) return; // con el vídeo en marcha, la tarjeta se queda quieta
     const r = e.currentTarget.getBoundingClientRect();
     mx.set((e.clientX - r.left) / r.width - 0.5);
     my.set((e.clientY - r.top) / r.height - 0.5);
@@ -104,14 +108,23 @@ export default function AboutVideo() {
               style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
               className="relative isolate overflow-hidden rounded-xl bg-navy shadow-[0_50px_110px_-45px_rgba(28,54,97,0.75)]"
             >
-              <ImagePlaceholder
-                label={about.video.label}
-                tone="navy"
-                ratio="16/9"
-                rounded="rounded-none"
-                align="top"
-                className="border-0"
-              />
+              {ytId ? (
+                <img
+                  src={`https://i.ytimg.com/vi/${ytId}/maxresdefault.jpg`}
+                  alt={about.video.label}
+                  loading="lazy"
+                  className="aspect-video w-full object-cover"
+                />
+              ) : (
+                <ImagePlaceholder
+                  label={about.video.label}
+                  tone="navy"
+                  ratio="16/9"
+                  rounded="rounded-none"
+                  align="top"
+                  className="border-0"
+                />
+              )}
 
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy via-navy/25 to-navy/45" />
 
@@ -133,7 +146,14 @@ export default function AboutVideo() {
               </div>
 
               <div className="absolute inset-0 grid place-items-center">
-                <PlayButton onClick={() => open("video")} />
+                <PlayButton
+                  onClick={() => {
+                    if (!ytId) return open("video");
+                    mx.set(0);
+                    my.set(0);
+                    setPlaying(true);
+                  }}
+                />
               </div>
 
               <div className="pointer-events-none absolute inset-x-0 bottom-0 p-5 sm:p-7">
@@ -149,6 +169,17 @@ export default function AboutVideo() {
                   />
                 </div>
               </div>
+
+              {playing && (
+                <iframe
+                  className="absolute inset-0 z-10 h-full w-full bg-black"
+                  src={`https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0&playsinline=1`}
+                  title={about.video.label}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              )}
             </motion.div>
           </motion.div>
         </motion.div>

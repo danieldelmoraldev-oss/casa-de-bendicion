@@ -248,6 +248,7 @@ export const about = {
     label: "Vídeo institucional: recorrido por la vida de la iglesia",
     caption: "Vídeo institucional",
     duration: "12:09",
+    youtubeId: "IH1RK6dmnN8",
   },
   // Cifras derivadas del propio documento (reuniones, ministerios y sedes listados)
   stats: [
